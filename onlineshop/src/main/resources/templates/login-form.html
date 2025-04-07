@@ -16,7 +16,9 @@
         <section class="login-form">
             <h2>Имам регистрация</h2>
 
-            <form>
+            <form th:action="@{/users/login}"
+                  th:method="POST">
+
                 <div class="field">
                     <label for="email">Имейл</label>
                     <input type="email" name="email" id="email">
@@ -24,7 +26,7 @@
     
                 <div class="field">
                     <label for="password">Парола</label>
-                    <input type="text" name="password" id="password">
+                    <input type="password" name="password" id="password">
                 </div>
 
                 <div><a th:href="@{/users/forgot-password}">Забравена парола</a></div>

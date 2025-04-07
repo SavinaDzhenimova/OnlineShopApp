@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="" />
+    <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/header-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/header-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/profile-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/profile-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/login-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/login-form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +30,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

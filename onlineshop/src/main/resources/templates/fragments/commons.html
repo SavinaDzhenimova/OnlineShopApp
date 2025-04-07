@@ -45,7 +45,13 @@
                     </form>
                 </li>
                 <li class="icons">
-                    <a th:href="@{/users/login}"><i class="fa-solid fa-user"></i>Вход/Регистрация</a>
+                    <a sec:authorize="isAnonymous()"
+                       th:href="@{/users/login}"><i class="fa-solid fa-user"></i>Вход/Регистрация</a>
+                    <form sec:authorize="isAuthenticated()"
+                          th:action="@{/users/logout}"
+                          th:method="POST">
+                        <button><i class="fa-solid fa-right-from-bracket"></i>Изход</button>
+                    </form>
                     <a href="#"><i class="fa-regular fa-star"></i>Любими</a>
                     <a href="#"><i class="fa-solid fa-cart-shopping"></i>Количка</a>
                 </li>

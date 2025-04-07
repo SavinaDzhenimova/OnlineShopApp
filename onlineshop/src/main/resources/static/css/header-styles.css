@@ -97,6 +97,27 @@ header nav .logo-container .icons a:hover {
     color: #fff;
 }
 
+header nav .logo-container .icons form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav .logo-container .icons form button {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    padding: 0.5em 1.1em;
+    border-radius: 0.5em;
+}
+
+header nav .logo-container .icons form button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
 header nav .menu {
     padding: 0 8em;
     background-color: #eee;

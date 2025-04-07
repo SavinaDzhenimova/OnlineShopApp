@@ -1,0 +1,139 @@
+main .profile-menu {
+    display: flex;
+    gap: 2em;
+    position: relative;
+}
+
+main .profile-menu::after {
+    display: block;
+    content: '';
+    background-color: #ccc;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: -2em;
+    left: 0;
+}
+
+main .profile-menu .profile-menu-link {
+    padding: 0.5em 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+}
+
+main .profile-menu .profile-menu-link:hover {
+    border-color: #000;
+}
+
+main .main-profile-info {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 3em;
+}
+
+main .main-profile-info .main-info-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .main-profile-info .vip-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+main .main-profile-info .main-info-section form {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+}
+
+main .main-profile-info .main-info-section form .field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main .main-profile-info .main-info-section form .field input {
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+}
+
+main .main-profile-info .main-info-section form p::before {
+    display: inline;
+    content: '*';
+    color: red;
+    padding-right: 0.3em;
+}
+
+main .main-profile-info .main-info-section form button,
+main .main-profile-info .main-info-section form .exit-button {
+    width: 50%;
+    align-self: center;
+    background-color: #000;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+    font-weight: 600;
+    border: none;
+    border-radius: 2em;
+}
+
+main .main-profile-info .main-info-section form .exit-button {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+}
+
+main .main-profile-info .main-info-section form .exit-button:hover {
+    border-color: #000;
+}
+
+main .main-profile-info .vip-section .become-vip {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    border: 1px solid #ccc;
+    border-radius: 1.5em;
+    padding: 3em 1em;
+}
+
+main .main-profile-info .vip-section .become-vip .crown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    border: 1px dashed #ccc;
+}
+
+main .main-profile-info .vip-section .become-vip .crown i {
+    color: orange;
+    font-size: 40px;
+}
+
+main .main-profile-info .vip-section .become-vip h4 {
+    font-size: 20px;
+}
+
+main .main-profile-info .vip-section .become-vip a {
+    text-decoration: underline;
+}
+
+main .main-profile-info .vip-section .become-vip a:hover {
+    text-decoration: none;
+}

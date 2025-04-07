@@ -13,9 +13,62 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <h1>Обща информация</h1>
+        <h1>Моят профил</h1>
 
+        <div class="profile-menu">
+            <a class="profile-menu-link" th:href="@{/users/profile}">Данни за профила</a>
+            <a class="profile-menu-link" th:href="@{/users/profile/my-orders}">Моите поръчки</a>
+            <a class="profile-menu-link" th:href="@{/users/profile/my-addresses}">Моите адреси</a>
+            <a class="profile-menu-link" th:href="@{/users/exchange-or-return}">Замяна или връщане</a>
+            <a class="profile-menu-link" th:href="@{/users/profile/favourites}">Любими</a>
+            <a class="profile-menu-link" th:href="@{/contacts}">Връзка с нас</a>
+        </div>
 
+        <div class="main-profile-info">
+            <section class="main-info-section">
+                <h3>Обща информация</h3>
+
+                <form>
+                    <div class="field">
+                        <label for="email">Имейл</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+
+                    <div class="field">
+                        <label for="fullName">Име и фамилия</label>
+                        <input type="text" name="fullName" id="fullName">
+                    </div>
+
+                    <div class="field">
+                        <label for="phoneNumber">Мобилен телефон</label>
+                        <input type="text" name="phoneNumber" id="phoneNumber">
+                    </div>
+
+                    <p>Моля, свери внимателно въведения номер</p>
+
+                    <button>Запази промените</button>
+                </form>
+
+                <form th:action="@{/users/logout}"
+                      th:method="POST">
+                    <button class="exit-button">Изход от профила</button>
+                </form>
+            </section>
+
+            <section class="vip-section">
+                <div class="become-vip">
+                    <div class="crown">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+
+                    <h4>Стани ВИП</h4>
+
+                    <p>Остават ти още 134.52 лв. до ВИП 300</p>
+
+                    <a th:href="@{/loyalty-program}">Програма "Лоялен клиент"</a>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer th:replace="~{fragments/commons::footer}"></footer>

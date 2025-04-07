@@ -25,6 +25,12 @@ public class LoginController {
         return new ModelAndView("login-form");
     }
 
+    @GetMapping("/profile")
+    public ModelAndView profile() {
+
+        return new ModelAndView("profile");
+    }
+
     @GetMapping("/login-error")
     public ModelAndView loginError(RedirectAttributes redirectAttributes) {
 
