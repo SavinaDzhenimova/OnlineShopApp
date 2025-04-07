@@ -1,0 +1,17 @@
+main .all-brands-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+main .all-brands-section div {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+}
+
+main .all-brands-section div img {
+    height: 100px;
+    object-fit: cover;
+}

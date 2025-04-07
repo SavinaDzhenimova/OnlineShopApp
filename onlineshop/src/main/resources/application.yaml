@@ -1,0 +1,41 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: 'FALSE'
+        show_sql: 'FALSE'
+    hibernate:
+      ddl-auto: update
+    open-in-view: 'false'
+  sql:
+    init:
+      mode: never
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: 'true'
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: ${db_password}
+    username: ${db_username}
+    url: jdbc:mysql://localhost:3306/online_shop?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor: TRACE
+        SQL: DEBUG
+      nodeValue: WARN
+    blog: WARN
+
+server:
+  port: 8090
+
+# mail:
+#  sunrise_travel: "sunrise.ta.bg@gmail.com"
+#  host: smtp.gmail.com
+#  port: 25
+#  username: ${mail_user}
+#  password: ${mail_password}

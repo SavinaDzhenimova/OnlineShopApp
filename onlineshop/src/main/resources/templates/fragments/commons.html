@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/commons-styles.css">
+    <link rel="stylesheet" href="/css/header-styles.css">
+    <link rel="stylesheet" href="/css/footer-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul class="contacts">
+                <li>
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <p>+359 888 232 555</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-envelope-open"></i>
+                    <p>runtastic.shoes.contacts@gmail.com</p>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                </li>
+            </ul>
+
+            <ul class="logo-container">
+                <li class="logo">
+                    <img src="/images/logo/logo.jpg" />
+                    <p>Runtastic<br> Shoes</p>
+                </li>
+                <li class="search-form">
+                    <form>
+                        <input placeholder="Търсене...">
+                        <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </li>
+                <li class="icons">
+                    <a th:href="@{/users/login}"><i class="fa-solid fa-user"></i>Вход/Регистрация</a>
+                    <a href="#"><i class="fa-regular fa-star"></i>Любими</a>
+                    <a href="#"><i class="fa-solid fa-cart-shopping"></i>Количка</a>
+                </li>
+            </ul>
+
+            <ul class="menu">
+                <li><a href="#">Дамски</a></li>
+                <li><a href="#">Мъжки</a></li>
+                <li><a href="#">Детски</a></li>
+                <li><a href="#">Разпродажба</a></li>
+                <li><a href="#">Ново</a></li>
+            </ul>
+        </nav>
+
+        <section class="after-nav">
+            <p><i class="fa-regular fa-eye"></i>Тест и преглед преди плащане</p>
+            <p><i class="fa-solid fa-truck"></i>Безплатна доставка над 100 лв.</p>
+            <p><i class="fa-solid fa-medal"></i>Само оригинални стоки</p>
+            <p><i class="fa-solid fa-right-left"></i>30 дни безплатно връщане</p>
+        </section>
+    </header>
+
+    <footer>
+        <section class="links">
+            <ul class="categories">
+                <h3>Категории</h3>
+
+                <li><a href="#">Дамски</a></li>
+                <li><a href="#">Мъжки</a></li>
+                <li><a href="#">Детски</a></li>
+                <li><a href="#">Разпродажба</a></li>
+                <li><a href="#">Ново</a></li>
+            </ul>
+
+            <ul class="customer-service">
+                <h3>Клиентски услуги</h3>
+
+                <li><a th:href="@{/exchange-or-return}">Замяна или връщане</a></li>
+                <li><a th:href="@{/about-us}">За нас</a></li>
+                <li><a th:href="@{/contacts}">Контакти</a></li>
+                <li><a th:href="@{/delivery-and-payment}">Доставка и плащане</a></li>
+                <li><a th:href="@{/choose-size}">Избери твоя размер</a></li>
+                <li><a th:href="@{/maintenance-tips}">Съвети за поддръжка</a></li>
+            </ul>
+
+            <ul class="more-info">
+                <h3>Полезно</h3>
+
+                <li><a th:href="@{/loyalty-program}">Програма "Лоялен клиент"</a></li>
+                <li><a th:href="@{/faq}">Често задавани въпроси</a></li>
+                <li><a th:href="@{/privacy-policy}">Политика за поверителност</a></li>
+                <li><a th:href="@{/general-conditions}">Общи условия</a></li>
+            </ul>
+
+            <ul class="subscribe">
+                <h3>Електронен бюлетин</h3>
+
+                <li>
+                    <p>Грабни 5% отстъпка за първата си поръчка и научавай<br> първи за нови продукти и промоции.</p>
+                    <p>Запиши се от тук сега!</p>
+
+                    <form>
+                        <input placeholder="Остави имейл...">
+                        <button>Абонирай се</button>
+                    </form>
+                </li>
+            </ul>
+        </section>
+
+        <section class="social-media">
+            <p>Открий ни и в социалните мрежи</p>
+
+            <ul class="social-media-links">
+                <li><a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                <li><a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a></li>
+                <li><a href="https://www.tik-tok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a></li>
+                <li><a href="https://www.pinterest.com" target="_blank"><i class="fa-brands fa-pinterest"></i></a></li>
+            </ul>
+        </section>
+
+        <section class="copyright">
+            <p>&copy 2025 Runtastic Shoes. Всички права запазени.</p>
+
+            <p>Програмиране: инж. Савина Дженимова</p>
+        </section>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+main {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16em;
+}
+
+main .login-form,
+main .register-form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    position: relative;
+}
+
+main .login-form::after {
+    display: inline;
+    content: '';
+    background-color: #ccc;
+    width: 0.5px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: -8em;
+}
+
+main .login-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .login-form form .field {
+    display: flex;
+    flex-direction: column;
+}
+
+main .login-form form .field input {
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+}
+
+main .login-form form button {
+    background-color: #000;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+    font-weight: 600;
+    border: none;
+    border-radius: 2em;
+    margin-bottom: 1em;
+}
+
+main .login-form form a {
+    text-decoration: underline;
+}
+
+main .login-form form a:hover {
+    text-decoration: none;
+}
+
+main .register-form .register-button {
+    background-color: #000;
+    color: #fff;
+    padding: 0.5em 1em;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 2em;
+    margin-bottom: 1em;
+}
+
+main .register-form ul li i {
+    color: #008000;
+    padding-right: 0.5em;
+}

@@ -1,0 +1,26 @@
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    font: 16px/1.5 'Roboto', sans-serif;
+}
+
+main .questions details summary {
+    font-size: 18px;
+    padding: 0.7em 1em;
+    border-bottom: 1px solid #ccc;
+}
+
+main .questions details div {
+    padding: 1em 0.5em;
+}
+
+main a {
+    align-self: center;
+    width: 250px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 0.5em 4em;
+    border-radius: 1em;
+}

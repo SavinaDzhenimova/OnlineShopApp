@@ -1,0 +1,134 @@
+header nav .contacts,
+header nav .logo-container,
+header nav .menu,
+footer section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    padding: 0.5em 8em;
+    position: relative;
+}
+
+header nav .contacts::after,
+header .after-nav::after,
+footer section::after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+header nav .contacts li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8em;
+}
+
+header nav .contacts li i {
+    font-size: 18px;
+}
+
+header nav .logo-container .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav .logo-container .logo img {
+    width: 150px;
+    height: 150px;
+}
+
+header nav .logo-container .logo p {
+    font: 38px "Ga Maamli", sans-serif;
+}
+
+header nav .logo-container li form {
+    display: flex;
+}
+
+header nav .logo-container li form input {
+    width: 600px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-top-left-radius: 1.5em;
+    border-bottom-left-radius: 1.5em;
+    padding: 0.7em;
+    font-size: 16px;
+}
+
+header nav .logo-container li form button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top-right-radius: 1.5em;
+    border-bottom-right-radius: 1.5em;
+    border-left: none;
+    outline: none;
+    font-size: 19px;
+    padding: 0.5em;
+}
+
+header nav .logo-container .icons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    font-size: 16px;
+}
+
+header nav .logo-container .icons a {
+    padding: 0 1em;
+    border-radius: 0.5em;
+}
+
+header nav .logo-container .icons i {
+    width: 22px;
+    padding-right: 0.3em;
+}
+
+header nav .logo-container .icons a:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+header nav .menu {
+    padding: 0 8em;
+    background-color: #eee;
+    justify-content: center;
+    font-weight: 600;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+header nav .menu li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav .menu li a {
+    padding: 1em 5em;
+}
+
+header nav .menu li:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+header .after-nav {
+    padding: 0.5em 14em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header .after-nav i {
+    padding-right: 0.5em;
+}

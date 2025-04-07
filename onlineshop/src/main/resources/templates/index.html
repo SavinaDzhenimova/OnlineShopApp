@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/index-styles.css">
+    <title>Начална страница</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <section class="site-banner">
+            <img src="/images/index/banner.jpg">
+        </section>
+
+        <section class="site-main-section">
+            <section class="choose-shoes">
+                <div>
+                    <p>Мъжки маратонки</p>
+                    <img src="/images/index/men-shoes.png">
+                    <p><i class="fa-solid fa-chevron-right"></i></p>
+                </div>
+    
+                <div>
+                    <p>Дамски маратонки</p>
+                    <img src="/images/index/women-shoes.png">
+                    <p><i class="fa-solid fa-chevron-right"></i></p>
+                </div>
+    
+                <div>
+                    <p>Детски маратонки</p>
+                    <img src="/images/index/children-shoes.png">
+                    <p><i class="fa-solid fa-chevron-right"></i></p>
+                </div>
+
+                <p>Онлайн магазин за оригинални маратонки Runtastic Shoes! Купи сега с големи намаления!</p>
+            </section>
+
+            <section class="new-models">
+                <a><img src="/images/index/new-models.jpg" alt="Нови модели"></a>
+            </section>
+
+            <section class="choose-your-size">
+                <div class="article-main">
+                    <h2>Избери своя размер</h2>
+
+                    <input type="range" min="19" max="48" name="size-range" id="size-range">
+
+                    <a href="#">Виж всички модели с размер </a>
+                </div>
+
+                <div class="image-container">
+                    <img src="/images/index/choose-size.jpg">
+                </div>
+            </section>
+
+            <section class="more-info-section">
+                <article>
+                    <a th:href="@{/loyalty-program}">
+                        <img class="first-section-image" src="/images/index/loyalty-program-image.jpg">
+                    </a>
+                </article>
+
+                <article class="promo-code-form">
+                    <img class="second-section-image" src="/images/index/promo-code.jpg">
+                    <form>
+                        <input type="email" name="email" id="email" placeholder="Остави имейл...">
+                        <button>Изпрати</button>
+                    </form>
+                    <p>На посочения имейл ще изпратим промокод</p>
+                </article>
+
+                <article>
+                    <a th:href="@{/maintenance-tips}">
+                        <img class="third-section-image" src="/images/index/maintenance-tips.jpg">
+                    </a>
+                </article>
+
+                <article>
+                    <a th:href="@{/choose-size}">
+                        <img class="forth-section-image" src="/images/index/choose-your-size.jpg">
+                    </a>
+                </article>
+            </section>
+
+            <section class="brands-section">
+                <h2>Популярни марки</h2>
+
+                <div class="popular-brands">
+                    <div class="popular-brands-main">
+                        <div class="brand">
+                            <a><img src="/images/index/nike-logo.png"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/index/adidas-logo.png"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/index/puma-logo.png"></a>
+                        </div>
+                    </div>
+
+                    <div class="popular-brands-second">
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-guess-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-skechers-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-salomon-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-reebok-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-new-balance-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-calvin-klein-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-the-north-face-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-champion-dark.svg"></a>
+                        </div>
+                        <div class="brand">
+                            <a><img src="/images/brands/brand-timberland-dark.svg"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="view-all-brands" th:href="@{/brands}">Виж всички</a>
+            </section>
+
+            <section class="opinions-section">
+                <h2>Мнения от клиентите ни</h2>
+
+                <div class="opinions">
+                    <div class="opinion">
+                        <div class="header-opinion">
+                            <div class="rating">
+                                <p>5/5</p>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p>01.04.2024</p>
+                        </div>
+
+                        <div class="main-opinion">
+                            <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал.
+                                Цялото семейство се обуваме от сайта</p>
+                        </div>
+
+                        <div class="footer-opinion">
+                            <p class="author">Илияна Кръстева</p>
+                        </div>
+                    </div>
+
+                    <div class="opinion">
+                        <div class="header-opinion">
+                            <div class="rating">
+                                <p>5/5</p>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p>01.04.2024</p>
+                        </div>
+
+                        <div class="main-opinion">
+                            <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал. 
+                                Цялото семейство се обуваме от сайта</p>
+                        </div>
+
+                        <div class="footer-opinion">
+                            <p class="author">Илияна Кръстева</p>
+                        </div>
+                    </div>
+
+                    <div class="opinion">
+                        <div class="header-opinion">
+                            <div class="rating">
+                                <p>5/5</p>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="date">01.04.2024</p>
+                        </div>
+
+                        <div class="main-opinion">
+                            <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал.
+                                Цялото семейство се обуваме от сайта</p>
+                        </div>
+
+                        <div class="footer-opinion">
+                            <p class="author">Илияна Кръстева</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opinion-links">
+                    <a class="write-opinion" th:href="@{/opinion-form}">Напиши мнение</a>
+                    <a href="opinions.html">Виж всички</a>
+                </div>
+            </section>
+
+            <section class="about-us-section">
+                <div class="image-container">
+                    <img src="/images/index/about-us-section.jpeg" />
+                </div>
+
+                <div class="about-us-content">
+                    <p>Runtastic Shoes е онлайн магазин за оригинални маратонки и други спортни обувки на най-популярните световни марки - 
+                        Puma, adidas, Reebok, Asics, Nike и др.</p>
+                    <p>При нас ще откриете огромно разнообразие от мъжки, дамски и детски оригинални маратонки за спорт и ежедневни нужди. 
+                        Обогатяваме асортимента си непрестанно, така че независимо дали търсите иновативни модели или по-традиционни, имаме 
+                        от всичко - от леки и здрави модели за бягане, през удобни и практични маратонки за разходка, до 
+                        най-екстравагантните спортни изкушения за вашите ходила. Всеки модел, който предлагаме е подбран според критериите 
+                        ни за високо качество на материалите, красив външен вид и производствена технология за постигане на перфектен 
+                        комфорт при носене. Покупката на маратонки онлайн е инвестиция не само в имидж, но и в здраве. В Runtastic Shoes 
+                        вярваме, че поръчката на спортни обувки е много лесна когато са налице всички положителни параметри на 
+                        “перфектните маратонки”, и че всеки чифт трябва да отговаря на изискванията на клиентите за здравина, визия и 
+                        удобство.</p>
+                    <p>Мисията на екипа на Runtastic Shoes е да предлага атрактивни маратонки на конкурентни цени, като спазва принципите 
+                        за безупречно обслужване и гарантира бърза доставка до всяка точка на България. Комбинацията от продукти с 
+                        доказан произход, възможността за лесна поръчка и професионалното отношение на нашите експерти е отлична 
+                        предпоставка за изпълнението на нашата цел номер 1 - доволни клиенти.</p>
+                    <p>Потопете се в изобилието от оригинални маратонки за всякаква спортна дейност - бягане, тенис, фитнес, футбол 
+                        или просто за разходки сред природата в парка или планината. Ние от Runtastic Shoes гарантираме, че ще 
+                        предлагаме най-страхотните модели ТОП марки на супер цени и да ви ги доставим по максимално най-бързия начин.</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

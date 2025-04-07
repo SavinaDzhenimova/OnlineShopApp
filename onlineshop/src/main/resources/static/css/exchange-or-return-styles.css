@@ -1,0 +1,81 @@
+main section ul {
+    padding-left: 1em;
+    list-style-type: circle;
+}
+
+main .form-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+}
+
+main .form-section form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    border-radius: 0.5em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 1em 2em 2em 2em;
+    gap: 1.5em;
+}
+
+main .form-section form h2 {
+    text-align: center;
+}
+
+main .form-section form h2::after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+}
+
+main .form-section form .name-and-phone {
+    display: flex;
+    justify-content: space-between;
+}
+
+main .form-section form .field {
+    display: flex;
+    flex-direction: column;
+}
+
+main .form-section form .field input {
+    width: 350px;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 0.5em;
+}
+
+main .form-section form .field input[name="town"] {
+    width: 100%;
+}
+
+main .form-section form .radio-buttons .radio-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+main .form-section form .radio-buttons .radio-button input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    aspect-ratio: 1 / 1;
+}
+
+main .form-section form button {
+    background-color: #000;
+    color: #fff;
+    width: 50%;
+    align-self: center;
+    padding: 1em;
+    border: none;
+    outline: none;
+    border-radius: 1.5em;
+    font-weight: 600;
+    font-size: 14px;
+}

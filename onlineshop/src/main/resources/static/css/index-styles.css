@@ -1,0 +1,339 @@
+main {
+    margin: 0 !important;
+}
+
+main .site-banner img {
+    width: 100%;
+}
+
+main .site-main-section .choose-shoes {
+    margin: 1em 8em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+main .site-main-section .choose-shoes div {
+    padding: 0.5em 1em;
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f3f3f3;
+    border-radius: 1em;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+main .site-main-section .choose-shoes>p {
+    width: 100%;
+    text-align: center;
+    padding-top: 1em;
+    opacity: 0.6;
+}
+
+main .site-main-section .new-models img {
+    width: 100%;
+    object-fit: contain;
+}
+
+main .site-main-section .choose-your-size {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+    padding: 0 8em;
+}
+
+main .site-main-section .choose-your-size .article-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 2em;
+    padding: 1em 0;
+}
+
+main .site-main-section .choose-your-size .article-main input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50%;
+    height: 10px;
+    background: #d3d3d3;
+    border-radius: 1em;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+main .site-main-section .choose-your-size .article-main input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background-image: url('/images/shoe-icon.png');
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+main .site-main-section .choose-your-size .article-main a {
+    margin-top: 1em;
+    background-color: #000;
+    color: #fff;
+    padding: 0.5em 1em;
+    width: 30%;
+    border-radius: 1.5em;
+    text-align: center;
+}
+
+main .site-main-section .choose-your-size .image-container {
+    height: 400px;
+}
+
+main .site-main-section .choose-your-size .image-container img {
+    width: 400px;
+    height: 100%;
+    object-fit: cover;
+}
+
+main .more-info-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    padding: 1em;
+}
+
+main .more-info-section article {
+    width: 49%;
+}
+
+main .more-info-section article img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+main .more-info-section article .first-section-image {
+    border-top-left-radius: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+main .more-info-section article .second-section-image {
+    border-top-right-radius: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+main .more-info-section article .third-section-image {
+    border-bottom-left-radius: 1.5em;
+}
+
+main .more-info-section article .forth-section-image {
+    border-bottom-right-radius: 1.5em;
+}
+
+main .more-info-section .promo-code-form {
+    position: relative;
+}
+
+main .more-info-section .promo-code-form form {
+    display: flex;
+    position: absolute;
+    top: 70%;
+    left: 9%;
+}
+
+main .more-info-section .promo-code-form p {
+    font-style: oblique;
+    position: absolute;
+    top: 82%;
+    left: 9%;
+}
+
+main .more-info-section .promo-code-form p::before {
+    display: inline;
+    content: '*';
+    color: red;
+    font-weight: 900;
+    padding-right: 0.5em;
+}
+
+main .more-info-section .promo-code-form form input {
+    width: 500px;
+    padding: 0.5em 1em;
+    outline: none;
+    border: 1px solid #ccc;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+
+main .more-info-section .promo-code-form form button {
+    width: 100px;
+    background-color: #000;
+    color: #fff;
+    outline: none;
+    border: none;
+    padding: 1em;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+main .brands-section {
+    padding: 1em 8em;
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f3f3;
+    gap: 1em;
+}
+
+main .brands-section .popular-brands {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4em;
+    padding-bottom: 1em;
+}
+
+main .brands-section .popular-brands .popular-brands-main,
+main .brands-section .popular-brands .popular-brands-second {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+main .brands-section .popular-brands .popular-brands-main {
+    gap: 2em;
+}
+
+main .brands-section .popular-brands .popular-brands-main .brand {
+    display: flex;
+    align-items: center;
+    height: 280px;
+    object-fit: contain;
+}
+
+main .brands-section .popular-brands .popular-brands-main .brand img {
+    width: 180px;
+}
+
+main .brands-section .popular-brands .brand {
+    background-color: #fff;
+    border-radius: 1em;
+}
+
+main .brands-section .popular-brands .brand a {
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    background-color: #fff;
+}
+
+main .brands-section .popular-brands .brand a img {
+    width: 150px;
+    object-fit: contain;
+}
+
+main .brands-section .view-all-brands,
+main .opinions-section a {
+    align-self: center;
+    padding: 0.5em 1em;
+    background-color: #000;
+    color: #fff;
+    width: 20%;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 1em;
+}
+
+main .opinions-section .write-opinion {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+}
+
+main .opinions-section .write-opinion:hover {
+    border-color: #000;
+}
+
+main .opinions-section {
+    padding: 1em 8em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .opinions-section .opinions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+    padding-bottom: 1em;
+}
+
+main .opinions-section .opinions .opinion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+}
+
+main .opinions-section .opinions .opinion .header-opinion {
+    display: flex;
+    justify-content: space-between;
+}
+
+main .opinions-section .opinions .opinion .header-opinion .rating {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    color: orange;
+}
+
+main .opinions-section .opinions .opinion .header-opinion .rating p {
+    color: #000;
+    padding-right: 0.5em;
+}
+
+main .opinions-section .opinions .opinion .footer-opinion .author::before {
+    display: inline;
+    content: '@';
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    padding-right: 0.5em;
+}
+
+main .opinions-section .opinion-links {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
+main .about-us-section {
+    background-color: #eee;
+    padding: 2em 8em;
+    display: flex;
+    gap: 3em;
+}
+
+main .about-us-section .image-container img {
+    width: 400px;
+    object-fit: contain;
+}
+
+main .about-us-section .about-us-content {
+    padding-right: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    height: 400px;
+    overflow-y: scroll;
+}

@@ -1,0 +1,16 @@
+ol {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding-left: 1em;
+}
+
+ol > li > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+ol > li > ul > li > ul {
+    padding-left: 2em;
+}

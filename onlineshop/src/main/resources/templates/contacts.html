@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/contacts-styles.css">
+    <title>Контакти</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Контакти</h1>
+
+        <div class="main-section">
+            <section class="contacts-section">
+                <h3>Информация</h3>
+
+                <ul class="contacts-links">
+                    <li><i class="fa-solid fa-phone-volume"></i>  0895 12 16 16</li>
+                    <li><i class="fa-brands fa-skype"></i>  runtastic_shoes</li>
+                    <li><i class="fa-solid fa-envelope"></i>  runtastic.shoes.contacts@gmail.com</li>
+                    <li><i class="fa-brands fa-facebook-messenger"></i> Чат с оператор</li>
+                </ul>
+
+                <p>Работно време на операторите:<br> понеделник до петък, 09:30 до 18:00 ч.</p>
+                <p>Рънтастик Шус ЕООД - ЕИК 202441322</p>
+                <p>Последвай ни</p>
+
+                <ul class="social-media-links">
+                    <li><a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                    <li><a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a></li>
+                    <li><a href="https://www.tik-tok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a></li>
+                    <li><a href="https://www.pinterest.com" target="_blank"><i class="fa-brands fa-pinterest"></i></a></li>
+                </ul>
+            </section>
+
+            <section class="contact-us-section">
+                <h3>Изпрати ни съобщение</h3>
+                
+                <form>
+                    <div class="field">
+                        <label for="fullName">Име и фамилия</label>
+                        <input type="text" name="fullName" id="fullName" placeholder="Име и фамилия">
+                    </div>
+
+                    <div class="email-and-phone">
+                        <div class="field">
+                            <label for="email">Имейл</label>
+                            <input type="email" name="email" id="email" placeholder="Email">
+                        </div>
+
+                        <div class="field">
+                            <label for="phoneNumber">Телефон</label>
+                            <input type="text" name="phoneNumber" id="phoneNumber" placeholder="Телефон">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="message">Съобщение</label>
+                        <textarea name="message" id="message"></textarea>
+                    </div>
+
+                    <button>Изпрати</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

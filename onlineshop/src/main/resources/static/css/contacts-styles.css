@@ -1,0 +1,89 @@
+main .main-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 10em;
+    font-size: 16px;
+}
+
+main .main-section .contacts-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    position: relative;
+}
+
+main .main-section .contacts-section::after {
+    display: inline;
+    content: '';
+    background-color: #ccc;
+    width: 0.5px;
+    height: 95%;
+    position: absolute;
+    top: 5%;
+    right: -5em;
+}
+
+main .main-section .contacts-section .contacts-links {
+    display: flex;
+    flex-direction: column;
+}
+
+main .main-section .contacts-section .contacts-links li i {
+    padding-right: 0.2em;
+}
+
+main .main-section .contacts-section .social-media-links {
+    display: flex;
+    gap: 1em;
+    font-size: 18px;
+}
+
+main .main-section .contact-us-section {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .main-section .contact-us-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .main-section .contact-us-section .email-and-phone {
+    display: flex;
+    justify-content: space-between;
+}
+
+main .main-section .contact-us-section .field {
+    display: flex;
+    flex-direction: column;
+}
+
+main .main-section .contact-us-section .field input {
+    width: 350px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
+
+main .main-section .contact-us-section .field textarea {
+    height: 70px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
+
+main .main-section .contact-us-section button {
+    width: 200px;
+    outline: none;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 1em;
+    font-weight: 600;
+    border-radius: 1em;
+}

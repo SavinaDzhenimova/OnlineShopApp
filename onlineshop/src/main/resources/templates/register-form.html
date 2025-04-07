@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/register-form-styles.css">
+    <title>Регистрация</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Нова регистрация</h1>
+
+        <form>
+
+            <fieldset>
+                <legend>Данни за вход</legend>
+
+                <div class="field">
+                    <label for="email">Имейл</label>
+                    <input type="email" name="email" id="email">
+                </div>
+
+                <div class="password-field">
+                    <div class="field">
+                        <label for="password">Парола</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+    
+                    <div class="field">
+                        <label for="confirmPassword">Потвърди паролата</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Лична информация</legend>
+
+                <div class="field">
+                    <label for="fullName">Име и фамилия</label>
+                    <input type="text" name="fullName" id="fullName">
+                </div>
+
+                <div class="field">
+                    <label for="phoneNumber">Мобилен телефон</label>
+                    <input type="text" name="phoneNumber" id="phoneNumber">
+                </div>
+            </fieldset>
+
+            <div class="checkbox-section">
+                <div class="checkbox-field">
+                    <input type="checkbox" id="newsletter" name="newsletter" value="newsletter" checked/>
+                    <label for="newsletter">Получавай известия за намаления и промо кодове</label>
+                </div>
+    
+                <div class="checkbox-field">
+                    <input type="checkbox" id="privacy-policy-checkbox" name="privacy-policy-checkbox" value="privacy-policy" />
+                    <label for="privacy-policy-checkbox"><a th:href="@{/privacy-policy}">Запознах се с политиката за поверителност</a></label>
+                </div>
+            </div>
+
+            <button>Регистрирай се</button>
+            <a class="login-button" th:href="@{/users/login}">Обратно към вход</a>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

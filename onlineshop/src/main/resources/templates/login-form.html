@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/login-form-styles.css">
+    <title>Вход</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <section class="login-form">
+            <h2>Имам регистрация</h2>
+
+            <form>
+                <div class="field">
+                    <label for="email">Имейл</label>
+                    <input type="email" name="email" id="email">
+                </div>
+    
+                <div class="field">
+                    <label for="password">Парола</label>
+                    <input type="text" name="password" id="password">
+                </div>
+
+                <div><a th:href="@{/users/forgot-password}">Забравена парола</a></div>
+
+                <button>Вход</button>
+            </form>
+        </section>
+
+        <section class="register-form">
+            <h2>Нов клиент</h2>
+
+            <a class="register-button" th:href="@{/users/register}">Регистрирай се</a>
+
+            <p>Защо да се регистрираш?</p>
+
+            <ul>
+                <li><i class="fa-solid fa-check"></i>Получаваш допълнителни отстъпки</li>
+                <li><i class="fa-solid fa-check"></i>Разбираш първи за новите модели и намаления</li>
+                <li><i class="fa-solid fa-check"></i>Бързо и лесно пазаруване</li>
+                <li><i class="fa-solid fa-check"></i>История и проследяване на поръчките</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>
