@@ -28,20 +28,38 @@
             <section class="main-info-section">
                 <h3>Обща информация</h3>
 
-                <form>
+                <form th:action="@{/users/update-profile}"
+                      th:method="PUT"
+                      th:object="${userDTO}">
+
                     <div class="field">
-                        <label for="email">Имейл</label>
-                        <input type="email" name="email" id="email">
+                        <label th:for="email">Имейл</label>
+                        <input type="email" th:field="*{email}"
+                               th:errorclass="is-invalid"
+                               name="email" id="email">
+                        <small th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"
+                               class="text-danger">Dish name error message</small>
                     </div>
 
                     <div class="field">
-                        <label for="fullName">Име и фамилия</label>
-                        <input type="text" name="fullName" id="fullName">
+                        <label th:for="fullName">Име и фамилия</label>
+                        <input type="text" th:field="*{fullName}"
+                               th:errorclass="is-invalid"
+                               name="fullName" id="fullName">
+                        <small th:if="${#fields.hasErrors('fullName')}"
+                               th:errors="*{fullName}"
+                               class="text-danger">Dish name error message</small>
                     </div>
 
                     <div class="field">
-                        <label for="phoneNumber">Мобилен телефон</label>
-                        <input type="text" name="phoneNumber" id="phoneNumber">
+                        <label th:for="phoneNumber">Мобилен телефон</label>
+                        <input type="text" th:field="*{phoneNumber}"
+                               th:errorclass="is-invalid"
+                               name="phoneNumber" id="phoneNumber">
+                        <small th:if="${#fields.hasErrors('phoneNumber')}"
+                               th:errors="*{phoneNumber}"
+                               class="text-danger">Dish name error message</small>
                     </div>
 
                     <p>Моля, свери внимателно въведения номер</p>

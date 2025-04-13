@@ -1,11 +1,12 @@
 package org.onlineshop.web;
 
+import jakarta.validation.Valid;
+import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,9 +27,37 @@ public class LoginController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile() {
+    public ModelAndView profile(Model model) {
 
-        return new ModelAndView("profile");
+        if (!model.containsAttribute("userDTO")) {
+            model.addAttribute("userDTO", new UserDTO());
+        }
+
+        ModelAndView modelAndView = new ModelAndView("profile");
+
+        UserDTO userDTO = this.userService.getLoggedUserInfoForProfilePage();
+
+        modelAndView.addObject("userDTO", userDTO);
+
+        return modelAndView;
+    }
+
+    @PutMapping("/update-profile")
+    public ModelAndView updateProfileInfo(@Valid @ModelAttribute("userDTO") UserDTO userDTO,
+                                          BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userDTO", userDTO)
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userDTO",
+                            bindingResult);
+
+            return new ModelAndView("profile");
+        }
+
+        this.userService.updateUserInfo(userDTO);
+        this.userService.refreshAuthentication(userDTO.getEmail());
+
+        return new ModelAndView("redirect:/users/profile");
     }
 
     @GetMapping("/login-error")

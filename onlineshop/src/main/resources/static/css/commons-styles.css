@@ -12,3 +12,8 @@ main h1::after {
     height: 1px;
     background-color: #ccc;
 }
+
+small {
+    color: #C00;
+    font-style: oblique;
+}

@@ -65,7 +65,7 @@ main .main-profile-info .main-info-section form .field input {
     border: 1px solid #ccc;
     outline: none;
     border-radius: 0.5em;
-    padding: 0.5em 1em;
+    padding: 0.5em;
 }
 
 main .main-profile-info .main-info-section form p::before {
