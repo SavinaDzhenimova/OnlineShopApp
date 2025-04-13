@@ -1,5 +1,6 @@
 package org.onlineshop.service;
 
+import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.repository.UserRepository;
@@ -43,6 +44,20 @@ public class UserServiceImpl implements UserService {
         }
 
         this.userRepository.saveAndFlush(loggedUser);
+    }
+
+    @Override
+    public Result sendEmailForForgottenPassword(String email) {
+
+        Optional<User> optionalUser = this.getUserByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            return new Result(false, "Не открихме потребител с посочения от Вас имейл!");
+        }
+
+        // TODO: Да се добави логика за изпращане на имейл
+
+        return new Result(true, "Моля проверете пощата си за имейл с временна парола!");
     }
 
     @Override

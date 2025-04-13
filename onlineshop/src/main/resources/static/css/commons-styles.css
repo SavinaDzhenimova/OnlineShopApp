@@ -13,7 +13,24 @@ main h1::after {
     background-color: #ccc;
 }
 
-small {
+.text-danger {
     color: #C00;
     font-style: oblique;
+}
+
+.alert {
+    color: #fff;
+    padding: 0.5em;
+    margin: 0.5em 0 0.5em 0;
+    border-radius: 0.5em;
+    border: none;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+}
+
+.alert-failure {
+    background-color: #e74c3c;
 }
