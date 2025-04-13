@@ -33,9 +33,9 @@ logging:
 server:
   port: 8090
 
-# mail:
-#  sunrise_travel: "sunrise.ta.bg@gmail.com"
-#  host: smtp.gmail.com
-#  port: 25
-#  username: ${mail_user}
-#  password: ${mail_password}
+mail:
+  online_shop: "runtastic.shoes.contacts@gmail.com"
+  host: smtp.gmail.com
+  port: 25
+  username: ${mail_user}
+  password: ${mail_password}
