@@ -1,27 +1,98 @@
 package org.onlineshop.service;
 
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.entity.Role;
+import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.user.UserDTO;
+import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
+import org.onlineshop.service.interfaces.EmailService;
+import org.onlineshop.service.interfaces.PasswordResetService;
+import org.onlineshop.service.interfaces.RoleService;
 import org.onlineshop.service.interfaces.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleService roleService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final PasswordResetService passwordResetService;
+    private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserDetailsServiceImpl userDetailsService) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
+                           PasswordResetService passwordResetService, EmailService emailService,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleService = roleService;
         this.userDetailsService = userDetailsService;
+        this.passwordResetService = passwordResetService;
+        this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public Result registerUser(UserRegisterDTO userRegisterDTO) {
+
+        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())) {
+            return new Result(false, "Паролите не съвпадат!");
+        }
+
+        Optional<Role> optionalRole = this.roleService.findRoleByRoleName(RoleName.CUSTOMER);
+        Optional<User> optionalUserByEmail = this.userRepository.findByEmail(userRegisterDTO.getEmail());
+        Optional<User> optionalUserByPhoneNumber = this.userRepository.findByPhoneNumber(userRegisterDTO.getPhoneNumber());
+
+        if (optionalRole.isEmpty()) {
+            return new Result(false, "Ролята, която искате да назначите на този потребител, не съществува!");
+        }
+
+        if (optionalUserByEmail.isPresent()) {
+            return new Result(false, "Вече съществува потребител с този имейл!");
+        }
+
+        if (optionalUserByPhoneNumber.isPresent()) {
+            return new Result(false, "Вече съществува потребител с този мобилен телефон!");
+        }
+
+        User user = new User();
+
+        user.setFullName(userRegisterDTO.getFullName());
+        user.setEmail(userRegisterDTO.getEmail());
+        user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
+        user.setTotalOutcome(BigDecimal.ZERO);
+        user.setAddress(userRegisterDTO.getAddress());
+        user.setPassword(this.passwordEncoder.encode(userRegisterDTO.getPassword()));
+        user.setRole(optionalRole.get());
+        user.setOrders(new HashSet<>());
+        user.setShoppingCart(new ShoppingCart());
+
+        if (!userRegisterDTO.isPrivacyPolicy()) {
+            return new Result(false, "Трябва да се съгласите с Политиката за поверителност!");
+        }
+
+        this.userRepository.saveAndFlush(user);
+
+        Optional<User> optionalUserAfterRegistration = this.getUserByEmail(userRegisterDTO.getEmail());
+
+        if (optionalUserAfterRegistration.isEmpty()) {
+            return new Result(false, "Нещо се обърка! Не можахме да Ви регистрираме!");
+        }
+
+        return new Result(true, "Успешно се регистрирахте!");
     }
 
     @Override
@@ -47,17 +118,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Result resetPassword(String password, String confirmPassword, String token) {
+
+        Optional<User> optionalUser = this.passwordResetService.validateToken(token);
+
+        if (optionalUser.isEmpty()) {
+            return new Result(false, "Паролите не съвпадат!");
+        }
+
+        User user = optionalUser.get();
+
+        user.setPassword(this.passwordEncoder.encode(password));
+
+        this.userRepository.saveAndFlush(user);
+
+        return new Result(true, "Успешно променихте своята парола!");
+    }
+
+    @Override
     public Result sendEmailForForgottenPassword(String email) {
 
         Optional<User> optionalUser = this.getUserByEmail(email);
 
         if (optionalUser.isEmpty()) {
-            return new Result(false, "Не открихме потребител с посочения от Вас имейл!");
+            return new Result(false, "Не открихме потребител с посочения имейл!");
         }
 
-        // TODO: Да се добави логика за изпращане на имейл
+        User user = optionalUser.get();
 
-        return new Result(true, "Моля проверете пощата си за имейл с временна парола!");
+        String token = UUID.randomUUID().toString();
+        this.passwordResetService.createTokenForUser(user, token);
+
+        this.emailService.sendForgotPasswordEmail(user.getFullName(), user.getEmail(), token);
+
+        return new Result(true, "Моля проверете пощата си за имейл с линк за смяна на паролата!");
     }
 
     @Override

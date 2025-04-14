@@ -15,25 +15,40 @@
     <main>
         <h1>Нова регистрация</h1>
 
-        <form>
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
+
+        <form th:action="@{/users/register}"
+              th:method="POST"
+              th:object="${userRegisterDTO}">
 
             <fieldset>
                 <legend>Данни за вход</legend>
 
                 <div class="field">
-                    <label for="email">Имейл</label>
-                    <input type="email" name="email" id="email">
+                    <label th:for="email">Имейл</label>
+                    <input type="email" th:field="*{email}" name="email" id="email">
+                    <small th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"
+                           class="text-danger">Dish name error message</small>
                 </div>
 
                 <div class="password-field">
                     <div class="field">
-                        <label for="password">Парола</label>
-                        <input type="password" name="password" id="password">
+                        <label th:for="password">Парола</label>
+                        <input type="password" th:field="*{password}" name="password" id="password">
+                        <small th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"
+                               class="text-danger">Dish name error message</small>
                     </div>
     
                     <div class="field">
-                        <label for="confirmPassword">Потвърди паролата</label>
-                        <input type="password" name="confirmPassword" id="confirmPassword">
+                        <label th:for="confirmPassword">Потвърди паролата</label>
+                        <input type="password" th:field="*{confirmPassword}" name="confirmPassword" id="confirmPassword">
+                        <small th:if="${#fields.hasErrors('confirmPassword')}"
+                               th:errors="*{confirmPassword}"
+                               class="text-danger">Dish name error message</small>
                     </div>
                 </div>
             </fieldset>
@@ -42,25 +57,49 @@
                 <legend>Лична информация</legend>
 
                 <div class="field">
-                    <label for="fullName">Име и фамилия</label>
-                    <input type="text" name="fullName" id="fullName">
+                    <label th:for="fullName">Име и фамилия</label>
+                    <input type="text" th:field="*{fullName}" name="fullName" id="fullName">
+                    <small th:if="${#fields.hasErrors('fullName')}"
+                           th:errors="*{fullName}"
+                           class="text-danger">Dish name error message</small>
                 </div>
 
                 <div class="field">
-                    <label for="phoneNumber">Мобилен телефон</label>
-                    <input type="text" name="phoneNumber" id="phoneNumber">
+                    <label th:for="phoneNumber">Мобилен телефон</label>
+                    <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber">
+                    <small th:if="${#fields.hasErrors('phoneNumber')}"
+                           th:errors="*{phoneNumber}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="address">Адрес (използва се за доставки)</label>
+                    <input type="text" th:field="*{address}" name="address" id="address">
+                    <small th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}"
+                           class="text-danger">Dish name error message</small>
                 </div>
             </fieldset>
 
             <div class="checkbox-section">
                 <div class="checkbox-field">
-                    <input type="checkbox" id="newsletter" name="newsletter" value="newsletter" checked/>
-                    <label for="newsletter">Получавай известия за намаления и промо кодове</label>
+                    <input type="checkbox" th:field="*{newsletter}"
+                           id="newsletter" name="newsletter" value="newsletter" checked/>
+                    <label th:for="newsletter">Получавай известия за намаления и промо кодове</label>
+                    <small th:if="${#fields.hasErrors('newsletter')}"
+                           th:errors="*{newsletter}"
+                           class="text-danger">Dish name error message</small>
                 </div>
     
                 <div class="checkbox-field">
-                    <input type="checkbox" id="privacy-policy-checkbox" name="privacy-policy-checkbox" value="privacy-policy" />
-                    <label for="privacy-policy-checkbox"><a th:href="@{/privacy-policy}">Запознах се с политиката за поверителност</a></label>
+                    <input type="checkbox" th:field="*{privacyPolicy}"
+                           id="privacy-policy-checkbox" name="privacy-policy-checkbox"
+                           value="privacyPolicy" />
+                    <label th:for="privacy-policy-checkbox"><a th:href="@{/privacy-policy}">
+                        Запознах се с политиката за поверителност</a></label>
+                    <small th:if="${#fields.hasErrors('privacyPolicy')}"
+                           th:errors="*{privacyPolicy}"
+                           class="text-danger">Dish name error message</small>
                 </div>
             </div>
 

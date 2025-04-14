@@ -6,11 +6,13 @@ import org.onlineshop.service.interfaces.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.Map;
 
+@Service
 public class EmailServiceImpl implements EmailService {
 
     private final TemplateEngine templateEngine;
@@ -25,15 +27,15 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendForgotPasswordEmail(String fullName, String email, String password) {
+    public void sendForgotPasswordEmail(String fullName, String email, String token) {
         Map<String, Object> variables = Map.of(
                 "fullName", fullName,
                 "email", email,
-                "password", password
+                "token", token
         );
 
         String content = generateEmailContent("/email/forgot-password-email", variables);
-        sendEmail(email, "Временна парола за достъп до профила ви", content);
+        sendEmail(email, "Линк за промяна на парола", content);
     }
 
     private void sendEmail(String sendTo, String subject, String content) {

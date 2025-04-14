@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/contacts", "faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return",
                                 "/loyalty-program", "/choose-size", "/users/login", "/users/register").permitAll()
-                        .requestMatchers("/users/forgot-password").anonymous()
+                        .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .anyRequest().authenticated()
                 )
