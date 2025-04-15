@@ -1,8 +1,10 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -10,23 +12,23 @@ import java.util.Set;
 public class Product extends BaseEntity {
 
     @Column(nullable = false)
+    @Size(min = 5, max = 50)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    @Size(min = 5, max = 500)
     private String description;
 
     @Column(nullable = false)
+    @Positive
     private BigDecimal price;
-
-    @Column(nullable = false)
-    private int quantity;
-
-    @Column(nullable = false)
-    private int size;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<QuantitySize> quantitySize;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "products_categories",
@@ -35,6 +37,8 @@ public class Product extends BaseEntity {
     private Set<Category> categories;
 
     public Product() {
+        this.quantitySize = new HashSet<>();
+        this.categories = new HashSet<>();
     }
 
     public String getName() {
@@ -77,19 +81,11 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public Set<QuantitySize> getQuantitySize() {
+        return quantitySize;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
+    public void setQuantitySize(Set<QuantitySize> quantitySize) {
+        this.quantitySize = quantitySize;
     }
 }

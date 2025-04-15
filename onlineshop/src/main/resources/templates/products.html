@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
@@ -13,7 +14,7 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <h1>Моят профил</h1>
+        <h1>Спортни обувки</h1>
 
         <div class="profile-menu">
             <a class="profile-menu-link" th:href="@{/users/profile}">Данни за профила</a>
@@ -24,8 +25,8 @@
             <a class="profile-menu-link" th:href="@{/contacts}">Връзка с нас</a>
         </div>
 
-        <h2>Администраторско меню</h2>
-        <div class="admin-menu">
+        <h2 sec:authorize="hasRole('ADMIN')">Администраторско меню</h2>
+        <div class="admin-menu" sec:authorize="hasRole('ADMIN')">
             <a class="admin-menu-link" th:href="@{/products/add-product}">Добави продукт</a>
         </div>
 

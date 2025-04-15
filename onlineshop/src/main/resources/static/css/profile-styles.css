@@ -1,10 +1,19 @@
-main .profile-menu {
+main .profile-menu,
+main .admin-menu {
     display: flex;
     gap: 2em;
     position: relative;
 }
 
-main .profile-menu::after {
+main h2::after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 0.5px;
+    background-color: #ccc;
+}
+
+main .admin-menu::after {
     display: block;
     content: '';
     background-color: #ccc;
@@ -15,13 +24,15 @@ main .profile-menu::after {
     left: 0;
 }
 
-main .profile-menu .profile-menu-link {
+main .profile-menu .profile-menu-link,
+main .admin-menu .admin-menu-link {
     padding: 0.5em 1em;
     border: 1px solid #ccc;
     border-radius: 1em;
 }
 
-main .profile-menu .profile-menu-link:hover {
+main .profile-menu .profile-menu-link:hover,
+main .admin-menu .admin-menu-link:hover {
     border-color: #000;
 }
 

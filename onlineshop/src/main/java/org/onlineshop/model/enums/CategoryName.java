@@ -2,5 +2,5 @@ package org.onlineshop.model.enums;
 
 public enum CategoryName {
 
-    MALE, FEMALE, CHILDREN, NEW, SALE
+    MEN, WOMEN, CHILDREN, NEW, SALE
 }

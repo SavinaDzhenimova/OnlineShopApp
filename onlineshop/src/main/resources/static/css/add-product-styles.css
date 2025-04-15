@@ -1,0 +1,131 @@
+main form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    border-radius: 1em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 2em 3em;
+    margin-top: 2em;
+    gap: 1.5em;
+}
+
+main form .field {
+    display: flex;
+    flex-direction: column;
+
+}
+
+main form .field input,
+main form .field textarea {
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+main form .field textarea {
+    height: 80px;
+}
+
+main form .field input:focus,
+main form .field textarea:focus {
+    border: 1.5px solid #000;
+}
+
+main form .field select {
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+main form .field .categories {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main form .field .categories label {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+main form .field .categories label input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    aspect-ratio: 1 / 1;
+    accent-color: green;
+}
+
+main form .field #sizes-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+main form .field-sizes {
+    gap: 1em;
+}
+
+main form .field #sizes-container .size-entry {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+main form .field #sizes-container .size-entry .size,
+main form .field #sizes-container .size-entry .quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+main form .field #sizes-container .size-entry .remove-btn {
+    width: 20px;
+    height: 20px;
+    aspect-ratio: 1 / 1;
+    color: #C00;
+    background-color: #fff;
+    border: 1px solid #C00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.2em;
+}
+
+main form .field .add-btn {
+    width: 300px;
+    padding: 0.5em;
+    border-radius: 1em;
+    border: 1px solid #000;
+    background-color: #fff;
+}
+
+main form button[type="submit"],
+main form .profile-btn {
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    padding: 1em;
+    width: 60%;
+    align-self: center;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    border-radius: 1em;
+}
+
+main form .profile-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #aaa;
+    text-align: center;
+    padding: 0.5em 1em;
+}
+
+main form .profile-btn:hover {
+    border: 1px solid #000
+}

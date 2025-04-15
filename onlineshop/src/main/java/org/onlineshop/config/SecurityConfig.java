@@ -25,9 +25,11 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/", "/contacts", "faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return",
-                                "/loyalty-program", "/choose-size", "/users/login", "/users/register").permitAll()
+                                "/loyalty-program", "/choose-size", "/users/login", "/users/register",
+                                "/products/all").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
+                        .requestMatchers("/products/add-product").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
