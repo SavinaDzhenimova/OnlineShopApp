@@ -6,19 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/CategoriesInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/CategoriesInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Category.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/CategoryName.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/CategoryName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/BrandServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/BrandServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/BrandService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/profile-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/profile-styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/add-product-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/add-product-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/add-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/add-product.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +26,9 @@
         <option value="Enum" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -98,5 +91,16 @@
       <updated>1742913177546</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

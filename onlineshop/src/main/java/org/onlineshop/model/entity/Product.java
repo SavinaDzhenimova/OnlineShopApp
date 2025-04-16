@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,7 @@ public class Product extends BaseEntity {
     private String name;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @Size(min = 5, max = 500)
+    @Size(min = 5, max = 5000)
     private String description;
 
     @Column(nullable = false)
@@ -36,9 +38,13 @@ public class Product extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Image> images;
+
     public Product() {
         this.quantitySize = new HashSet<>();
         this.categories = new HashSet<>();
+        this.images = new ArrayList<>();
     }
 
     public String getName() {
@@ -87,5 +93,13 @@ public class Product extends BaseEntity {
 
     public void setQuantitySize(Set<QuantitySize> quantitySize) {
         this.quantitySize = quantitySize;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }

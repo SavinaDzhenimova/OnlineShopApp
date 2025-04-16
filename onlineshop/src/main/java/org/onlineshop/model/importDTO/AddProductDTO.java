@@ -1,9 +1,12 @@
 package org.onlineshop.model.importDTO;
 
 import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class AddProductDTO {
@@ -13,10 +16,10 @@ public class AddProductDTO {
     private String name;
 
     @NotBlank(message = "Трябва да добавите описание на продукта!")
-    @Size(min = 5, max = 500, message = "Описанието на продукта трябва да бъде между 5 и 500 символа!")
+    @Size(min = 5, max = 5000, message = "Описанието на продукта трябва да бъде между 5 и 5000 символа!")
     private String description;
 
-    @NotBlank(message = "Трябва да посочите цена на продукта!")
+    @NotNull(message = "Трябва да посочите цена на продукта!")
     @Positive(message = "Цената на продукта не може да бъде отрицателно число или 0!")
     private BigDecimal price;
 
@@ -26,11 +29,16 @@ public class AddProductDTO {
     @NotEmpty(message = "Изберете поне една категория!")
     private Set<Long> categories;
 
-    private Set<QuantitySizeDTO> sizes;
+    @NotEmpty(message = "Добавете поне един размер със съответното му количество!")
+    private List<QuantitySizeDTO> sizes;
+
+    @NotEmpty(message = "Трябва да добавите поне една снимка на продукта!")
+    private List<MultipartFile> images;
 
     public AddProductDTO() {
         this.categories = new HashSet<>();
-        this.sizes = new HashSet<>();
+        this.sizes = new ArrayList<>();
+        this.images = new ArrayList<>();
     }
 
     public String getName() {
@@ -73,11 +81,19 @@ public class AddProductDTO {
         this.categories = categories;
     }
 
-    public Set<QuantitySizeDTO> getSizes() {
+    public List<QuantitySizeDTO> getSizes() {
         return sizes;
     }
 
-    public void setSizes(Set<QuantitySizeDTO> sizes) {
+    public void setSizes(List<QuantitySizeDTO> sizes) {
         this.sizes = sizes;
+    }
+
+    public List<MultipartFile> getImages() {
+        return images;
+    }
+
+    public void setImages(List<MultipartFile> images) {
+        this.images = images;
     }
 }

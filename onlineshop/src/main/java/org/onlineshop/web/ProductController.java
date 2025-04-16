@@ -38,10 +38,6 @@ public class ProductController {
             model.addAttribute("addProductDTO", new AddProductDTO());
         }
 
-        model.addAttribute("brands", this.brandService.getAllBrands());
-        model.addAttribute("categoryIds", this.categoryService.getAllCategories());
-        model.addAttribute("shoeSizes", Size.values());
-
         return new ModelAndView("add-product");
     }
 

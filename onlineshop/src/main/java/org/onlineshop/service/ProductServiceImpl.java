@@ -3,16 +3,11 @@ package org.onlineshop.service;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.repository.ProductRepository;
-import org.onlineshop.service.interfaces.BrandService;
-import org.onlineshop.service.interfaces.CategoryService;
-import org.onlineshop.service.interfaces.ProductService;
-import org.onlineshop.service.interfaces.QuantitySizeService;
+import org.onlineshop.service.interfaces.*;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,13 +17,15 @@ public class ProductServiceImpl implements ProductService {
     private final QuantitySizeService quantitySizeService;
     private final BrandService brandService;
     private final CategoryService categoryService;
+    private final ImageService imageService;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
-                              BrandService brandService, CategoryService categoryService) {
+                              BrandService brandService, CategoryService categoryService, ImageService imageService) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
         this.categoryService = categoryService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -61,12 +58,30 @@ public class ProductServiceImpl implements ProductService {
 
         this.productRepository.saveAndFlush(product);
 
+        try {
+            List<String> imageUrls = this.imageService.saveImages(addProductDTO.getImages());
+
+            List<Image> images = new ArrayList<>();
+
+            for (String imageUrl : imageUrls) {
+                Image image = new Image();
+
+                image.setImageUrl(imageUrl);
+                image.setProduct(product);
+                images.add(image);
+            }
+
+            product.setImages(images);
+        } catch (IOException e) {
+            return null;
+        }
+
         Set<QuantitySize> quantitySizes = addProductDTO.getSizes().stream()
                 .map(quantitySizeDTO -> {
                     QuantitySize quantitySize = new QuantitySize();
 
                     quantitySize.setSize(quantitySizeDTO.getSize());
-                    quantitySize.setQuantity(quantitySize.getQuantity());
+                    quantitySize.setQuantity(quantitySizeDTO.getQuantity());
                     quantitySize.setProduct(product);
 
                     return quantitySize;

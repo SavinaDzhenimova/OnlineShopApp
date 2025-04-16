@@ -59,6 +59,11 @@ main form .field .categories label input[type="checkbox"] {
     accent-color: green;
 }
 
+main form .field input[type="file"] {
+    border: none;
+    padding: 0.5em 0;
+}
+
 main form .field #sizes-container {
     display: flex;
     flex-direction: column;
