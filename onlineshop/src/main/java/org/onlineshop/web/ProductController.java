@@ -3,10 +3,14 @@ package org.onlineshop.web;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.enums.Size;
+import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.service.interfaces.BrandService;
 import org.onlineshop.service.interfaces.CategoryService;
 import org.onlineshop.service.interfaces.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -69,14 +73,16 @@ public class ProductController {
     @GetMapping("/all")
     public ModelAndView showAllProducts(Model model) {
 
-        if (!model.containsAttribute("addProductDTO")) {
-            model.addAttribute("addProductDTO", new AddProductDTO());
+        ModelAndView modelAndView = new ModelAndView("products");
+
+        ProductsListDTO allProducts = this.productService.getAllProducts();
+
+        if (allProducts.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage", "Все още няма добавени екскурзии за разглеждане!");
+        } else {
+            modelAndView.addObject("products", allProducts);
         }
 
-        model.addAttribute("brands", this.brandService.getAllBrands());
-        model.addAttribute("categoryIds", this.categoryService.getAllCategories());
-        model.addAttribute("shoeSizes", Size.values());
-
-        return new ModelAndView("products");
+        return modelAndView;
     }
 }

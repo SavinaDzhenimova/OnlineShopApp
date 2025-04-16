@@ -5,8 +5,8 @@
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
-    <link rel="stylesheet" href="/css/profile-styles.css">
-    <title>Профил</title>
+    <link rel="stylesheet" href="/css/products-styles.css">
+    <title>Продукти</title>
 </head>
 
 <body>
@@ -16,82 +16,33 @@
     <main>
         <h1>Спортни обувки</h1>
 
-        <div class="profile-menu">
-            <a class="profile-menu-link" th:href="@{/users/profile}">Данни за профила</a>
-            <a class="profile-menu-link" th:href="@{/users/profile/my-orders}">Моите поръчки</a>
-            <a class="profile-menu-link" th:href="@{/users/profile/my-addresses}">Моите адреси</a>
-            <a class="profile-menu-link" th:href="@{/exchange-or-return}">Замяна или връщане</a>
-            <a class="profile-menu-link" th:href="@{/users/profile/favourites}">Любими</a>
-            <a class="profile-menu-link" th:href="@{/contacts}">Връзка с нас</a>
-        </div>
-
-        <h2 sec:authorize="hasRole('ADMIN')">Администраторско меню</h2>
-        <div class="admin-menu" sec:authorize="hasRole('ADMIN')">
-            <a class="admin-menu-link" th:href="@{/products/add-product}">Добави продукт</a>
-        </div>
-
-        <div class="main-profile-info">
-            <section class="main-info-section">
-                <h3>Обща информация</h3>
-
-                <form th:action="@{/users/update-profile}"
-                      th:method="PUT"
-                      th:object="${userDTO}">
-
-                    <div class="field">
-                        <label th:for="email">Имейл</label>
-                        <input type="email" th:field="*{email}"
-                               th:errorclass="is-invalid"
-                               name="email" id="email">
-                        <small th:if="${#fields.hasErrors('email')}"
-                               th:errors="*{email}"
-                               class="text-danger">Dish name error message</small>
-                    </div>
-
-                    <div class="field">
-                        <label th:for="fullName">Име и фамилия</label>
-                        <input type="text" th:field="*{fullName}"
-                               th:errorclass="is-invalid"
-                               name="fullName" id="fullName">
-                        <small th:if="${#fields.hasErrors('fullName')}"
-                               th:errors="*{fullName}"
-                               class="text-danger">Dish name error message</small>
-                    </div>
-
-                    <div class="field">
-                        <label th:for="phoneNumber">Мобилен телефон</label>
-                        <input type="text" th:field="*{phoneNumber}"
-                               th:errorclass="is-invalid"
-                               name="phoneNumber" id="phoneNumber">
-                        <small th:if="${#fields.hasErrors('phoneNumber')}"
-                               th:errors="*{phoneNumber}"
-                               class="text-danger">Dish name error message</small>
-                    </div>
-
-                    <p>Моля, свери внимателно въведения номер</p>
-
-                    <button>Запази промените</button>
+        <div class="products-list">
+            <a class="product-card" th:each="product : ${products.getProducts()}">
+                <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
+                <form th:action="@{/profile/add-favourites}" th:method="POST">
+                    <input type="hidden" name="productId" value="${product.id}" />
+                    <button type="submit" class="wishlist">♡</button>
                 </form>
-
-                <form th:action="@{/users/logout}"
-                      th:method="POST">
-                    <button class="exit-button">Изход от профила</button>
-                </form>
-            </section>
-
-            <section class="vip-section">
-                <div class="become-vip">
-                    <div class="crown">
-                        <i class="fa-solid fa-crown"></i>
-                    </div>
-
-                    <h4>Стани ВИП</h4>
-
-                    <p>Остават ти още 134.52 лв. до ВИП 300</p>
-
-                    <a th:href="@{/loyalty-program}">Програма "Лоялен клиент"</a>
+                <div class="product-image">
+                    <img th:src="@{${product.imageUrls[0]}}" th:alt="${product.name}">
                 </div>
-            </section>
+                <div class="product-title" th:text="${product.getName()}">Nike Flex Experience RN 12</div>
+                <div class="product-type">
+                    <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
+                    <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
+                    <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
+                </div>
+                <div class="price">
+                    <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+                </div>
+                <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
+                <div class="sizes">
+                    <div class="sizes-title">Налични размери:</div>
+                    <div class="sizes">
+                        <span th:each="size : ${product.getSizes()}" th:text="${size}"></span>
+                    </div>
+                </div>
+            </a>
         </div>
     </main>
 

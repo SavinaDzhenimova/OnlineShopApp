@@ -71,4 +71,10 @@ public class HomeController {
 
         return new ModelAndView("choose-size");
     }
+
+    @GetMapping("/brands")
+    public ModelAndView brands() {
+
+        return new ModelAndView("brands");
+    }
 }

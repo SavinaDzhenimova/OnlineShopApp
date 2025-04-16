@@ -23,8 +23,8 @@ public class SecurityConfig {
                         .csrfTokenRepository(csrfTokenRepository()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/contacts", "faq", "/general-conditions", "/privacy-policy",
-                                "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return",
+                        .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
+                                "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
                                 "/loyalty-program", "/choose-size", "/users/login", "/users/register",
                                 "/products/all").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
