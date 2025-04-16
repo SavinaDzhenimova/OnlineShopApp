@@ -1,6 +1,7 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
+import org.onlineshop.model.enums.Size;
 
 @Entity
 @Table(name = "cart_items")
@@ -16,6 +17,9 @@ public class CartItem extends BaseEntity {
 
     @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
+    private int size;
 
     public CartItem() {
     }
@@ -42,5 +46,13 @@ public class CartItem extends BaseEntity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

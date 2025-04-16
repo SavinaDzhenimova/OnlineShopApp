@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
                                 "/loyalty-program", "/choose-size", "/users/login", "/users/register",
-                                "/products/all").permitAll()
+                                "/products/all", "/products/product/**").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product").hasRole("ADMIN")

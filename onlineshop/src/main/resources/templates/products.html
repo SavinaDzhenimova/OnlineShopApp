@@ -17,7 +17,9 @@
         <h1>Спортни обувки</h1>
 
         <div class="products-list">
-            <a class="product-card" th:each="product : ${products.getProducts()}">
+            <a class="product-card"
+               th:each="product : ${products.getProducts()}"
+               th:href="@{/products/product/{id}(id=${product.getId()})}">
                 <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
                 <form th:action="@{/profile/add-favourites}" th:method="POST">
                     <input type="hidden" name="productId" value="${product.id}" />

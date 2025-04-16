@@ -8,10 +8,7 @@ import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
-import org.onlineshop.service.interfaces.EmailService;
-import org.onlineshop.service.interfaces.PasswordResetService;
-import org.onlineshop.service.interfaces.RoleService;
-import org.onlineshop.service.interfaces.UserService;
+import org.onlineshop.service.interfaces.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,16 +27,18 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final ShoppingCartService shoppingCartService;
     private final PasswordResetService passwordResetService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
-                           PasswordResetService passwordResetService, EmailService emailService,
-                           PasswordEncoder passwordEncoder) {
+                           ShoppingCartService shoppingCartService, PasswordResetService passwordResetService,
+                           EmailService emailService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
+        this.shoppingCartService = shoppingCartService;
         this.passwordResetService = passwordResetService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
@@ -78,7 +77,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(this.passwordEncoder.encode(userRegisterDTO.getPassword()));
         user.setRole(optionalRole.get());
         user.setOrders(new HashSet<>());
-        user.setShoppingCart(new ShoppingCart());
+
+        this.userRepository.saveAndFlush(user);
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUser(user);
+        this.shoppingCartService.saveAndFlush(shoppingCart);
+
+        user.setShoppingCart(shoppingCart);
 
         if (!userRegisterDTO.isPrivacyPolicy()) {
             return new Result(false, "Трябва да се съгласите с Политиката за поверителност!");

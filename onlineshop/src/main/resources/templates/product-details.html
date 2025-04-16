@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/product-details-styles.css">
+    <title>Продукти</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <div class="image-container">
+            <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
+            <form th:action="@{/profile/add-favourites}" th:method="POST">
+                <input type="hidden" name="productId" value="${product.id}" />
+                <button type="submit" class="wishlist">♡</button>
+            </form>
+            <img th:each="imageUrl : ${product.getImageUrls()}" th:src="${imageUrl}" th:alt="${product.getName}">
+        </div>
+
+        <div class="content-container">
+            <h2 th:text="${product.getName()}"></h2>
+
+            <div class="product-type">
+                <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
+                <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
+                <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
+            </div>
+
+            <div class="price">
+                <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+            </div>
+
+            <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
+
+            <form th:action="@{/products/product/add-to-shopping-cart}"
+                  th:method="POST"
+                  th:object="${addCartItemDTO}"
+                  class="add-cart-item">
+
+                <div class="size-selector">
+                    <select th:field="*{size}" id="size" required>
+                        <option value="" selected>-- Избери размер --</option>
+                        <option th:each="size : ${product.getSizes()}"
+                                th:value="${size}"
+                                th:text="'№ ' + ${size}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="quantity-input">
+                    <label for="quantity">Избери количество:</label>
+                    <input type="number" id="quantity" name="quantity"
+                           th:field="*{quantity}" min="1" value="1">
+                </div>
+
+                <input type="hidden" th:field="*{productId}" th:value="${product.getId()}">
+
+                <button type="submit"><i class="fa-solid fa-cart-arrow-down"></i> Добави в количката</button>
+            </form>
+
+            <div class="more-info">
+                <div class="purchase">
+                    <div>
+                        <i class="fa-solid fa-circle"></i>
+                        <p>Поръчай днес и ще получиш утре</p>
+                    </div>
+                    <p>
+                        <i class="fa-solid fa-calendar-day"></i>
+                        <span id="tomorrow-info"></span>
+                    </p>
+                </div>
+
+                <div class="delivery-info">
+                    <div class="delivery-info-section">
+                        <i class="fa-solid fa-eye"></i>
+                        <p>Тест и преглед преди плащане</p>
+                    </div>
+                    <div class="delivery-info-section">
+                        <i class="fa-solid fa-truck"></i>
+                        <p>Безплатна доставка над 100 лв.</p>
+                    </div>
+                    <div class="delivery-info-section">
+                        <i class="fa-solid fa-medal"></i>
+                        <p>Само оригинални стоки</p>
+                    </div>
+                    <div class="delivery-info-section">
+                        <i class="fa-solid fa-right-left"></i>
+                        <p>30 дни безплатно връщане</p>
+                    </div>
+                    <div class="delivery-info-section">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <p>Всички стоки са налични</p>
+                    </div>
+                    <div class="delivery-info-section">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <p>0895 12 16 16</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="description">
+                <h3>Информация за продукта</h3>
+
+                <p th:text="${product.getDescription()}"></p>
+            </div>
+
+            <div class="useful-info">
+                <a th:href="@{/faq}">Често задавани въпроси <i class="fa-solid fa-chevron-right"></i></a>
+                <a th:href="@{/delivery-and-payment}">Доставка и плащане <i class="fa-solid fa-chevron-right"></i></a>
+                <a th:href="@{/contacts}">Контакти <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script src="\js\show-tomorrow-date.js"></script>
+
+</body>
+</html>

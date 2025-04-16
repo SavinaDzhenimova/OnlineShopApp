@@ -1,10 +1,9 @@
 package org.onlineshop.service;
 
 import org.onlineshop.model.entity.*;
-import org.onlineshop.model.enums.CategoryName;
-import org.onlineshop.model.enums.Size;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
+import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.*;
@@ -22,14 +21,19 @@ public class ProductServiceImpl implements ProductService {
     private final BrandService brandService;
     private final CategoryService categoryService;
     private final ImageService imageService;
+    private final UserService userService;
+    private final CartItemService cartItemService;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
-                              BrandService brandService, CategoryService categoryService, ImageService imageService) {
+                              BrandService brandService, CategoryService categoryService, ImageService imageService,
+                              UserService userService, CartItemService cartItemService) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
         this.categoryService = categoryService;
         this.imageService = imageService;
+        this.userService = userService;
+        this.cartItemService = cartItemService;
     }
 
     @Override
@@ -101,31 +105,89 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductDTO getProductInfo(Long id) {
+
+        Optional<Product> optionalProduct = this.productRepository.findById(id);
+
+        if (optionalProduct.isEmpty()) {
+            return null;
+        }
+
+        Product product = optionalProduct.get();
+
+        return this.mapProductToDTO(product);
+    }
+
+    @Override
+    public Result addProductToShoppingCart(AddCartItemDTO addCartItemDTO) {
+
+        Optional<Product> optionalProduct = this.productRepository.findById(addCartItemDTO.getProductId());
+
+        if (optionalProduct.isEmpty()) {
+            return new Result(false, "Продуктът, който се опитвате да добавите в количката, не съществува!");
+        }
+
+        Product product = optionalProduct.get();
+
+        Optional<QuantitySize> matchingSize = product.getQuantitySize()
+                .stream()
+                .filter(qs -> qs.getSize().getValue() == addCartItemDTO.getSize())
+                .findFirst();
+
+        if (matchingSize.isEmpty()) {
+            return new Result(false, "Избраният размер не е наличен за този продукт!");
+        }
+
+        int availableQuantity = matchingSize.get().getQuantity();
+        int requestedQuantity = addCartItemDTO.getQuantity();
+
+        if (availableQuantity < requestedQuantity) {
+            return new Result(false, "Наличното количество за размер " +
+                    addCartItemDTO.getSize() + " е само " + availableQuantity + " броя.");
+        }
+
+        CartItem cartItem = new CartItem();
+
+        User loggedUser = this.userService.getLoggedUser();
+        ShoppingCart loggedUserShoppingCart = loggedUser.getShoppingCart();
+
+        cartItem.setShoppingCart(loggedUserShoppingCart);
+        cartItem.setProduct(product);
+        cartItem.setQuantity(addCartItemDTO.getQuantity());
+        cartItem.setSize(addCartItemDTO.getSize());
+
+        this.cartItemService.saveAndFlush(cartItem);
+
+        return new Result(true, "Успешно добавихте този продукт във вашата количка!");
+    }
+
+    private ProductDTO mapProductToDTO(Product product) {
+        ProductDTO productDTO = new ProductDTO();
+
+        productDTO.setId(product.getId());
+        productDTO.setName(product.getName());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setPrice(product.getPrice());
+        productDTO.setBrand(product.getBrand().getBrandName());
+
+        List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
+        productDTO.setImageUrls(imageUrls);
+
+        Set<String> categories = new LinkedHashSet<>(this.mapCategoriesToString(product.getCategories()));
+        productDTO.setCategories(categories);
+
+        Set<Integer> sizes = new TreeSet<>(this.mapQuantitySizeToIntegers(product.getQuantitySize()));
+        productDTO.setSizes(sizes);
+
+        return productDTO;
+    }
+
+    @Override
     public ProductsListDTO getAllProducts() {
 
         List<Product> allProducts = this.productRepository.findAll();
 
-        List<ProductDTO> productDTOS = allProducts.stream()
-                .map(product -> {
-                    ProductDTO productDTO = new ProductDTO();
-
-                    productDTO.setId(product.getId());
-                    productDTO.setName(product.getName());
-                    productDTO.setDescription(product.getDescription());
-                    productDTO.setPrice(product.getPrice());
-                    productDTO.setBrand(product.getBrand().getBrandName());
-
-                    List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
-                    productDTO.setImageUrls(imageUrls);
-
-                    Set<String> categories = new LinkedHashSet<>(this.mapCategoriesToString(product.getCategories()));
-                    productDTO.setCategories(categories);
-
-                    Set<Integer> sizes = new TreeSet<>(this.mapQuantitySizeToIntegers(product.getQuantitySize()));
-                    productDTO.setSizes(sizes);
-
-                    return productDTO;
-                }).toList();
+        List<ProductDTO> productDTOS = allProducts.stream().map(this::mapProductToDTO).toList();
 
         return new ProductsListDTO(productDTOS);
     }
