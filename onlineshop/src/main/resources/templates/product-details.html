@@ -15,20 +15,29 @@
     <main>
         <div class="image-container">
             <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
-            <form th:action="@{/profile/add-favourites}" th:method="POST">
-                <input type="hidden" name="productId" value="${product.id}" />
+            <form th:action="@{/profile/add-favourites}"
+                  th:method="POST">
+                <input type="hidden" name="productId" value="${product.getId()}" />
                 <button type="submit" class="wishlist">♡</button>
             </form>
-            <img th:each="imageUrl : ${product.getImageUrls()}" th:src="${imageUrl}" th:alt="${product.getName}">
+            <img th:each="imageUrl : ${product.getImageUrls()}" th:src="${imageUrl}" th:alt="${product.getName()}">
         </div>
 
         <div class="content-container">
-            <h2 th:text="${product.getName()}"></h2>
+            <div class="product-header">
+                <div class="product-title">
+                    <h2 th:text="${product.getName()}"></h2>
 
-            <div class="product-type">
-                <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
-                <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
-                <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
+                    <div class="product-type">
+                        <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
+                        <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
+                        <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
+                    </div>
+                </div>
+
+                <div class="brand-image">
+                    <img th:src="${product.getBrandUrl()}" th:alt="${product.getBrand()}">
+                </div>
             </div>
 
             <div class="price">

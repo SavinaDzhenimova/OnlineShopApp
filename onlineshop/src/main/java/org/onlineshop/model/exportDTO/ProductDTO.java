@@ -18,6 +18,8 @@ public class ProductDTO {
 
     private BrandName brand;
 
+    private String brandUrl;
+
     private String color;
 
     private Set<Integer> sizes;
@@ -67,6 +69,14 @@ public class ProductDTO {
 
     public void setBrand(BrandName brand) {
         this.brand = brand;
+    }
+
+    public String getBrandUrl() {
+        return brandUrl;
+    }
+
+    public void setBrandUrl(String brandUrl) {
+        this.brandUrl = brandUrl;
     }
 
     public String getColor() {

@@ -53,12 +53,26 @@ main .image-container img {
 }
 
 main .content-container {
-    width: 40%;
+    width: 42%;
 }
 
-.product-type {
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.product-header .product-type {
     color: #666;
     font-size: 14px;
+}
+
+.product-header .brand-image img {
+    width: 90px;
+    height: 90px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
 .price {

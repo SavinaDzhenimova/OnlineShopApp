@@ -178,6 +178,7 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice());
         productDTO.setBrand(product.getBrand().getBrandName());
+        productDTO.setBrandUrl(product.getBrand().getBrandUrl());
         productDTO.setColor(product.getColor().getDescription());
 
         List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
