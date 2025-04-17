@@ -5,6 +5,7 @@ import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
+import org.onlineshop.model.importDTO.QuantitySizeDTO;
 import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.*;
 import org.springframework.stereotype.Service;
@@ -192,7 +193,7 @@ public class ProductServiceImpl implements ProductService {
         Set<String> categories = new LinkedHashSet<>(this.mapCategoriesToString(product.getCategories()));
         productDTO.setCategories(categories);
 
-        Set<Integer> sizes = new TreeSet<>(this.mapQuantitySizeToIntegers(product.getQuantitySize()));
+        Set<QuantitySizeDTO> sizes = new TreeSet<>(this.mapQuantitySizeToDTO(product.getQuantitySize()));
         productDTO.setSizes(sizes);
 
         return productDTO;
@@ -220,16 +221,21 @@ public class ProductServiceImpl implements ProductService {
         return imageUrls;
     }
 
-    private Set<Integer> mapQuantitySizeToIntegers(Set<QuantitySize> quantitySizes) {
-        Set<Integer> integerSizes = new HashSet<>();
+    private Set<QuantitySizeDTO> mapQuantitySizeToDTO(Set<QuantitySize> quantitySizes) {
+        Set<QuantitySizeDTO> quantitySizeDTOS = new HashSet<>();
 
         for (QuantitySize quantitySize : quantitySizes) {
             if (quantitySize != null && quantitySize.getSize() != null) {
-                integerSizes.add(quantitySize.getSize().getSize());
+                QuantitySizeDTO quantitySizeDTO = new QuantitySizeDTO();
+
+                quantitySizeDTO.setSize(quantitySize.getSize().getSize());
+                quantitySizeDTO.setQuantity(quantitySize.getQuantity());
+
+                quantitySizeDTOS.add(quantitySizeDTO);
             }
         }
 
-        return integerSizes;
+        return quantitySizeDTOS;
     }
 
     private Set<String> mapCategoriesToString(Set<Category> categories) {

@@ -112,22 +112,9 @@ main .add-cart-item {
     margin-top: 1em;
 }
 
-.size-selector select {
+.size-selector select,
+.quantity-input select {
     width: 100%;
-    outline: none;
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
-    padding: 0.5em;
-}
-
-.quantity-input {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-}
-
-.quantity-input input {
-    width: 100px;
     outline: none;
     border: 1px solid #ccc;
     border-radius: 0.5em;
@@ -146,6 +133,11 @@ main .add-cart-item {
     font-size: 14px;
     border-radius: 1.5em;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-top: 1em;
+}
+
+.add-cart-item button[type="submit"] i {
+    padding-right: 0.5em;
 }
 
 main .more-info {

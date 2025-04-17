@@ -56,19 +56,21 @@
                   class="add-cart-item">
 
                 <div class="size-selector">
-                    <select th:field="*{size}" id="size" required>
+                    <select th:field="*{size}" id="size" name="sizes[0].size.id" required>
                         <option value="" selected>-- Избери размер --</option>
                         <option th:each="size : ${product.getSizes()}"
-                                th:value="${size}"
-                                th:text="'№ ' + ${size}">
+                                th:value="${size.size}"
+                                th:data-quantity="${size.quantity}"
+                                th:text="'№ ' + ${size.size}">
                         </option>
                     </select>
                 </div>
 
                 <div class="quantity-input">
                     <label for="quantity">Избери количество:</label>
-                    <input type="number" id="quantity" name="quantity"
-                           th:field="*{quantity}" min="1" value="1">
+                    <select id="quantity" name="sizes[0].quantity" required disabled>
+                        <option value="">-- Избери първо размер --</option>
+                    </select>
                 </div>
 
                 <input type="hidden" th:field="*{productId}" th:value="${product.getId()}">
@@ -133,6 +135,7 @@
     <footer th:replace="~{fragments/commons::footer}"></footer>
 
     <script src="\js\show-tomorrow-date.js"></script>
+    <script src="\js\show-quantity-for-size.js"></script>
 
 </body>
 </html>

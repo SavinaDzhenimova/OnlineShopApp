@@ -1,6 +1,7 @@
 package org.onlineshop.model.exportDTO;
 
 import org.onlineshop.model.enums.BrandName;
+import org.onlineshop.model.importDTO.QuantitySizeDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ProductDTO {
 
     private String color;
 
-    private Set<Integer> sizes;
+    private Set<QuantitySizeDTO> sizes;
 
     private Set<String> categories;
 
@@ -87,11 +88,11 @@ public class ProductDTO {
         this.color = color;
     }
 
-    public Set<Integer> getSizes() {
+    public Set<QuantitySizeDTO> getSizes() {
         return sizes;
     }
 
-    public void setSizes(Set<Integer> sizes) {
+    public void setSizes(Set<QuantitySizeDTO> sizes) {
         this.sizes = sizes;
     }
 

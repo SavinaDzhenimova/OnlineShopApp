@@ -1,8 +1,6 @@
 package org.onlineshop.model.importDTO;
 
-import org.onlineshop.model.entity.ShoeSize;
-
-public class QuantitySizeDTO {
+public class QuantitySizeDTO implements Comparable<QuantitySizeDTO> {
 
     private Integer size;
 
@@ -22,5 +20,10 @@ public class QuantitySizeDTO {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public int compareTo(QuantitySizeDTO other) {
+        return Integer.compare(this.size, other.size);
     }
 }
