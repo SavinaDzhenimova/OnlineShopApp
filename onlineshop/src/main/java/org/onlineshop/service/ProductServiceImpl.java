@@ -9,6 +9,7 @@ import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.model.importDTO.QuantitySizeDTO;
 import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.*;
+import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,11 +28,12 @@ public class ProductServiceImpl implements ProductService {
     private final ImageService imageService;
     private final UserService userService;
     private final ShoppingCartService shoppingCartService;
+    private final CurrentUserProvider currentUserProvider;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
                               BrandService brandService, ColorService colorService, CategoryService categoryService,
                               ShoeSizeService shoeSizeService, ImageService imageService, UserService userService,
-                              ShoppingCartService shoppingCartService) {
+                              ShoppingCartService shoppingCartService, CurrentUserProvider currentUserProvider) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
@@ -41,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
         this.imageService = imageService;
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
+        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
@@ -147,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = optionalProduct.get();
         ShoppingCart shoppingCart;
 
-        User loggedUser = userService.getLoggedUser();
+        User loggedUser = this.currentUserProvider.getLoggedUser();
 
         if (loggedUser != null) {
             shoppingCart = loggedUser.getShoppingCart();
@@ -178,7 +181,7 @@ public class ProductServiceImpl implements ProductService {
         List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
         productDTO.setImageUrls(imageUrls);
 
-        Set<String> categories = new LinkedHashSet<>(this.mapCategoriesToString(product.getCategories()));
+        Set<String> categories = new LinkedHashSet<>(this.categoryService.mapCategoriesToString(product.getCategories()));
         productDTO.setCategories(categories);
 
         Set<QuantitySizeDTO> sizes = new TreeSet<>(this.mapQuantitySizeToDTO(product.getQuantitySize()));
@@ -224,23 +227,5 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return quantitySizeDTOS;
-    }
-
-    private Set<String> mapCategoriesToString(Set<Category> categories) {
-        Set<String> stringCategories = new HashSet<>();
-
-        for (Category category : categories) {
-            if (category == null || category.getCategoryName() == null) continue;
-
-            switch (category.getCategoryName()) {
-                case MEN -> stringCategories.add("Мъжки обувки");
-                case WOMEN -> stringCategories.add("Дамски обувки");
-                case CHILDREN -> stringCategories.add("Детски обувки");
-                case NEW -> stringCategories.add("Ново");
-                case SALE -> stringCategories.add("Разпродажба");
-            }
-        }
-
-        return stringCategories;
     }
 }

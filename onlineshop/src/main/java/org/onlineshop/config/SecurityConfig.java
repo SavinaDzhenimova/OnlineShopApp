@@ -26,7 +26,8 @@ public class SecurityConfig {
                         .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
                                 "/loyalty-program", "/choose-size", "/users/login", "/users/register",
-                                "/products/all", "/products/product/**", "/products/add-to-shopping-cart/**").permitAll()
+                                "/products/all", "/products/product/**", "/products/add-to-shopping-cart/**",
+                                "/shopping-cart").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product").hasRole("ADMIN")

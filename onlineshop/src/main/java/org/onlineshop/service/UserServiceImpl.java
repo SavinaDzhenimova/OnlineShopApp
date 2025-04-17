@@ -10,8 +10,8 @@ import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
 import org.onlineshop.service.interfaces.*;
+import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,10 +33,12 @@ public class UserServiceImpl implements UserService {
     private final PasswordResetService passwordResetService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+    private final CurrentUserProvider currentUserProvider;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
                            ShoppingCartService shoppingCartService, PasswordResetService passwordResetService,
-                           EmailService emailService, PasswordEncoder passwordEncoder) {
+                           EmailService emailService, PasswordEncoder passwordEncoder,
+                           CurrentUserProvider currentUserProvider) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
         this.passwordResetService = passwordResetService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
+        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
@@ -106,7 +109,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserInfo(UserDTO userDTO) {
 
-        User loggedUser = this.getLoggedUser();
+        User loggedUser = this.currentUserProvider.getLoggedUser();
 
         Optional<User> optionalUserByEmail = this.getUserByEmail(userDTO.getEmail());
 
@@ -175,7 +178,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getLoggedUserInfoForProfilePage() {
 
-        User loggedUser = this.getLoggedUser();
+        User loggedUser = this.currentUserProvider.getLoggedUser();
 
         UserDTO userDTO = new UserDTO();
 
@@ -187,23 +190,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getLoggedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        String email = authentication.getName();
-
-        Optional<User> optionalUser = this.getUserByEmail(email);
-
-        if (optionalUser.isEmpty()) {
-            return null;
-        }
-
-        return optionalUser.get();
-    }
-
-    @Override
     public ShoppingCart getLoggedUserShoppingCart(HttpSession session) {
-        User loggedUser = this.getLoggedUser();
+        User loggedUser = this.currentUserProvider.getLoggedUser();
 
         if (loggedUser != null) {
             return loggedUser.getShoppingCart();

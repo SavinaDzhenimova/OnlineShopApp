@@ -46,7 +46,7 @@
                 <div class="sizes">
                     <div class="sizes-title">Налични размери:</div>
                     <div class="sizes">
-                        <span th:each="size : ${product.getSizes()}" th:text="${size}"></span>
+                        <span th:each="size : ${product.getSizes()}" th:text="${size.size}"></span>
                     </div>
                 </div>
             </a>

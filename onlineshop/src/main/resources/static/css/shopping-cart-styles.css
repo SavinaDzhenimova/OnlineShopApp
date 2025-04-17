@@ -1,0 +1,98 @@
+main .empty-cart-message {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .empty-cart-message .view-products-btn {
+    width: 20%;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5em;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 1.5em;
+}
+
+main .shopping-cart-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+}
+
+main .shopping-cart-items .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+main .shopping-cart-items .cart-item img {
+    width: 20%;
+    object-fit: contain;
+}
+
+main .shopping-cart-items .cart-item .size-selector,
+main .shopping-cart-items .cart-item .quantity-input {
+    width: 12%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+main .shopping-cart-items .cart-item .size-selector label,
+main .shopping-cart-items .cart-item .quantity-input label {
+    font-size: 16px;
+}
+
+main .shopping-cart-items .cart-item .size-selector select,
+main .shopping-cart-items .cart-item .quantity-input select {
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+main .shopping-cart-items .cart-item .price {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+main .shopping-cart-price {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: flex-end;
+}
+
+main .shopping-cart-price .total-price {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+main .shopping-cart-price form {
+    width: 100%;
+}
+
+main .shopping-cart-price form button[type="submit"] {
+    background-color: green;
+    color: #fff;
+    padding: 1em;
+    font-weight: 600;
+    width: 100%;
+    align-self: center;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    border-radius: 1.5em;
+    margin-top: 1em;
+}

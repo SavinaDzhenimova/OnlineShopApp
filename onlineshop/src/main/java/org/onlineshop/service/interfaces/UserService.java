@@ -20,8 +20,6 @@ public interface UserService {
 
     UserDTO getLoggedUserInfoForProfilePage();
 
-    User getLoggedUser();
-
     Optional<User> getUserByEmail(String email);
 
     Result registerUser(UserRegisterDTO userRegisterDTO);

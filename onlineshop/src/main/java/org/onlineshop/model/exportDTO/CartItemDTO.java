@@ -1,5 +1,11 @@
 package org.onlineshop.model.exportDTO;
 
+import org.onlineshop.model.importDTO.QuantitySizeDTO;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
 public class CartItemDTO {
 
     private Long id;
@@ -8,13 +14,18 @@ public class CartItemDTO {
 
     private String name;
 
-    private String category;
+    private Set<String> categories;
 
-    private Integer quantity;
+    private Set<QuantitySizeDTO> quantitySizes;
 
-    private Integer size;
+    private Integer selectedQuantity;
+
+    private Integer selectedSize;
+
+    private BigDecimal price;
 
     public CartItemDTO() {
+        this.quantitySizes = new HashSet<>();
     }
 
     public Long getId() {
@@ -41,27 +52,43 @@ public class CartItemDTO {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
+    public Set<String> getCategories() {
+        return categories;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategories(Set<String> categories) {
+        this.categories = categories;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getSelectedQuantity() {
+        return selectedQuantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setSelectedQuantity(Integer selectedQuantity) {
+        this.selectedQuantity = selectedQuantity;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getSelectedSize() {
+        return selectedSize;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setSelectedSize(Integer selectedSize) {
+        this.selectedSize = selectedSize;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Set<QuantitySizeDTO> getQuantitySizes() {
+        return quantitySizes;
+    }
+
+    public void setQuantitySizes(Set<QuantitySizeDTO> quantitySizes) {
+        this.quantitySizes = quantitySizes;
     }
 }

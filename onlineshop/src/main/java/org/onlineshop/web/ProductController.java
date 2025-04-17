@@ -1,14 +1,11 @@
 package org.onlineshop.web;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
-import org.onlineshop.service.interfaces.BrandService;
-import org.onlineshop.service.interfaces.CategoryService;
 import org.onlineshop.service.interfaces.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/products")
 public class ProductController {
 
-    private final BrandService brandService;
-    private final CategoryService categoryService;
     private final ProductService productService;
 
-    public ProductController(BrandService brandService, CategoryService categoryService, ProductService productService) {
-        this.brandService = brandService;
-        this.categoryService = categoryService;
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -104,30 +97,5 @@ public class ProductController {
         modelAndView.addObject("product", productDTO);
 
         return modelAndView;
-    }
-
-    @PostMapping("/add-to-shopping-cart/{id}")
-    public ModelAndView addProductToShoppingCart(@PathVariable("id") Long productId,
-                                                 @Valid @ModelAttribute("addCartItemDTO") AddCartItemDTO addCartItemDTO,
-                                                 BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                                 HttpSession session) {
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("addCartItemDTO", addCartItemDTO)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.addCartItemDTO",
-                            bindingResult);
-
-            return new ModelAndView("redirect:/products/product/" + productId);
-        }
-
-        Result result = this.productService.addProductToShoppingCart(productId, addCartItemDTO, session);
-
-        if (result.isSuccess()) {
-            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
-        } else {
-            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
-        }
-
-        return new ModelAndView("redirect:/products/product/" + productId);
     }
 }

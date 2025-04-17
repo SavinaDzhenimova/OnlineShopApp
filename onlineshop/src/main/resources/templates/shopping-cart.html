@@ -4,7 +4,7 @@
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
-    <link rel="stylesheet" href="/css/register-form-styles.css">
+    <link rel="stylesheet" href="/css/shopping-cart-styles.css">
     <title>Количка</title>
 </head>
 
@@ -19,10 +19,65 @@
           <p th:text="${failureMessage}"></p>
         </div>
 
+        <div th:if="${shoppingCart.cartItems.empty}" class="empty-cart-message">
+            <p>Все още нямаш добавени продукти в твоята количка.
+                Можеш да разгледаш най-новото в Runtastic Shoes и да направиш своя избор.</p>
+            <a th:href="@{/products/all}" class="view-products-btn">Виж нашите предложения</a>
+        </div>
 
+        <div class="shopping-cart-items" th:if="${not shoppingCart.cartItems.empty}">
+            <div class="cart-item" th:each="cartItem : ${shoppingCart.getCartItems()}">
+                <img th:src="${cartItem.getImageUrl()}"/>
+
+                <div class="product-title">
+                    <h2 th:text="${cartItem.getName()}"></h2>
+
+                    <div class="product-type">
+                        <span th:if="${cartItem.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
+                        <span th:if="${cartItem.categories.contains('Дамски обувки')}">Дамски обувки</span>
+                        <span th:if="${cartItem.categories.contains('Детски обувки')}">Детски обувки</span>
+                    </div>
+                </div>
+
+                <div class="size-selector">
+                    <label for="quantity">Размер:</label>
+                    <select id="size" name="size" th:attr="data-selected-quantity=${cartItem.selectedQuantity}">
+                        <option th:each="size : ${cartItem.quantitySizes}"
+                                th:value="${size.size}"
+                                th:data-quantity="${size.quantity}"
+                                th:text="'№ ' + ${size.size}"
+                                th:selected="${size.size} == ${cartItem.selectedSize}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="quantity-input">
+                    <label for="quantity">Количество:</label>
+                    <select id="quantity" name="quantity" required>
+                        <!-- Опциите ще се запълнят динамично чрез JavaScript -->
+                    </select>
+                </div>
+
+                <div class="price">
+                    <span class="current" th:text="${cartItem.getPrice()} + ' лв.'">129.99 лв.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="shopping-cart-price" th:if="${not shoppingCart.cartItems.empty}">
+            <div class="total-price">
+                <p>Обща сума:</p><span th:text="${totalPrice} + ' лв.'"></span>
+            </div>
+
+            <form th:method="POST">
+                <button type="submit">Поръчай</button>
+            </form>
+        </div>
     </main>
 
     <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script src="\js\show-quantity-sizes.js"></script>
 
 </body>
 </html>
