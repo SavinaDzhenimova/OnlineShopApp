@@ -53,7 +53,10 @@
                         <button><i class="fa-solid fa-right-from-bracket"></i>Изход</button>
                     </form>
                     <a href="#"><i class="fa-regular fa-star"></i>Любими</a>
-                    <a href="#"><i class="fa-solid fa-cart-shopping"></i>Количка</a>
+                    <a href="#">
+                        <i class="fa-solid fa-cart-shopping"></i>Количка
+                        <span class="has-items-in-cart" th:if="${hasItemsInCart}"><i class="fa-solid fa-circle"></i></span>
+                    </a>
                 </li>
             </ul>
 

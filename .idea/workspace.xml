@@ -6,10 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/QuantitySizeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/QuantitySizeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/AdminInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/AdminInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CartItemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CartItemServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ShoppingCartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ShoppingCartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/GlobalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/GlobalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/header-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/header-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,5 +99,16 @@
       <updated>1742913177546</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

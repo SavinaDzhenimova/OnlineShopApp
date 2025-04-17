@@ -1,5 +1,6 @@
 package org.onlineshop.service.interfaces;
 
+import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
@@ -14,5 +15,5 @@ public interface ProductService {
 
     ProductDTO getProductInfo(Long id);
 
-    Result addProductToShoppingCart(AddCartItemDTO addCartItemDTO);
+    Result addProductToShoppingCart(Long productId, AddCartItemDTO addCartItemDTO, HttpSession session);
 }

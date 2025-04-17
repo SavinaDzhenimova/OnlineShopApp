@@ -50,7 +50,7 @@
                 <span th:text="'Цвят: ' + ${product.getColor()}"></span>
             </div>
 
-            <form th:action="@{/products/product/add-to-shopping-cart}"
+            <form th:action="@{/products/add-to-shopping-cart/{id}(id=${product.getId()})}"
                   th:method="POST"
                   th:object="${addCartItemDTO}"
                   class="add-cart-item">
@@ -68,12 +68,10 @@
 
                 <div class="quantity-input">
                     <label for="quantity">Избери количество:</label>
-                    <select id="quantity" name="sizes[0].quantity" required disabled>
+                    <select th:field="*{quantity}" id="quantity" name="sizes[0].quantity" required disabled>
                         <option value="">-- Избери първо размер --</option>
                     </select>
                 </div>
-
-                <input type="hidden" th:field="*{productId}" th:value="${product.getId()}">
 
                 <button type="submit"><i class="fa-solid fa-cart-arrow-down"></i> Добави в количката</button>
             </form>

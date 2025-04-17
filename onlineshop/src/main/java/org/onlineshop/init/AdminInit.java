@@ -5,6 +5,7 @@ import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.repository.RoleRepository;
+import org.onlineshop.repository.ShoppingCartRepository;
 import org.onlineshop.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -22,11 +23,14 @@ public class AdminInit implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ShoppingCartRepository shoppingCartRepository;
 
-    public AdminInit(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public AdminInit(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
+                     ShoppingCartRepository shoppingCartRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
     @Override
@@ -45,8 +49,14 @@ public class AdminInit implements CommandLineRunner {
             user.setOrders(new HashSet<>());
             user.setRole(role);
             user.setTotalOutcome(BigDecimal.ZERO);
-            user.setShoppingCart(new ShoppingCart());
 
+            this.userRepository.saveAndFlush(user);
+
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
+            this.shoppingCartRepository.saveAndFlush(shoppingCart);
+
+            user.setShoppingCart(shoppingCart);
             this.userRepository.saveAndFlush(user);
         }
     }

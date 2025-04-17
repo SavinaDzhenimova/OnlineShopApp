@@ -1,5 +1,6 @@
 package org.onlineshop.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.Role;
 import org.onlineshop.model.entity.ShoppingCart;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
@@ -197,6 +199,25 @@ public class UserServiceImpl implements UserService {
         }
 
         return optionalUser.get();
+    }
+
+    @Override
+    public ShoppingCart getLoggedUserShoppingCart(HttpSession session) {
+        User loggedUser = this.getLoggedUser();
+
+        if (loggedUser != null) {
+            return loggedUser.getShoppingCart();
+        } else {
+            ShoppingCart guestCart = (ShoppingCart) session.getAttribute("guestCart");
+
+            if (guestCart == null) {
+                guestCart = new ShoppingCart();
+                guestCart.setCartItems(new ArrayList<>());
+                session.setAttribute("guestCart", guestCart);
+            }
+
+            return guestCart;
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.onlineshop.web;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.ProductDTO;
@@ -66,7 +67,7 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ModelAndView showAllProducts(Model model) {
+    public ModelAndView showAllProducts() {
 
         ModelAndView modelAndView = new ModelAndView("products");
 
@@ -105,19 +106,21 @@ public class ProductController {
         return modelAndView;
     }
 
-    @PostMapping("/product/add-to-shopping-cart")
-    public ModelAndView addProductToShoppingCart(@Valid @ModelAttribute("addCartItemDTO") AddCartItemDTO addCartItemDTO,
-                                     BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    @PostMapping("/add-to-shopping-cart/{id}")
+    public ModelAndView addProductToShoppingCart(@PathVariable("id") Long productId,
+                                                 @Valid @ModelAttribute("addCartItemDTO") AddCartItemDTO addCartItemDTO,
+                                                 BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                                 HttpSession session) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addCartItemDTO", addCartItemDTO)
                     .addFlashAttribute("org.springframework.validation.BindingResult.addCartItemDTO",
                             bindingResult);
 
-            return new ModelAndView("redirect:/products/product/" + addCartItemDTO.getProductId());
+            return new ModelAndView("redirect:/products/product/" + productId);
         }
 
-        Result result = this.productService.addProductToShoppingCart(addCartItemDTO);
+        Result result = this.productService.addProductToShoppingCart(productId, addCartItemDTO, session);
 
         if (result.isSuccess()) {
             redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
@@ -125,6 +128,6 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
         }
 
-        return new ModelAndView("redirect:/products/product/" + addCartItemDTO.getProductId());
+        return new ModelAndView("redirect:/products/product/" + productId);
     }
 }

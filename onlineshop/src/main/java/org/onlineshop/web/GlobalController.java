@@ -1,14 +1,9 @@
 package org.onlineshop.web;
 
-import org.onlineshop.model.entity.Brand;
-import org.onlineshop.model.entity.Category;
-import org.onlineshop.model.entity.Color;
-import org.onlineshop.model.entity.ShoeSize;
-import org.onlineshop.model.enums.SizeName;
-import org.onlineshop.service.interfaces.BrandService;
-import org.onlineshop.service.interfaces.CategoryService;
-import org.onlineshop.service.interfaces.ColorService;
-import org.onlineshop.service.interfaces.ShoeSizeService;
+import jakarta.servlet.http.HttpSession;
+import org.onlineshop.model.entity.*;
+import org.onlineshop.service.interfaces.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -21,13 +16,18 @@ public class GlobalController {
     private final ColorService colorService;
     private final CategoryService categoryService;
     private final ShoeSizeService shoeSizeService;
+    private final ShoppingCartService shoppingCartService;
+    private final UserService userService;
 
     public GlobalController(BrandService brandService, ColorService colorService, CategoryService categoryService,
-                            ShoeSizeService shoeSizeService) {
+                            ShoeSizeService shoeSizeService, ShoppingCartService shoppingCartService,
+                            UserService userService) {
         this.brandService = brandService;
         this.colorService = colorService;
         this.categoryService = categoryService;
         this.shoeSizeService = shoeSizeService;
+        this.shoppingCartService = shoppingCartService;
+        this.userService = userService;
     }
 
     @ModelAttribute("brands")
@@ -48,5 +48,17 @@ public class GlobalController {
     @ModelAttribute("shoeSizes")
     public List<ShoeSize> shoeSizes() {
         return this.shoeSizeService.getAllShoeSizes();
+    }
+
+    @ModelAttribute
+    public void addCartIndicatorToModel(HttpSession session, Model model) {
+        ShoppingCart cart = (ShoppingCart) session.getAttribute("guestCart");
+        if (cart == null) {
+            cart = this.userService.getLoggedUserShoppingCart(session);
+        }
+
+        boolean hasItemsInCart = cart != null && !cart.getCartItems().isEmpty();
+
+        model.addAttribute("hasItemsInCart", hasItemsInCart);
     }
 }

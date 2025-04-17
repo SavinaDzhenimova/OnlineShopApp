@@ -1,6 +1,8 @@
 package org.onlineshop.service.interfaces;
 
+import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
@@ -24,4 +26,5 @@ public interface UserService {
 
     Result registerUser(UserRegisterDTO userRegisterDTO);
 
+    ShoppingCart getLoggedUserShoppingCart(HttpSession session);
 }

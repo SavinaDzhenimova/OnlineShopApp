@@ -1,5 +1,6 @@
 package org.onlineshop.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
@@ -25,12 +26,12 @@ public class ProductServiceImpl implements ProductService {
     private final ShoeSizeService shoeSizeService;
     private final ImageService imageService;
     private final UserService userService;
-    private final CartItemService cartItemService;
+    private final ShoppingCartService shoppingCartService;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
                               BrandService brandService, ColorService colorService, CategoryService categoryService,
                               ShoeSizeService shoeSizeService, ImageService imageService, UserService userService,
-                              CartItemService cartItemService) {
+                              ShoppingCartService shoppingCartService) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
@@ -39,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
         this.shoeSizeService = shoeSizeService;
         this.imageService = imageService;
         this.userService = userService;
-        this.cartItemService = cartItemService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Override
@@ -134,46 +135,33 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Result addProductToShoppingCart(AddCartItemDTO addCartItemDTO) {
+    public Result addProductToShoppingCart(Long productId, AddCartItemDTO dto, HttpSession session) {
 
-        Optional<Product> optionalProduct = this.productRepository.findById(addCartItemDTO.getProductId());
+        dto.setProductId(productId);
+        Optional<Product> optionalProduct = this.productRepository.findById(dto.getProductId());
 
         if (optionalProduct.isEmpty()) {
             return new Result(false, "Продуктът, който се опитвате да добавите в количката, не съществува!");
         }
 
         Product product = optionalProduct.get();
+        ShoppingCart shoppingCart;
 
-        Optional<QuantitySize> matchingSize = product.getQuantitySize()
-                .stream()
-                .filter(qs -> qs.getSize().getSize().equals(addCartItemDTO.getSize()))
-                .findFirst();
+        User loggedUser = userService.getLoggedUser();
 
-        if (matchingSize.isEmpty()) {
-            return new Result(false, "Избраният размер не е наличен за този продукт!");
+        if (loggedUser != null) {
+            shoppingCart = loggedUser.getShoppingCart();
+        } else {
+            shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
+
+            if (shoppingCart == null) {
+                shoppingCart = new ShoppingCart();
+                shoppingCart.setCartItems(new ArrayList<>());
+                session.setAttribute("guestCart", shoppingCart);
+            }
         }
 
-        int availableQuantity = matchingSize.get().getQuantity();
-        int requestedQuantity = addCartItemDTO.getQuantity();
-
-        if (availableQuantity < requestedQuantity) {
-            return new Result(false, "Наличното количество за размер " +
-                    addCartItemDTO.getSize() + " е само " + availableQuantity + " броя.");
-        }
-
-        CartItem cartItem = new CartItem();
-
-        User loggedUser = this.userService.getLoggedUser();
-        ShoppingCart loggedUserShoppingCart = loggedUser.getShoppingCart();
-
-        cartItem.setShoppingCart(loggedUserShoppingCart);
-        cartItem.setProduct(product);
-        cartItem.setQuantity(addCartItemDTO.getQuantity());
-        cartItem.setSize(addCartItemDTO.getSize());
-
-        this.cartItemService.saveAndFlush(cartItem);
-
-        return new Result(true, "Успешно добавихте този продукт във вашата количка!");
+        return this.shoppingCartService.addItemToCart(product, dto, shoppingCart);
     }
 
     private ProductDTO mapProductToDTO(Product product) {
