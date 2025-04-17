@@ -37,6 +37,10 @@
 
             <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
 
+            <div class="color">
+                <span th:text="'Цвят: ' + ${product.getColor()}"></span>
+            </div>
+
             <form th:action="@{/products/product/add-to-shopping-cart}"
                   th:method="POST"
                   th:object="${addCartItemDTO}"

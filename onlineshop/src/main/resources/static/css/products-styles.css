@@ -60,6 +60,7 @@ main .products-list {
 
 .product-title {
     font-weight: bold;
+    font-size: 16px;
     margin-top: 10px;
 }
 
@@ -86,11 +87,16 @@ main .products-list {
 .free-shipping {
     background: green;
     color: white;
-    padding: 5px 10px;
+    padding: 0 0.7em;
     border-radius: 15px;
     font-size: 13px;
+    font-weight: 500;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 0.5em;
+}
+
+.color {
+    margin-top: 0.5em;
 }
 
 .sizes span {

@@ -1,6 +1,5 @@
 package org.onlineshop.model.exportDTO;
 
-import org.onlineshop.model.entity.Image;
 import org.onlineshop.model.enums.BrandName;
 
 import java.math.BigDecimal;
@@ -18,6 +17,8 @@ public class ProductDTO {
     private BigDecimal price;
 
     private BrandName brand;
+
+    private String color;
 
     private Set<Integer> sizes;
 
@@ -66,6 +67,14 @@ public class ProductDTO {
 
     public void setBrand(BrandName brand) {
         this.brand = brand;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Set<Integer> getSizes() {

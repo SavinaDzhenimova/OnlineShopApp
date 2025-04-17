@@ -62,7 +62,7 @@ main .content-container {
 }
 
 .price {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .price .current {
@@ -79,11 +79,16 @@ main .content-container {
 .free-shipping {
     background: green;
     color: white;
-    padding: 5px 10px;
+    padding: 0 0.7em;
     border-radius: 15px;
     font-size: 13px;
+    font-weight: 500;
     display: inline-block;
-    margin-top: 10px;
+    margin: 0.5em 0;
+}
+
+.color {
+    margin-top: 0.5em;
 }
 
 main .add-cart-item {

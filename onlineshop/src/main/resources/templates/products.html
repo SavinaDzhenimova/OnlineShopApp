@@ -16,6 +16,8 @@
     <main>
         <h1>Спортни обувки</h1>
 
+        <p th:if="${warningMessage}" th:text="${warningMessage}"></p>
+
         <div class="products-list">
             <a class="product-card"
                th:each="product : ${products.getProducts()}"
@@ -38,6 +40,9 @@
                     <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
                 </div>
                 <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
+                <div class="color">
+                    <span th:text="'Цвят: ' + ${product.getColor()}"></span>
+                </div>
                 <div class="sizes">
                     <div class="sizes-title">Налични размери:</div>
                     <div class="sizes">

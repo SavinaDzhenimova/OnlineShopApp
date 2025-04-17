@@ -19,17 +19,19 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final QuantitySizeService quantitySizeService;
     private final BrandService brandService;
+    private final ColorService colorService;
     private final CategoryService categoryService;
     private final ImageService imageService;
     private final UserService userService;
     private final CartItemService cartItemService;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
-                              BrandService brandService, CategoryService categoryService, ImageService imageService,
-                              UserService userService, CartItemService cartItemService) {
+                              BrandService brandService, ColorService colorService, CategoryService categoryService,
+                              ImageService imageService, UserService userService, CartItemService cartItemService) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
+        this.colorService = colorService;
         this.categoryService = categoryService;
         this.imageService = imageService;
         this.userService = userService;
@@ -43,6 +45,12 @@ public class ProductServiceImpl implements ProductService {
 
         if (optionalBrand.isEmpty()) {
             return new Result(false, "Марката, която искате да добавите на този продукт, не съществува!");
+        }
+
+        Optional<Color> optionalColor = this.colorService.findColorById(addProductDTO.getColorId());
+
+        if (optionalColor.isEmpty()) {
+            return new Result(false, "Цветът, който искате да добавите на този продукт, не съществува!");
         }
 
         Set<Category> categories = new HashSet<>();
@@ -62,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(addProductDTO.getDescription());
         product.setPrice(addProductDTO.getPrice());
         product.setBrand(optionalBrand.get());
+        product.setColor(optionalColor.get());
         product.setCategories(categories);
 
         this.productRepository.saveAndFlush(product);
@@ -169,6 +178,7 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice());
         productDTO.setBrand(product.getBrand().getBrandName());
+        productDTO.setColor(product.getColor().getDescription());
 
         List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
         productDTO.setImageUrls(imageUrls);

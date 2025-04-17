@@ -76,10 +76,10 @@ public class ProductController {
 
         ProductsListDTO allProducts = this.productService.getAllProducts();
 
+        modelAndView.addObject("products", allProducts);
+
         if (allProducts.getProducts().isEmpty()) {
-            modelAndView.addObject("warningMessage", "Все още няма добавени екскурзии за разглеждане!");
-        } else {
-            modelAndView.addObject("products", allProducts);
+            modelAndView.addObject("warningMessage", "Все още няма добавени продукти за разглеждане!");
         }
 
         return modelAndView;

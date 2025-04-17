@@ -6,19 +6,29 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/CartItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CartItemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CartItemServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/CartItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/CartItemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ShoppingCartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ShoppingCartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/GlobalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/GlobalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/products-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/products-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/add-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/add-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/products.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789488842_kecove-adidas-grand-court-base-20-gw9261-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789488857_kecove-adidas-grand-court-base-20-gw9261-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789488867_kecove-adidas-grand-court-base-20-gw9261-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789488876_kecove-adidas-grand-court-base-20-gw9261-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789488887_kecove-adidas-grand-court-base-20-gw9261-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789488900_kecove-adidas-grand-court-base-20-gw9261-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789722595_kecove-adidas-vs-pace-20-hp6004-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789722608_kecove-adidas-vs-pace-20-hp6004-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789722617_kecove-adidas-vs-pace-20-hp6004-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789722626_kecove-adidas-vs-pace-20-hp6004-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789722638_kecove-adidas-vs-pace-20-hp6004-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1744789722647_kecove-adidas-vs-pace-20-hp6004-6.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +40,12 @@
       <list>
         <option value="package-info" />
         <option value="AnnotationType" />
-        <option value="Enum" />
-        <option value="Interface" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>

@@ -26,6 +26,9 @@ public class AddProductDTO {
     @NotNull(message = "Изберете марка!")
     private Long brandId;
 
+    @NotNull(message = "Изберете цвят!")
+    private Long colorId;
+
     @NotEmpty(message = "Изберете поне една категория!")
     private Set<Long> categories;
 
@@ -71,6 +74,14 @@ public class AddProductDTO {
 
     public void setBrandId(Long brandId) {
         this.brandId = brandId;
+    }
+
+    public Long getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
     }
 
     public Set<Long> getCategories() {

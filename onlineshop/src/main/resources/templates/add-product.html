@@ -64,6 +64,17 @@
             </div>
 
             <div class="field">
+                <label th:for="colorId">Цвят</label>
+                <select th:field="*{colorId}" name="colorId" id="colorId">
+                    <option value="">-- Изберете цвят --</option>
+                    <option th:each="color : ${colors}"
+                            th:value="${color.id}"
+                            th:text="${color.description}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="field">
                 <label th:for="categories">Категории</label>
                 <div class="categories">
                     <label th:each="cat : ${categoryIds}">

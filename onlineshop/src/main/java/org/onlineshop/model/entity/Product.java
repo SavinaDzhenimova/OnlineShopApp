@@ -29,6 +29,10 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "color_id", referencedColumnName = "id")
+    private Color color;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<QuantitySize> quantitySize;
 
@@ -85,6 +89,14 @@ public class Product extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public Set<QuantitySize> getQuantitySize() {
