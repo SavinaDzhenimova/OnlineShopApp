@@ -1,7 +1,6 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
-import org.onlineshop.model.enums.Size;
 
 @Entity
 @Table(name = "cart_items")

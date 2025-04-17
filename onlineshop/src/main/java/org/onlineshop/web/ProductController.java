@@ -2,7 +2,6 @@ package org.onlineshop.web;
 
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
-import org.onlineshop.model.enums.Size;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
@@ -10,9 +9,6 @@ import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.service.interfaces.BrandService;
 import org.onlineshop.service.interfaces.CategoryService;
 import org.onlineshop.service.interfaces.ProductService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

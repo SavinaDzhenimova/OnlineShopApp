@@ -1,6 +1,6 @@
 package org.onlineshop.model.enums;
 
-public enum Size {
+public enum SizeName {
 
     SIZE_19(19),
     SIZE_20(20),
@@ -36,7 +36,7 @@ public enum Size {
 
     private final int value;
 
-    Size(int value) {
+    SizeName(int value) {
         this.value = value;
     }
 
@@ -44,8 +44,8 @@ public enum Size {
         return value;
     }
 
-    public static Size fromValue(int value) {
-        for (Size size : values()) {
+    public static SizeName fromValue(int value) {
+        for (SizeName size : values()) {
             if (size.value == value) {
                 return size;
             }

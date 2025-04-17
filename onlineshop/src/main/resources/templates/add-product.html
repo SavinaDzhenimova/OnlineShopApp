@@ -103,7 +103,7 @@
                         <div class="size">
                             <label>Размер:</label>
                             <select name="sizes[0].size">
-                                <option th:each="s : ${shoeSizes}" th:value="${s}" th:text="${s}"></option>
+                                <option th:each="s : ${shoeSizes}" th:value="${s.size}" th:text="'№ ' + ${s.size}"></option>
                             </select>
                         </div>
 

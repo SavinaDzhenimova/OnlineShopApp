@@ -1,7 +1,6 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
-import org.onlineshop.model.enums.Size;
 
 @Entity
 @Table(name = "quantities_sizes")
@@ -11,9 +10,9 @@ public class QuantitySize extends BaseEntity {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Size size;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "size_label", referencedColumnName = "size")
+    private ShoeSize size;
 
     @Column(nullable = false)
     private int quantity;
@@ -29,11 +28,11 @@ public class QuantitySize extends BaseEntity {
         this.product = product;
     }
 
-    public Size getSize() {
+    public ShoeSize getSize() {
         return size;
     }
 
-    public void setSize(Size size) {
+    public void setSize(ShoeSize size) {
         this.size = size;
     }
 

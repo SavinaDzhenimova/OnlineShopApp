@@ -1,18 +1,18 @@
 package org.onlineshop.model.importDTO;
 
-import org.onlineshop.model.enums.Size;
+import org.onlineshop.model.entity.ShoeSize;
 
 public class QuantitySizeDTO {
 
-    private Size size;
+    private Integer size;
 
     private int quantity;
 
-    public Size getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(Size size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 

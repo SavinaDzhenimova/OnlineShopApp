@@ -21,18 +21,21 @@ public class ProductServiceImpl implements ProductService {
     private final BrandService brandService;
     private final ColorService colorService;
     private final CategoryService categoryService;
+    private final ShoeSizeService shoeSizeService;
     private final ImageService imageService;
     private final UserService userService;
     private final CartItemService cartItemService;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
                               BrandService brandService, ColorService colorService, CategoryService categoryService,
-                              ImageService imageService, UserService userService, CartItemService cartItemService) {
+                              ShoeSizeService shoeSizeService, ImageService imageService, UserService userService,
+                              CartItemService cartItemService) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
         this.colorService = colorService;
         this.categoryService = categoryService;
+        this.shoeSizeService = shoeSizeService;
         this.imageService = imageService;
         this.userService = userService;
         this.cartItemService = cartItemService;
@@ -97,7 +100,9 @@ public class ProductServiceImpl implements ProductService {
                 .map(quantitySizeDTO -> {
                     QuantitySize quantitySize = new QuantitySize();
 
-                    quantitySize.setSize(quantitySizeDTO.getSize());
+                    Optional<ShoeSize> optionalSize = this.shoeSizeService.getBySize(quantitySizeDTO.getSize());
+
+                    quantitySize.setSize(optionalSize.get());
                     quantitySize.setQuantity(quantitySizeDTO.getQuantity());
                     quantitySize.setProduct(product);
 
@@ -140,7 +145,7 @@ public class ProductServiceImpl implements ProductService {
 
         Optional<QuantitySize> matchingSize = product.getQuantitySize()
                 .stream()
-                .filter(qs -> qs.getSize().getValue() == addCartItemDTO.getSize())
+                .filter(qs -> qs.getSize().getSize().equals(addCartItemDTO.getSize()))
                 .findFirst();
 
         if (matchingSize.isEmpty()) {
@@ -220,7 +225,7 @@ public class ProductServiceImpl implements ProductService {
 
         for (QuantitySize quantitySize : quantitySizes) {
             if (quantitySize != null && quantitySize.getSize() != null) {
-                integerSizes.add(quantitySize.getSize().getValue());
+                integerSizes.add(quantitySize.getSize().getSize());
             }
         }
 
