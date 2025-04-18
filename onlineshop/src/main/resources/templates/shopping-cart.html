@@ -95,13 +95,27 @@
         </div>
 
         <div class="shopping-cart-price" th:if="${not shoppingCart.cartItems.empty}">
-            <div class="total-price">
-                <p>Обща сума:</p><span th:text="${totalPrice} + ' лв.'"></span>
+            <div class="promo-code">
+                <form class="promo-code-form"
+                      th:action="@{/}"
+                      th:method="POST">
+                    <label for="promoCode">Имаш промо код?</label>
+                    <input type="text" name="promoCode" id="promoCode" placeholder="Въведи промо кода тук"/>
+                    <button type="submit">Приложи</button>
+                </form>
             </div>
 
-            <form th:method="POST">
-                <button type="submit">Поръчай</button>
-            </form>
+            <div class="price-section">
+                <div class="total-price">
+                    <p>Обща сума:</p><span th:text="${totalPrice} + ' лв.'"></span>
+                </div>
+
+                <form class="make-order-form"
+                      th:action="@{/}"
+                      th:method="POST">
+                    <button type="submit">Поръчай</button>
+                </form>
+            </div>
         </div>
     </main>
 

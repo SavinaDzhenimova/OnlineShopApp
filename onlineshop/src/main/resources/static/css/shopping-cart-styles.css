@@ -76,26 +76,63 @@ main .shopping-cart-items .cart-item .price {
 }
 
 main .shopping-cart-price {
-    width: 20%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    align-self: flex-end;
+    justify-content: space-between;
+    align-items: center;
 }
 
-main .shopping-cart-price .total-price {
+main .shopping-cart-price .promo-code .promo-code-form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+main .shopping-cart-price .promo-code .promo-code-form label {
+    width: 100%;
+    font-size: 16px;
+    padding-bottom: 0.5em;
+}
+
+main .shopping-cart-price .promo-code .promo-code-form input {
+    width: 300px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+    padding: 0.5em 1em;
+    font-size: 14px;
+}
+
+main .shopping-cart-price .promo-code .promo-code-form button[type="submit"] {
+    outline: none;
+    border: none;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+    padding: 1em;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+main .shopping-cart-price .price-section {
+    width: 20%;
+}
+
+main .shopping-cart-price .price-section .total-price {
     width: 100%;
     display: flex;
     justify-content: space-between;
     font-size: 20px;
     font-weight: 500;
+    border-bottom: 1px solid #ccc;
 }
 
-main .shopping-cart-price form {
+main .shopping-cart-price .price-section .make-order-form {
     width: 100%;
 }
 
-main .shopping-cart-price form button[type="submit"] {
+main .shopping-cart-price .price-section .make-order-form button[type="submit"] {
     background-color: green;
     color: #fff;
     padding: 1em;
