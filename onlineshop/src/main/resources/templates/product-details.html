@@ -15,7 +15,7 @@
     <main>
         <div class="image-container">
             <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
-            <form th:action="@{/profile/add-favourites}"
+            <form th:action="@{/profile/add-favourites/{id}(id=${product.getId()})}"
                   th:method="POST">
                 <input type="hidden" name="productId" value="${product.getId()}" />
                 <button type="submit" class="wishlist">♡</button>
@@ -50,7 +50,7 @@
                 <span th:text="'Цвят: ' + ${product.getColor()}"></span>
             </div>
 
-            <form th:action="@{/products/add-to-shopping-cart/{id}(id=${product.getId()})}"
+            <form th:action="@{/shopping-cart/add-item/{id}(id=${product.getId()})}"
                   th:method="POST"
                   th:object="${addCartItemDTO}"
                   class="add-cart-item">

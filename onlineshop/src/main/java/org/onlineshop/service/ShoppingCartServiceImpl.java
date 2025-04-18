@@ -10,13 +10,13 @@ import org.onlineshop.model.importDTO.QuantitySizeDTO;
 import org.onlineshop.repository.ShoppingCartRepository;
 import org.onlineshop.service.interfaces.CartItemService;
 import org.onlineshop.service.interfaces.CategoryService;
+import org.onlineshop.service.interfaces.ProductService;
 import org.onlineshop.service.interfaces.ShoppingCartService;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -25,13 +25,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final CartItemService cartItemService;
     private final CategoryService categoryService;
     private final CurrentUserProvider currentUserProvider;
+    private final ProductService productService;
 
     public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, CartItemService cartItemService,
-                                   CategoryService categoryService, CurrentUserProvider currentUserProvider) {
+                                   CategoryService categoryService, CurrentUserProvider currentUserProvider,
+                                   ProductService productService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.cartItemService = cartItemService;
         this.categoryService = categoryService;
         this.currentUserProvider = currentUserProvider;
+        this.productService = productService;
     }
 
     @Transactional
@@ -90,7 +93,37 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Result addItemToCart(Product product, AddCartItemDTO addCartItemDTO, ShoppingCart cart) {
+    public Result addProductToShoppingCart(Long productId, AddCartItemDTO addCartItemDTO, HttpSession session) {
+
+        addCartItemDTO.setProductId(productId);
+        Optional<Product> optionalProduct = this.productService.getById(addCartItemDTO.getProductId());
+
+        if (optionalProduct.isEmpty()) {
+            return new Result(false, "Продуктът, който се опитвате да добавите в количката, не съществува!");
+        }
+
+        Product product = optionalProduct.get();
+        ShoppingCart shoppingCart;
+
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        if (loggedUser != null) {
+            shoppingCart = loggedUser.getShoppingCart();
+        } else {
+            shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
+
+            if (shoppingCart == null) {
+                shoppingCart = new ShoppingCart();
+                shoppingCart.setCartItems(new ArrayList<>());
+                session.setAttribute("guestCart", shoppingCart);
+            }
+        }
+
+        return this.addItemToCart(product, addCartItemDTO, shoppingCart);
+    }
+
+    @Override
+    public Result addItemToCart(Product product, AddCartItemDTO addCartItemDTO, ShoppingCart shoppingCart) {
         Optional<QuantitySize> matchingSize = product.getQuantitySize()
                 .stream()
                 .filter(quantitySize -> quantitySize.getSize().getSize().equals(addCartItemDTO.getSize()))
@@ -109,18 +142,45 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         CartItem cartItem = new CartItem();
-        cartItem.setShoppingCart(cart);
+        cartItem.setShoppingCart(shoppingCart);
         cartItem.setProduct(product);
         cartItem.setQuantity(requestedQuantity);
         cartItem.setSize(addCartItemDTO.getSize());
 
-        if (cart.getId() != null) {
+        if (shoppingCart.getId() != null) {
             this.cartItemService.saveAndFlush(cartItem);
         } else {
-            cart.getCartItems().add(cartItem);
+            cartItem.setTempId(System.currentTimeMillis() + (long) (Math.random() * 100000));
+            shoppingCart.getCartItems().add(cartItem);
         }
 
         return new Result(true, "Успешно добавихте този продукт във вашата количка!");
+    }
+
+    @Override
+    public Result removeItemFromShoppingCart(Long cartItemId, HttpSession session) {
+
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+        ShoppingCart shoppingCart = (loggedUser != null)
+                ? loggedUser.getShoppingCart()
+                : (ShoppingCart) session.getAttribute("guestCart");
+
+        if (shoppingCart == null || shoppingCart.getCartItems() == null) {
+            return new Result(false, "Няма активна количка.");
+        }
+
+        boolean removed = shoppingCart.getCartItems().removeIf(cartItem ->
+                (cartItem.getId() != null && cartItem.getId().equals(cartItemId)) ||
+                (cartItem.getId() == null && cartItem.getTempId() != null && cartItem.getTempId().equals(cartItemId)));
+
+        if (removed) {
+            this.cartItemService.deleteById(cartItemId);
+            this.shoppingCartRepository.saveAndFlush(shoppingCart);
+
+            return new Result(true, "Продуктът беше успешно премахнат от количката.");
+        }
+
+        return new Result(false, "Продуктът не беше намерен в количката.");
     }
 
     @Override

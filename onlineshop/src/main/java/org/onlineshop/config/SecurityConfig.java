@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,15 +20,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(csrfTokenRepository()))
+                .csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
                                 "/loyalty-program", "/choose-size", "/users/login", "/users/register",
-                                "/products/all", "/products/product/**", "/products/add-to-shopping-cart/**",
-                                "/shopping-cart").permitAll()
+                                "/products/all", "/products/product/**", "/shopping-cart/**").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product").hasRole("ADMIN")
@@ -46,6 +45,11 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                 )
                 .build();
+    }
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
     }
 
     @Bean

@@ -24,6 +24,8 @@ public class CartItemDTO {
 
     private BigDecimal price;
 
+    private Long tempId;
+
     public CartItemDTO() {
         this.quantitySizes = new HashSet<>();
     }
@@ -90,5 +92,13 @@ public class CartItemDTO {
 
     public void setQuantitySizes(Set<QuantitySizeDTO> quantitySizes) {
         this.quantitySizes = quantitySizes;
+    }
+
+    public Long getTempId() {
+        return tempId;
+    }
+
+    public void setTempId(Long tempId) {
+        this.tempId = tempId;
     }
 }

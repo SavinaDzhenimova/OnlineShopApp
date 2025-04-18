@@ -1,11 +1,12 @@
 package org.onlineshop.service.interfaces;
 
-import jakarta.servlet.http.HttpSession;
+import org.onlineshop.model.entity.Product;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
-import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
+
+import java.util.Optional;
 
 public interface ProductService {
 
@@ -15,5 +16,5 @@ public interface ProductService {
 
     ProductDTO getProductInfo(Long id);
 
-    Result addProductToShoppingCart(Long productId, AddCartItemDTO addCartItemDTO, HttpSession session);
+    Optional<Product> getById(Long id);
 }

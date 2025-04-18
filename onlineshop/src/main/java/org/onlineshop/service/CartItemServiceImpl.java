@@ -18,6 +18,16 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public Optional<CartItem> getById(Long id) {
+        return this.cartItemRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.cartItemRepository.deleteById(id);
+    }
+
+    @Override
     public void saveAndFlush(CartItem cartItem) {
         this.cartItemRepository.saveAndFlush(cartItem);
     }

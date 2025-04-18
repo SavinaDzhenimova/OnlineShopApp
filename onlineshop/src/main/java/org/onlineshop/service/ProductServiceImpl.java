@@ -1,15 +1,12 @@
 package org.onlineshop.service;
 
-import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
-import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.model.importDTO.QuantitySizeDTO;
 import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.*;
-import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,14 +23,10 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryService categoryService;
     private final ShoeSizeService shoeSizeService;
     private final ImageService imageService;
-    private final UserService userService;
-    private final ShoppingCartService shoppingCartService;
-    private final CurrentUserProvider currentUserProvider;
 
     public ProductServiceImpl(ProductRepository productRepository, QuantitySizeService quantitySizeService,
                               BrandService brandService, ColorService colorService, CategoryService categoryService,
-                              ShoeSizeService shoeSizeService, ImageService imageService, UserService userService,
-                              ShoppingCartService shoppingCartService, CurrentUserProvider currentUserProvider) {
+                              ShoeSizeService shoeSizeService, ImageService imageService) {
         this.productRepository = productRepository;
         this.quantitySizeService = quantitySizeService;
         this.brandService = brandService;
@@ -41,9 +34,6 @@ public class ProductServiceImpl implements ProductService {
         this.categoryService = categoryService;
         this.shoeSizeService = shoeSizeService;
         this.imageService = imageService;
-        this.userService = userService;
-        this.shoppingCartService = shoppingCartService;
-        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
@@ -137,36 +127,6 @@ public class ProductServiceImpl implements ProductService {
         return this.mapProductToDTO(product);
     }
 
-    @Override
-    public Result addProductToShoppingCart(Long productId, AddCartItemDTO dto, HttpSession session) {
-
-        dto.setProductId(productId);
-        Optional<Product> optionalProduct = this.productRepository.findById(dto.getProductId());
-
-        if (optionalProduct.isEmpty()) {
-            return new Result(false, "Продуктът, който се опитвате да добавите в количката, не съществува!");
-        }
-
-        Product product = optionalProduct.get();
-        ShoppingCart shoppingCart;
-
-        User loggedUser = this.currentUserProvider.getLoggedUser();
-
-        if (loggedUser != null) {
-            shoppingCart = loggedUser.getShoppingCart();
-        } else {
-            shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
-
-            if (shoppingCart == null) {
-                shoppingCart = new ShoppingCart();
-                shoppingCart.setCartItems(new ArrayList<>());
-                session.setAttribute("guestCart", shoppingCart);
-            }
-        }
-
-        return this.shoppingCartService.addItemToCart(product, dto, shoppingCart);
-    }
-
     private ProductDTO mapProductToDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
 
@@ -198,6 +158,11 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> productDTOS = allProducts.stream().map(this::mapProductToDTO).toList();
 
         return new ProductsListDTO(productDTOS);
+    }
+
+    @Override
+    public Optional<Product> getById(Long id) {
+        return this.productRepository.findById(id);
     }
 
     private List<String> mapImageToImageUrl(List<Image> images) {

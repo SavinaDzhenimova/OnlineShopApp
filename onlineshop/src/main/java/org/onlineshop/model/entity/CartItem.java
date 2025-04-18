@@ -20,6 +20,9 @@ public class CartItem extends BaseEntity {
     @Column(nullable = false)
     private int size;
 
+    @Transient
+    private Long tempId;
+
     public CartItem() {
     }
 
@@ -53,5 +56,13 @@ public class CartItem extends BaseEntity {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public Long getTempId() {
+        return tempId;
+    }
+
+    public void setTempId(Long tempId) {
+        this.tempId = tempId;
     }
 }

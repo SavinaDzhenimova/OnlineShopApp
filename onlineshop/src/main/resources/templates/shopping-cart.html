@@ -15,6 +15,10 @@
     <main>
         <h1>Количка</h1>
 
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
+
         <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
           <p th:text="${failureMessage}"></p>
         </div>
@@ -31,7 +35,6 @@
 
                 <div class="product-title">
                     <h2 th:text="${cartItem.getName()}"></h2>
-
                     <div class="product-type">
                         <span th:if="${cartItem.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
                         <span th:if="${cartItem.categories.contains('Дамски обувки')}">Дамски обувки</span>
@@ -39,27 +42,51 @@
                     </div>
                 </div>
 
-                <div class="size-selector">
-                    <label for="quantity">Размер:</label>
-                    <select id="size" name="size" th:attr="data-selected-quantity=${cartItem.selectedQuantity}">
-                        <option th:each="size : ${cartItem.quantitySizes}"
-                                th:value="${size.size}"
-                                th:data-quantity="${size.quantity}"
-                                th:text="'№ ' + ${size.size}"
-                                th:selected="${size.size} == ${cartItem.selectedSize}">
-                        </option>
-                    </select>
+                <!-- ВАЖНО: data-цена, data-избран размер и количество -->
+                <div class="cart-item-info"
+                     th:attr="data-price=${cartItem.getPrice()},
+                  data-selected-quantity=${cartItem.selectedQuantity}">
+
+                    <div class="size-selector">
+                        <label th:for="'size-' + ${cartItem.id}">Размер:</label>
+                        <select th:id="'size-' + ${cartItem.id}"
+                                class="size-select"
+                                name="size">
+                            <option th:each="size : ${cartItem.quantitySizes}"
+                                    th:value="${size.size}"
+                                    th:data-quantity="${size.quantity}"
+                                    th:text="'№ ' + ${size.size}"
+                                    th:selected="${size.size} == ${cartItem.selectedSize}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="quantity-input">
+                        <label th:for="'quantity-' + ${cartItem.id}">Количество:</label>
+                        <select th:id="'quantity-' + ${cartItem.id}"
+                                class="quantity-select"
+                                name="quantity"
+                                required>
+                            <!-- ще се запълни чрез JS -->
+                        </select>
+                    </div>
                 </div>
 
-                <div class="quantity-input">
-                    <label for="quantity">Количество:</label>
-                    <select id="quantity" name="quantity" required>
-                        <!-- Опциите ще се запълнят динамично чрез JavaScript -->
-                    </select>
+                <div class="buttons">
+                    <form th:action="@{/shopping-cart/remove-item/{id}(id=${cartItem.id != null ? cartItem.id : cartItem.tempId})}"
+                          th:method="POST">
+                        <button type="submit"><i class="fa-regular fa-trash-can"></i>Премахни</button>
+                    </form>
+                    <form th:action="@{/profile/add-favourites/{id}(id=${cartItem.getId()})}"
+                          th:method="POST">
+                        <button type="submit"><i class="fa-regular fa-heart"></i>Добави в любими</button>
+                    </form>
                 </div>
 
                 <div class="price">
-                    <span class="current" th:text="${cartItem.getPrice()} + ' лв.'">129.99 лв.</span>
+                    <span class="current"
+                          th:id="'price-' + ${cartItem.id}"
+                          th:text="${cartItem.getPrice()} + ' лв.'">129.99 лв.</span>
                 </div>
             </div>
         </div>
