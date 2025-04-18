@@ -30,7 +30,7 @@ public class SecurityConfig {
                                 "/shopping-cart/remove-item/**").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
-                        .requestMatchers("/products/add-product").hasRole("ADMIN")
+                        .requestMatchers("/products/add-product", "/promo-codes/add-promo-code").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/add-promo-code-styles.css">
+    <title>Добави промо код</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <form th:action="@{/promo-codes/add-promo-code}"
+              th:method="POST"
+              th:object="${addPromoCodeDTO}">
+
+            <h2>Добави промо код</h2>
+
+            <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+                <p th:text="${failureMessage}"></p>
+            </div>
+
+            <div class="field">
+                <label th:for="code">Наименование на кода</label>
+                <input type="text" th:field="*{code}" name="code" id="code">
+            </div>
+
+            <div class="field">
+                <label th:for="discountValue">Стойност на отстъпката (в %)</label>
+                <input type="number" th:field="*{discountValue}" name="discountValue" id="discountValue">
+            </div>
+
+            <div class="field">
+                <label th:for="validFrom">Валиден от</label>
+                <input type="date" th:field="*{validFrom}" name="validFrom" id="validFrom">
+            </div>
+
+            <div class="field">
+                <label th:for="validTo">Валиден до</label>
+                <input type="date" th:field="*{validTo}" name="validTo" id="validTo">
+            </div>
+
+            <button type="submit">Добави промо код</button>
+            <a th:href="@{/users/profile}">Обратно към профил</a>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>
