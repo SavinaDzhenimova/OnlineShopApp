@@ -3,7 +3,6 @@ package org.onlineshop.init;
 import org.onlineshop.model.entity.Role;
 import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.repository.RoleRepository;
-import org.onlineshop.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -14,16 +13,14 @@ import java.util.Arrays;
 @Order(1)
 public class RolesInit implements CommandLineRunner {
 
-    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public RolesInit(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
+    public RolesInit(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (this.roleRepository.count() == 0) {
 
             Arrays.stream(RoleName.values())

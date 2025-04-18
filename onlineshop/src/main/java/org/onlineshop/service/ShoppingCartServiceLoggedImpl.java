@@ -11,51 +11,44 @@ import org.onlineshop.repository.ShoppingCartRepository;
 import org.onlineshop.service.interfaces.CartItemService;
 import org.onlineshop.service.interfaces.CategoryService;
 import org.onlineshop.service.interfaces.ProductService;
-import org.onlineshop.service.interfaces.ShoppingCartService;
-import org.onlineshop.service.utils.CurrentUserProvider;
+import org.onlineshop.service.interfaces.ShoppingCartServiceLogged;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged {
 
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemService cartItemService;
     private final CategoryService categoryService;
-    private final CurrentUserProvider currentUserProvider;
     private final ProductService productService;
 
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, CartItemService cartItemService,
-                                   CategoryService categoryService, CurrentUserProvider currentUserProvider,
-                                   ProductService productService) {
+    public ShoppingCartServiceLoggedImpl(ShoppingCartRepository shoppingCartRepository, CartItemService cartItemService,
+                                         CategoryService categoryService, ProductService productService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.cartItemService = cartItemService;
         this.categoryService = categoryService;
-        this.currentUserProvider = currentUserProvider;
         this.productService = productService;
     }
 
     @Transactional
     @Override
-    public ShoppingCartDTO getCartItemsForCurrentUser(HttpSession session) {
-        User loggedUser = this.currentUserProvider.getLoggedUser();
-
-        ShoppingCart shoppingCart;
-
-        if (loggedUser != null) {
-            shoppingCart = loggedUser.getShoppingCart();
-        } else {
-            shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
+    public ShoppingCartDTO getCartItemsForCurrentUser(User loggedUser, HttpSession session) {
+        if (loggedUser == null) {
+            return new ShoppingCartDTO(new ArrayList<>(), BigDecimal.ZERO);
         }
 
+        ShoppingCart shoppingCart = loggedUser.getShoppingCart();
         if (shoppingCart == null || shoppingCart.getCartItems() == null) {
             return new ShoppingCartDTO(new ArrayList<>(), BigDecimal.ZERO);
         }
 
         List<CartItemDTO> cartItemDTOList = shoppingCart.getCartItems().stream()
-                .map(this::mapToCartItemDTO).toList();
+                .map(this::mapToCartItemDTO)
+                .collect(Collectors.toList());
 
         BigDecimal totalPrice = shoppingCart.getCartItems().stream()
                 .map(cartItem -> cartItem.getProduct().getPrice()
@@ -70,6 +63,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Product product = cartItem.getProduct();
 
         cartItemDTO.setId(cartItem.getId());
+        if (cartItem.getId() == null && cartItem.getTempId() != null) {
+            cartItemDTO.setTempId(cartItem.getTempId());
+        }
+
         cartItemDTO.setName(product.getName());
         cartItemDTO.setImageUrl(product.getImages().get(0).getImageUrl());
         cartItemDTO.setCategories(this.categoryService.mapCategoriesToString(product.getCategories()));
@@ -80,10 +77,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Set<QuantitySizeDTO> quantitySizes = new TreeSet<>(product.getQuantitySize().stream()
                 .map(quantitySize -> {
                     QuantitySizeDTO quantitySizeDTO = new QuantitySizeDTO();
-
                     quantitySizeDTO.setSize(quantitySize.getSize().getSize());
                     quantitySizeDTO.setQuantity(quantitySize.getQuantity());
-
                     return quantitySizeDTO;
                 }).toList());
 
@@ -93,8 +88,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Result addProductToShoppingCart(Long productId, AddCartItemDTO addCartItemDTO, HttpSession session) {
-
+    public Result addProductToShoppingCart(User loggedUser, Long productId, AddCartItemDTO addCartItemDTO, HttpSession session) {
         addCartItemDTO.setProductId(productId);
         Optional<Product> optionalProduct = this.productService.getById(addCartItemDTO.getProductId());
 
@@ -103,21 +97,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         Product product = optionalProduct.get();
-        ShoppingCart shoppingCart;
-
-        User loggedUser = this.currentUserProvider.getLoggedUser();
-
-        if (loggedUser != null) {
-            shoppingCart = loggedUser.getShoppingCart();
-        } else {
-            shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
-
-            if (shoppingCart == null) {
-                shoppingCart = new ShoppingCart();
-                shoppingCart.setCartItems(new ArrayList<>());
-                session.setAttribute("guestCart", shoppingCart);
-            }
-        }
+        ShoppingCart shoppingCart = loggedUser.getShoppingCart();
 
         return this.addItemToCart(product, addCartItemDTO, shoppingCart);
     }
@@ -147,31 +127,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setQuantity(requestedQuantity);
         cartItem.setSize(addCartItemDTO.getSize());
 
-        if (shoppingCart.getId() != null) {
-            this.cartItemService.saveAndFlush(cartItem);
-        } else {
-            cartItem.setTempId(System.currentTimeMillis() + (long) (Math.random() * 100000));
-            shoppingCart.getCartItems().add(cartItem);
-        }
-
+        this.cartItemService.saveAndFlush(cartItem);
         return new Result(true, "Успешно добавихте този продукт във вашата количка!");
     }
 
     @Override
-    public Result removeItemFromShoppingCart(Long cartItemId, HttpSession session) {
-
-        User loggedUser = this.currentUserProvider.getLoggedUser();
-        ShoppingCart shoppingCart = (loggedUser != null)
-                ? loggedUser.getShoppingCart()
-                : (ShoppingCart) session.getAttribute("guestCart");
-
-        if (shoppingCart == null || shoppingCart.getCartItems() == null) {
-            return new Result(false, "Няма активна количка.");
-        }
+    public Result removeItemFromShoppingCart(User loggedUser, Long cartItemId, HttpSession session) {
+        ShoppingCart shoppingCart = loggedUser.getShoppingCart();
 
         boolean removed = shoppingCart.getCartItems().removeIf(cartItem ->
-                (cartItem.getId() != null && cartItem.getId().equals(cartItemId)) ||
-                (cartItem.getId() == null && cartItem.getTempId() != null && cartItem.getTempId().equals(cartItemId)));
+                cartItem.getId().equals(cartItemId));
 
         if (removed) {
             this.cartItemService.deleteById(cartItemId);

@@ -1,68 +1,82 @@
+// Актуализира опциите за количеството според избрания размер
 function updateQuantityOptions(sizeSelect) {
-    const cartItemInfo = sizeSelect.closest('.cart-item-info');
-    const cartItemId = sizeSelect.id.split('-')[1];
-
+    const cartItemId = sizeSelect.id.replace('size-', '');
     const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
     const availableQuantity = parseInt(selectedOption.dataset.quantity);
 
     const quantitySelect = document.getElementById(`quantity-${cartItemId}`);
-    const preselectedQuantity = parseInt(cartItemInfo.dataset.selectedQuantity);
+    const preselectedQuantity = parseInt(sizeSelect.dataset.selectedQuantity);
 
-    quantitySelect.innerHTML = '';
+    quantitySelect.innerHTML = ''; // Изчистваме старите стойности
 
     for (let i = 1; i <= availableQuantity; i++) {
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
+
         if (i === preselectedQuantity) {
             option.selected = true;
         }
+
         quantitySelect.appendChild(option);
     }
 }
 
-function updatePrice(sizeSelect) {
-    const cartItemInfo = sizeSelect.closest('.cart-item-info');
-    const cartItemId = sizeSelect.id.split('-')[1];
-    const pricePerUnit = parseFloat(cartItemInfo.dataset.price);
-
+// Актуализира цената на продукта спрямо количеството
+function updateProductPrice(cartItemId) {
     const quantitySelect = document.getElementById(`quantity-${cartItemId}`);
-    const selectedQuantity = parseInt(quantitySelect.value);
+    const quantity = parseInt(quantitySelect.value);
+    const priceElement = document.getElementById(`price-${cartItemId}`);
 
-    const newPrice = (pricePerUnit * selectedQuantity).toFixed(2);
-    document.getElementById(`price-${cartItemId}`).textContent = newPrice + ' лв.';
+    const unitPriceText = priceElement.dataset.unitPrice; // Може да добавиш th:attr="data-unit-price=${cartItem.price}"
+    const unitPrice = parseFloat(unitPriceText);
+
+    const newPrice = quantity * unitPrice;
+    priceElement.textContent = newPrice.toFixed(2) + ' лв.';
 }
 
+// Пресмята и показва новата обща сума на количката
 function updateTotalPrice() {
     let total = 0;
-    document.querySelectorAll('.price .current').forEach(span => {
-        const price = parseFloat(span.textContent.replace(' лв.', ''));
-        total += price;
+
+    document.querySelectorAll('.cart-item .current').forEach(function (priceElement) {
+        const priceText = priceElement.textContent;
+        const priceValue = parseFloat(priceText.replace('лв.', '').trim());
+        total += priceValue;
     });
-    const totalPriceEl = document.querySelector('.total-price span');
-    if (totalPriceEl) {
-        totalPriceEl.textContent = total.toFixed(2) + ' лв.';
+
+    const totalSpan = document.querySelector('.total-price span');
+    if (totalSpan) {
+        totalSpan.textContent = total.toFixed(2) + ' лв.';
     }
 }
 
+// Инициализация след зареждане на страницата
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.size-select').forEach(sizeSelect => {
+    // За всеки size select — зареди количествата и закачи събитие
+    document.querySelectorAll('.size-selector select').forEach(function (sizeSelect) {
         updateQuantityOptions(sizeSelect);
 
+        const cartItemId = sizeSelect.id.replace('size-', '');
+
+        // При смяна на размера — презарежда възможните количества
         sizeSelect.addEventListener('change', function () {
-            updateQuantityOptions(this);
-            updatePrice(this);
+            updateQuantityOptions(sizeSelect);
+            updateProductPrice(cartItemId);
             updateTotalPrice();
         });
     });
 
-    document.querySelectorAll('.quantity-select').forEach(quantitySelect => {
+    // За всяко поле за количество — закачи събитие при смяна
+    document.querySelectorAll('.quantity-selector').forEach(function (quantitySelect) {
+        const cartItemId = quantitySelect.id.replace('quantity-', '');
+
         quantitySelect.addEventListener('change', function () {
-            const sizeSelect = this.closest('.cart-item-info').querySelector('.size-select');
-            updatePrice(sizeSelect);
+            updateProductPrice(cartItemId);
             updateTotalPrice();
         });
     });
 
-    updateTotalPrice(); // при първоначално зареждане
+    // Първоначално изчисляване на общата сума
+    updateTotalPrice();
 });

@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserDetailsServiceImpl userDetailsService;
-    private final ShoppingCartService shoppingCartService;
+    private final ShoppingCartServiceLogged shoppingCartService;
     private final PasswordResetService passwordResetService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserProvider currentUserProvider;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
-                           ShoppingCartService shoppingCartService, PasswordResetService passwordResetService,
+                           ShoppingCartServiceLogged shoppingCartService, PasswordResetService passwordResetService,
                            EmailService emailService, PasswordEncoder passwordEncoder,
                            CurrentUserProvider currentUserProvider) {
         this.userRepository = userRepository;
