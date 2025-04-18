@@ -63,6 +63,10 @@ public class GlobalController {
         boolean hasItemsInCart = shoppingCart != null && shoppingCart.getCartItems() != null &&
                 !shoppingCart.getCartItems().isEmpty();
 
+        int cartItemsCount = shoppingCart != null ? shoppingCart.getCartItems().stream()
+                .mapToInt(CartItem::getQuantity).sum(): 0;
+
         model.addAttribute("hasItemsInCart", hasItemsInCart);
+        model.addAttribute("cartItemsCount", cartItemsCount);
     }
 }

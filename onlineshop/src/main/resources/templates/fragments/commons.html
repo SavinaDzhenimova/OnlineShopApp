@@ -52,10 +52,12 @@
                           th:method="POST">
                         <button><i class="fa-solid fa-right-from-bracket"></i>Изход</button>
                     </form>
-                    <a href="#"><i class="fa-regular fa-star"></i>Любими</a>
-                    <a th:href="@{/shopping-cart}">
+                    <a href="#"><i class="fa-regular fa-heart"></i>Любими</a>
+                    <a class="shopping-cart-btn" th:href="@{/shopping-cart}">
                         <i class="fa-solid fa-cart-shopping"></i>Количка
-                        <span class="has-items-in-cart" th:if="${hasItemsInCart}"><i class="fa-solid fa-circle"></i></span>
+                        <span class="has-items-in-cart"
+                              th:if="${hasItemsInCart}"
+                              th:text="${cartItemsCount}"></span>
                     </a>
                 </li>
             </ul>

@@ -18,7 +18,7 @@
             <form th:action="@{/profile/add-favourites/{id}(id=${product.getId()})}"
                   th:method="POST">
                 <input type="hidden" name="productId" value="${product.getId()}" />
-                <button type="submit" class="wishlist">♡</button>
+                <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
             </form>
             <img th:each="imageUrl : ${product.getImageUrls()}" th:src="${imageUrl}" th:alt="${product.getName()}">
         </div>

@@ -25,7 +25,7 @@
                 <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
                 <form th:action="@{/profile/add-favourites}" th:method="POST">
                     <input type="hidden" name="productId" value="${product.id}" />
-                    <button type="submit" class="wishlist">♡</button>
+                    <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
                 </form>
                 <div class="product-image">
                     <img th:src="@{${product.imageUrls[0]}}" th:alt="${product.name}">

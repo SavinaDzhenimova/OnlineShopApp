@@ -154,7 +154,23 @@ header .after-nav i {
     padding-right: 0.5em;
 }
 
-.has-items-in-cart i {
-    padding-left: 0.5em;
-    color: red;
+.shopping-cart-btn {
+    position: relative;
+}
+
+.has-items-in-cart {
+    position: absolute;
+    top: -0.5em;
+    left: 0.5em;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2em 0.5em;
+    background-color: #C00;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 10px;
 }
