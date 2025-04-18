@@ -1,4 +1,3 @@
-// Актуализира опциите за количеството според избрания размер
 function updateQuantityOptions(sizeSelect) {
     const cartItemId = sizeSelect.id.replace('size-', '');
     const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
@@ -22,20 +21,18 @@ function updateQuantityOptions(sizeSelect) {
     }
 }
 
-// Актуализира цената на продукта спрямо количеството
 function updateProductPrice(cartItemId) {
     const quantitySelect = document.getElementById(`quantity-${cartItemId}`);
     const quantity = parseInt(quantitySelect.value);
     const priceElement = document.getElementById(`price-${cartItemId}`);
 
-    const unitPriceText = priceElement.dataset.unitPrice; // Може да добавиш th:attr="data-unit-price=${cartItem.price}"
-    const unitPrice = parseFloat(unitPriceText);
+    const unitPriceInput = document.getElementById(`unit-price-${cartItemId}`);
+    const unitPrice = parseFloat(unitPriceInput.value);
 
     const newPrice = quantity * unitPrice;
     priceElement.textContent = newPrice.toFixed(2) + ' лв.';
 }
 
-// Пресмята и показва новата обща сума на количката
 function updateTotalPrice() {
     let total = 0;
 
@@ -51,15 +48,12 @@ function updateTotalPrice() {
     }
 }
 
-// Инициализация след зареждане на страницата
 document.addEventListener('DOMContentLoaded', function () {
-    // За всеки size select — зареди количествата и закачи събитие
     document.querySelectorAll('.size-selector select').forEach(function (sizeSelect) {
         updateQuantityOptions(sizeSelect);
 
         const cartItemId = sizeSelect.id.replace('size-', '');
 
-        // При смяна на размера — презарежда възможните количества
         sizeSelect.addEventListener('change', function () {
             updateQuantityOptions(sizeSelect);
             updateProductPrice(cartItemId);
@@ -67,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // За всяко поле за количество — закачи събитие при смяна
     document.querySelectorAll('.quantity-selector').forEach(function (quantitySelect) {
         const cartItemId = quantitySelect.id.replace('quantity-', '');
 
@@ -77,6 +70,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Първоначално изчисляване на общата сума
     updateTotalPrice();
 });

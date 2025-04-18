@@ -1,6 +1,5 @@
 package org.onlineshop.web;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;

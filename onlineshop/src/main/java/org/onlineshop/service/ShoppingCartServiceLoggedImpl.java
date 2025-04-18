@@ -72,7 +72,8 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
         cartItemDTO.setCategories(this.categoryService.mapCategoriesToString(product.getCategories()));
         cartItemDTO.setSelectedQuantity(cartItem.getQuantity());
         cartItemDTO.setSelectedSize(cartItem.getSize());
-        cartItemDTO.setPrice(product.getPrice());
+        cartItemDTO.setUnitPrice(product.getPrice());
+        cartItemDTO.setQuantityPrice(product.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
 
         Set<QuantitySizeDTO> quantitySizes = new TreeSet<>(product.getQuantitySize().stream()
                 .map(quantitySize -> {
@@ -113,12 +114,25 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
             return new Result(false, "Избраният размер не е наличен за този продукт!");
         }
 
-        int availableQuantity = matchingSize.get().getQuantity();
         int requestedQuantity = addCartItemDTO.getQuantity();
 
-        if (availableQuantity < requestedQuantity) {
-            return new Result(false, "Наличното количество за размер " +
-                    addCartItemDTO.getSize() + " е само " + availableQuantity + " броя.");
+        Optional<CartItem> existingCartItemOpt = shoppingCart.getCartItems().stream()
+                .filter(cartItem -> cartItem.getProduct().getId().equals(product.getId())
+                        && cartItem.getSize() == (addCartItemDTO.getSize()))
+                .findFirst();
+
+        if (existingCartItemOpt.isPresent()) {
+            CartItem existingCartItem = existingCartItemOpt.get();
+            int newQuantity = existingCartItem.getQuantity() + addCartItemDTO.getQuantity();
+
+            if (newQuantity > matchingSize.get().getQuantity()) {
+                return new Result(false, "Наличността за размер " + addCartItemDTO.getSize() +
+                        " е само " + matchingSize.get().getQuantity() + " броя.");
+            }
+
+            existingCartItem.setQuantity(newQuantity);
+            cartItemService.saveAndFlush(existingCartItem);
+            return new Result(true, "Актуализирахме количеството на този продукт във вашата количка!");
         }
 
         CartItem cartItem = new CartItem();

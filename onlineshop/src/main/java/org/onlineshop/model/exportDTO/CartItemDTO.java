@@ -22,7 +22,9 @@ public class CartItemDTO {
 
     private Integer selectedSize;
 
-    private BigDecimal price;
+    private BigDecimal unitPrice;
+
+    private BigDecimal quantityPrice;
 
     private Long tempId;
 
@@ -78,12 +80,20 @@ public class CartItemDTO {
         this.selectedSize = selectedSize;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getQuantityPrice() {
+        return quantityPrice;
+    }
+
+    public void setQuantityPrice(BigDecimal quantityPrice) {
+        this.quantityPrice = quantityPrice;
     }
 
     public Set<QuantitySizeDTO> getQuantitySizes() {

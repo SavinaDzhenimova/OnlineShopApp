@@ -83,10 +83,13 @@
                 </div>
 
                 <div class="price">
+                    <input type="hidden" th:id="'unit-price-' + ${cartItem.id != null ? cartItem.id : cartItem.tempId}"
+                           th:value="${cartItem.getUnitPrice()}" />
+
                     <span class="current"
                           th:id="'price-' + ${cartItem.id != null ? cartItem.id : cartItem.tempId}"
-                          th:attr="data-unit-price=${cartItem.getPrice()}"
-                          th:text="${cartItem.getPrice()} + ' лв.'">129.99 лв.</span>
+                          th:attr="data-unit-price=${cartItem.getQuantityPrice()}"
+                          th:text="${cartItem.getQuantityPrice()} + ' лв.'">129.99 лв.</span>
                 </div>
             </div>
         </div>
