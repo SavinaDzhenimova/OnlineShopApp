@@ -2,7 +2,7 @@ package org.onlineshop.web;
 
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
-import org.onlineshop.model.importDTO.AddProductDTO;
+import org.onlineshop.model.exportDTO.PromoCodesListDTO;
 import org.onlineshop.model.importDTO.AddPromoCodeDTO;
 import org.onlineshop.service.interfaces.PromoCodeService;
 import org.springframework.stereotype.Controller;
@@ -23,6 +23,18 @@ public class PromoCodeController {
 
     public PromoCodeController(PromoCodeService promoCodeService) {
         this.promoCodeService = promoCodeService;
+    }
+
+    @GetMapping
+    public ModelAndView showPromoCodes() {
+
+        ModelAndView modelAndView = new ModelAndView("promo-codes");
+
+        PromoCodesListDTO promoCodesList = this.promoCodeService.getAllPromoCodes();
+
+        modelAndView.addObject("promoCodes", promoCodesList);
+
+        return modelAndView;
     }
 
     @GetMapping("/add-promo-code")

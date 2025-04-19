@@ -1,0 +1,27 @@
+main table {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+main table tr th,
+main table tr td {
+    border: 1px solid #ccc;
+    padding: 0.2em 0.5em;
+}
+
+main table tr th {
+    background-color: #000;
+    color: #fff;
+    border-color: #fff;
+    font-size: 16px;
+}
+
+main table tr .active .active-true {
+    color: #4CAF50;
+}
+
+main table tr .active .active-false {
+    color: #C00;
+}

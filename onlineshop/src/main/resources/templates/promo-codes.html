@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/promo-codes-styles.css">
+    <title>Промо кодове</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Промо кодове</h1>
+
+        <table>
+            <tr>
+                <th class="code">Промо код</th>
+                <th class="discount-value">Отстъпка</th>
+                <th class="valid-from">Валиден от</th>
+                <th class="valid-to">Валиден до</th>
+                <th class="active">Активност</th>
+            </tr>
+            <tr th:each="promoCode : ${promoCodes.getPromoCodes()}">
+                <td class="code" th:text="${promoCode.getCode()}"></td>
+                <td class="discount-value" th:text="${promoCode.getDiscountValue()} + '%'"></td>
+                <td class="valid-from" th:text="${#temporals.format(promoCode.getValidFrom(), 'dd MMMM yyyy')}"></td>
+                <td class="valid-to" th:text="${#temporals.format(promoCode.getValidTo(), 'dd MMMM yyyy')}"></td>
+                <td class="active">
+                    <span class="active-true" th:if="${promoCode.isActive()}"><i class="fa-solid fa-check"></i></span>
+                    <span class="active-false" th:unless="${promoCode.isActive()}"><i class="fa-solid fa-xmark"></i></span>
+                </td>
+            </tr>
+        </table>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

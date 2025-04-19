@@ -28,6 +28,7 @@
         <h2 sec:authorize="hasRole('ADMIN')">Администраторско меню</h2>
         <div class="admin-menu" sec:authorize="hasRole('ADMIN')">
             <a class="admin-menu-link" th:href="@{/products/add-product}">Добави продукт</a>
+            <a class="admin-menu-link" th:href="@{/promo-codes}">Промо кодове</a>
             <a class="admin-menu-link" th:href="@{/promo-codes/add-promo-code}">Добави промо код</a>
         </div>
 
