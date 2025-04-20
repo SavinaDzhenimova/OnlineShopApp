@@ -31,6 +31,7 @@ public class PromoCodeServiceImpl implements PromoCodeService {
                 .map(promoCode -> {
                     PromoCodeDTO promoCodeDTO = new PromoCodeDTO();
 
+                    promoCodeDTO.setId(promoCode.getId());
                     promoCodeDTO.setCode(promoCode.getCode());
                     promoCodeDTO.setDiscountValue(promoCode.getDiscountValue());
                     promoCodeDTO.setValidFrom(promoCode.getValidFrom());
@@ -70,5 +71,29 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 
         this.promoCodeRepository.saveAndFlush(promoCode);
         return new Result(true, "Промо кодът е добавен успешно!");
+    }
+
+    @Override
+    public Result deletePromoCode(Long id) {
+
+        Optional<PromoCode> optionalPromoCode = this.promoCodeRepository.findById(id);
+
+        if (optionalPromoCode.isEmpty()) {
+            return new Result(false, "Промо кодът, който се опитвате да премахнете, не съществува!");
+        }
+
+        if (optionalPromoCode.get().isActive()) {
+            return new Result(false, "Не можете да изтриете активен промо код!");
+        }
+
+        this.promoCodeRepository.deleteById(id);
+
+        Optional<PromoCode> optionalPromoCodeAfterDeletion = this.promoCodeRepository.findById(id);
+
+        if (optionalPromoCodeAfterDeletion.isPresent()) {
+            return new Result(false, "Промо кодът не можа да бъде премахнат!");
+        }
+
+        return new Result(true, "Успешно премахнахте този промо код!");
     }
 }

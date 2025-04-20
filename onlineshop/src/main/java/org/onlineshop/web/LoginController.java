@@ -1,6 +1,7 @@
 package org.onlineshop.web;
 
 import jakarta.validation.Valid;
+import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
@@ -36,8 +37,10 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView("profile");
 
         UserDTO userDTO = this.userService.getLoggedUserInfoForProfilePage();
+        VipStatusDTO vipStatusDTO = this.userService.calculateVipStatus();
 
         modelAndView.addObject("userDTO", userDTO);
+        modelAndView.addObject("vipStatus", vipStatusDTO);
 
         return modelAndView;
     }

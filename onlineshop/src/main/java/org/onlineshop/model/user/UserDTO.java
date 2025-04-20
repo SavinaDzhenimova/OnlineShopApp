@@ -3,6 +3,8 @@ package org.onlineshop.model.user;
 import jakarta.validation.constraints.Size;
 import org.onlineshop.model.annotations.ValidEmail;
 
+import java.math.BigDecimal;
+
 public class UserDTO {
 
     @Size(min = 5, max = 50, message = "Името трябва да бъде между 5 и 50 символа!")

@@ -77,7 +77,7 @@
 
                 <form th:action="@{/users/logout}"
                       th:method="POST">
-                    <button class="exit-button">Изход от профила</button>
+                    <button class="exit-button"><i class="fa-solid fa-right-from-bracket"></i>Изход от профила</button>
                 </form>
             </section>
 
@@ -89,7 +89,12 @@
 
                     <h4>Стани ВИП</h4>
 
-                    <p>Остават ти още 134.52 лв. до ВИП 300</p>
+                    <p th:if="${vipStatus.getMessage() != null}" th:text="${vipStatus.getMessage()}"></p>
+
+                    <p th:if="${vipStatus.getMessage() == null}">
+                        Остават ти още <span th:text="${vipStatus.getAmountToNextLevel()}"></span> лв. до
+                        <span th:text="${vipStatus.getNextLevel()}"></span>
+                    </p>
 
                     <a th:href="@{/loyalty-program}">Програма "Лоялен клиент"</a>
                 </div>

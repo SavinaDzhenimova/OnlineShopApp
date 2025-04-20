@@ -6,6 +6,7 @@ import org.onlineshop.model.entity.Role;
 import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.enums.RoleName;
+import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
@@ -188,6 +189,37 @@ public class UserServiceImpl implements UserService {
 
         return userDTO;
     }
+
+    @Override
+    public VipStatusDTO calculateVipStatus() {
+
+        BigDecimal totalOutcome = this.currentUserProvider.getLoggedUser().getTotalOutcome();
+        BigDecimal amountToNextLevel = null;
+        String nextLevel = "";
+        String message = null;
+
+        if (totalOutcome.compareTo(BigDecimal.valueOf(1200)) >= 0) {
+            message = "Поздравления! Вие сте достигнали ниво ВИП 1200!";
+        } else if (totalOutcome.compareTo(BigDecimal.valueOf(700)) >= 0) {
+            nextLevel = "ВИП 1200";
+            amountToNextLevel = BigDecimal.valueOf(1200).subtract(totalOutcome);
+        } else if (totalOutcome.compareTo(BigDecimal.valueOf(300)) >= 0) {
+            nextLevel = "ВИП 700";
+            amountToNextLevel = BigDecimal.valueOf(700).subtract(totalOutcome);
+        } else {
+            nextLevel = "ВИП 300";
+            amountToNextLevel = BigDecimal.valueOf(300).subtract(totalOutcome);
+        }
+
+        VipStatusDTO vipStatusDTO = new VipStatusDTO();
+
+        vipStatusDTO.setNextLevel(nextLevel);
+        vipStatusDTO.setAmountToNextLevel(amountToNextLevel);
+        vipStatusDTO.setMessage(message);
+
+        return vipStatusDTO;
+    }
+
 
     @Override
     public ShoppingCart getLoggedUserShoppingCart(HttpSession session) {

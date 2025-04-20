@@ -4,9 +4,11 @@ import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface UserService {
@@ -23,6 +25,8 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
 
     Result registerUser(UserRegisterDTO userRegisterDTO);
+
+    VipStatusDTO calculateVipStatus();
 
     ShoppingCart getLoggedUserShoppingCart(HttpSession session);
 }

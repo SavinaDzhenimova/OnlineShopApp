@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 public class PromoCodeDTO {
 
+    private Long id;
+
     private String code;
 
     private BigDecimal discountValue;
@@ -16,6 +18,14 @@ public class PromoCodeDTO {
     private boolean active;
 
     public PromoCodeDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCode() {

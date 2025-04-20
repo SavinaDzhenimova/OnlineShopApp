@@ -8,10 +8,7 @@ import org.onlineshop.service.interfaces.PromoCodeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,5 +67,19 @@ public class PromoCodeController {
         }
 
         return new ModelAndView("redirect:/users/profile");
+    }
+
+    @DeleteMapping("/delete-promo-code/{id}")
+    public ModelAndView deletePromoCode(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+
+        Result result = this.promoCodeService.deletePromoCode(id);
+
+        if (result.isSuccess()) {
+            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
+        } else {
+            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+        }
+
+        return new ModelAndView("redirect:/promo-codes");
     }
 }

@@ -25,3 +25,31 @@ main table tr .active .active-true {
 main table tr .active .active-false {
     color: #C00;
 }
+
+main table tr td form .delete-btn {
+    background-color: #C00;
+    color: #fff;
+    padding: 0.5em;
+    border: none;
+    outline: none;
+    border-radius: 0.5em;
+    font-weight: 600;
+}
+
+main .profile-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #aaa;
+    font-weight: 600;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    width: 15%;
+    align-self: center;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 1.5em;
+}
+
+main .profile-btn:hover {
+    border: 1px solid #000
+}

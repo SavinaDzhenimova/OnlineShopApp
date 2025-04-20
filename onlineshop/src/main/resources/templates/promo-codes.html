@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
@@ -16,6 +15,14 @@
     <main>
         <h1>Промо кодове</h1>
 
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
+
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
+
         <table>
             <tr>
                 <th class="code">Промо код</th>
@@ -23,6 +30,7 @@
                 <th class="valid-from">Валиден от</th>
                 <th class="valid-to">Валиден до</th>
                 <th class="active">Активност</th>
+                <th class="active">Изтриване</th>
             </tr>
             <tr th:each="promoCode : ${promoCodes.getPromoCodes()}">
                 <td class="code" th:text="${promoCode.getCode()}"></td>
@@ -33,8 +41,16 @@
                     <span class="active-true" th:if="${promoCode.isActive()}"><i class="fa-solid fa-check"></i></span>
                     <span class="active-false" th:unless="${promoCode.isActive()}"><i class="fa-solid fa-xmark"></i></span>
                 </td>
+                <td>
+                    <form th:action="@{/promo-codes/delete-promo-code/{id}(id=${promoCode.getId()})}"
+                          th:method="DELETE">
+                        <button class="delete-btn" type="submit">Изтрий</button>
+                    </form>
+                </td>
             </tr>
         </table>
+
+        <a class="profile-btn" th:href="@{/users/profile}">Обратно към профил</a>
     </main>
 
     <footer th:replace="~{fragments/commons::footer}"></footer>

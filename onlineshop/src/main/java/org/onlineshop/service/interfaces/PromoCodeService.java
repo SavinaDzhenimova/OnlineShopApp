@@ -10,4 +10,5 @@ public interface PromoCodeService {
 
     PromoCodesListDTO getAllPromoCodes();
 
+    Result deletePromoCode(Long id);
 }

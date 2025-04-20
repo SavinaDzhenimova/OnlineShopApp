@@ -48,9 +48,9 @@
                     <a sec:authorize="isAnonymous()"
                        th:href="@{/users/login}"><i class="fa-solid fa-user"></i>Вход/Регистрация</a>
                     <form sec:authorize="isAuthenticated()"
-                          th:action="@{/users/logout}"
+                          th:action="@{/users/profile}"
                           th:method="POST">
-                        <button><i class="fa-solid fa-right-from-bracket"></i>Изход</button>
+                        <button><i class="fa-regular fa-user"></i>Моят профил</button>
                     </form>
                     <a href="#"><i class="fa-regular fa-heart"></i>Любими</a>
                     <a class="shopping-cart-btn" th:href="@{/shopping-cart}">
