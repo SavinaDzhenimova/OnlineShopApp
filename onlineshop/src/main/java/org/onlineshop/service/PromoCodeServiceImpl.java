@@ -111,25 +111,21 @@ public class PromoCodeServiceImpl implements PromoCodeService {
         }
 
         BigDecimal discount = BigDecimal.ZERO;
-        BigDecimal discountPercent = BigDecimal.ZERO;
 
         Optional<PromoCode> optionalPromo = promoCodeRepository.findByCode(promoCode);
 
-        if (optionalPromo.isPresent() && optionalPromo.get().isActive()) {
-            if (optionalPromo.get().getCode().equals(promoCode)) {
-                discountPercent = optionalPromo.get().getDiscountValue();
-                discount = total.multiply(discountPercent).divide(BigDecimal.valueOf(100));
-            }
+        if (optionalPromo.isEmpty()) {
+            return buildInvalidResponse(total, discount);
         }
 
-        if (optionalPromo.isEmpty() || !optionalPromo.get().isActive()) {
-            Map<String, Object> invalidResponse = new HashMap<>();
-            invalidResponse.put("error", "Невалиден промо код!");
-            invalidResponse.put("discount", discount);
-            invalidResponse.put("finalPrice", total);
-            invalidResponse.put("originalPrice", total);
-            return invalidResponse;
+        PromoCode promo = optionalPromo.get();
+
+        if (!promo.isActive() || !promo.getCode().equals(promoCode)) {
+            return buildInvalidResponse(total, discount);
         }
+
+        BigDecimal discountPercent = promo.getDiscountValue();
+        discount = total.multiply(discountPercent).divide(BigDecimal.valueOf(100));
 
         BigDecimal finalPrice = total.subtract(discount);
 
@@ -140,6 +136,15 @@ public class PromoCodeServiceImpl implements PromoCodeService {
         response.put("discountPercent", discountPercent);
 
         return response;
+    }
+
+    private Map<String, Object> buildInvalidResponse(BigDecimal total, BigDecimal discount) {
+        Map<String, Object> invalidResponse = new HashMap<>();
+        invalidResponse.put("error", "Невалиден промо код!");
+        invalidResponse.put("discount", discount);
+        invalidResponse.put("finalPrice", total);
+        invalidResponse.put("originalPrice", total);
+        return invalidResponse;
     }
 
     @Override
