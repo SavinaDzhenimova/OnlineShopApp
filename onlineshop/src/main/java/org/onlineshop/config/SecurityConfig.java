@@ -27,7 +27,7 @@ public class SecurityConfig {
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
                                 "/loyalty-program", "/choose-size", "/users/login", "/users/register",
                                 "/products/all", "/products/product/**", "/shopping-cart", "/shopping-cart/add-item/**",
-                                "/shopping-cart/remove-item/**").permitAll()
+                                "/shopping-cart/remove-item/**", "/promo-codes/apply-promo").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product", "/promo-codes/**").hasRole("ADMIN")

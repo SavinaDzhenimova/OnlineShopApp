@@ -1,9 +1,12 @@
 package org.onlineshop.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.PromoCodesListDTO;
 import org.onlineshop.model.importDTO.AddPromoCodeDTO;
+import org.onlineshop.model.importDTO.CartItemRequestDTO;
 import org.onlineshop.service.interfaces.PromoCodeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.*;
 
 @Controller
 @RequestMapping("/promo-codes")
@@ -81,5 +86,18 @@ public class PromoCodeController {
         }
 
         return new ModelAndView("redirect:/promo-codes");
+    }
+
+    @PostMapping("/apply-promo")
+    @ResponseBody
+    public Map<String, Object> applyPromo(@RequestParam("promoCode") String promoCode,
+                                          @RequestParam("cartData") String cartDataJson) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<CartItemRequestDTO> cartItems = Arrays.asList(
+                mapper.readValue(cartDataJson, CartItemRequestDTO[].class)
+        );
+
+        return promoCodeService.applyPromoCode(promoCode, cartItems);
     }
 }

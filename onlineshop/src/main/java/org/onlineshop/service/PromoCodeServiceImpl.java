@@ -5,12 +5,16 @@ import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.PromoCodeDTO;
 import org.onlineshop.model.exportDTO.PromoCodesListDTO;
 import org.onlineshop.model.importDTO.AddPromoCodeDTO;
+import org.onlineshop.model.importDTO.CartItemRequestDTO;
 import org.onlineshop.repository.PromoCodeRepository;
 import org.onlineshop.service.interfaces.PromoCodeService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -95,5 +99,51 @@ public class PromoCodeServiceImpl implements PromoCodeService {
         }
 
         return new Result(true, "Успешно премахнахте този промо код!");
+    }
+
+    @Override
+    public Map<String, Object> applyPromoCode(String promoCode, List<CartItemRequestDTO> cartItems) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (CartItemRequestDTO item : cartItems) {
+            BigDecimal itemTotal = item.getUnitPrice().multiply(BigDecimal.valueOf(item.getSelectedQuantity()));
+            total = total.add(itemTotal);
+        }
+
+        BigDecimal discount = BigDecimal.ZERO;
+        BigDecimal discountPercent = BigDecimal.ZERO;
+
+        Optional<PromoCode> optionalPromo = promoCodeRepository.findByCode(promoCode);
+
+        if (optionalPromo.isPresent() && optionalPromo.get().isActive()) {
+            if (optionalPromo.get().getCode().equals(promoCode)) {
+                discountPercent = optionalPromo.get().getDiscountValue();
+                discount = total.multiply(discountPercent).divide(BigDecimal.valueOf(100));
+            }
+        }
+
+        if (optionalPromo.isEmpty() || !optionalPromo.get().isActive()) {
+            Map<String, Object> invalidResponse = new HashMap<>();
+            invalidResponse.put("error", "Невалиден промо код!");
+            invalidResponse.put("discount", discount);
+            invalidResponse.put("finalPrice", total);
+            invalidResponse.put("originalPrice", total);
+            return invalidResponse;
+        }
+
+        BigDecimal finalPrice = total.subtract(discount);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("originalPrice", total);
+        response.put("discount", discount);
+        response.put("finalPrice", finalPrice);
+        response.put("discountPercent", discountPercent);
+
+        return response;
+    }
+
+    @Override
+    public Optional<PromoCode> getByCode(String code) {
+        return this.promoCodeRepository.findByCode(code);
     }
 }

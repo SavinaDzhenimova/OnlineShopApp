@@ -3,6 +3,8 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
     <link rel="stylesheet" href="/css/shopping-cart-styles.css">
     <title>Количка</title>
@@ -96,18 +98,33 @@
 
         <div class="shopping-cart-price" th:if="${not shoppingCart.cartItems.empty}">
             <div class="promo-code">
-                <form class="promo-code-form"
-                      th:action="@{/}"
+                <form id="promoForm" class="promo-code-form"
+                      th:action="@{/promo-codes/apply-promo}"
                       th:method="POST">
                     <label for="promoCode">Имаш промо код?</label>
+                    <input type="hidden" name="cartData" id="cartData" />
                     <input type="text" name="promoCode" id="promoCode" placeholder="Въведи промо кода тук"/>
                     <button type="submit">Приложи</button>
+
+                    <div id="discountInfo"></div>
                 </form>
             </div>
 
             <div class="price-section">
                 <div class="total-price">
-                    <p>Обща сума:</p><span th:text="${totalPrice} + ' лв.'"></span>
+                    <div>
+                        <p>Обща сума:</p>
+                        <span id="originalPrice" th:text="${totalPrice} + ' лв.'"></span>
+                    </div>
+
+                    <div id="discountBlock" style="display: none;">
+                        <p>Отстъпка:</p><span id="discountValue"></span>
+                    </div>
+
+                    <div id="finalBlock" style="display: none;">
+                        <p><strong>Крайна цена:</strong></p>
+                        <span id="finalPrice"></span>
+                    </div>
                 </div>
 
                 <form class="make-order-form"
@@ -121,7 +138,8 @@
 
     <footer th:replace="~{fragments/commons::footer}"></footer>
 
-    <script src="\js\show-quantity-sizes.js"></script>
+    <script src="\js\update-quantity-sizes.js"></script>
+    <script src="\js\apply-promo.js"></script>
 
 </body>
 </html>

@@ -82,6 +82,10 @@ main .shopping-cart-price {
     align-items: center;
 }
 
+main .shopping-cart-price .promo-code {
+    align-self: flex-start;
+}
+
 main .shopping-cart-price .promo-code .promo-code-form {
     display: flex;
     flex-wrap: wrap;
@@ -91,6 +95,10 @@ main .shopping-cart-price .promo-code .promo-code-form label {
     width: 100%;
     font-size: 16px;
     padding-bottom: 0.5em;
+}
+
+main .shopping-cart-price .promo-code .promo-code-form #discountInfo {
+    width: 100%;
 }
 
 main .shopping-cart-price .promo-code .promo-code-form input {
@@ -122,10 +130,21 @@ main .shopping-cart-price .price-section {
 main .shopping-cart-price .price-section .total-price {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     font-size: 20px;
     font-weight: 500;
     border-bottom: 1px solid #ccc;
+}
+
+main .shopping-cart-price .price-section .total-price div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .shopping-cart-price .price-section .total-price #discountBlock {
+    color: #C00;
 }
 
 main .shopping-cart-price .price-section .make-order-form {

@@ -6,7 +6,7 @@ function updateQuantityOptions(sizeSelect) {
     const quantitySelect = document.getElementById(`quantity-${cartItemId}`);
     const preselectedQuantity = parseInt(sizeSelect.dataset.selectedQuantity);
 
-    quantitySelect.innerHTML = ''; // Изчистваме старите стойности
+    quantitySelect.innerHTML = '';
 
     for (let i = 1; i <= availableQuantity; i++) {
         const option = document.createElement("option");
@@ -24,12 +24,13 @@ function updateQuantityOptions(sizeSelect) {
 function updateProductPrice(cartItemId) {
     const quantitySelect = document.getElementById(`quantity-${cartItemId}`);
     const quantity = parseInt(quantitySelect.value);
-    const priceElement = document.getElementById(`price-${cartItemId}`);
 
     const unitPriceInput = document.getElementById(`unit-price-${cartItemId}`);
     const unitPrice = parseFloat(unitPriceInput.value);
 
+    const priceElement = document.getElementById(`price-${cartItemId}`);
     const newPrice = quantity * unitPrice;
+
     priceElement.textContent = newPrice.toFixed(2) + ' лв.';
 }
 
@@ -45,6 +46,31 @@ function updateTotalPrice() {
     const totalSpan = document.querySelector('.total-price span');
     if (totalSpan) {
         totalSpan.textContent = total.toFixed(2) + ' лв.';
+    }
+
+    const discountPercent = window.currentDiscountPercent;
+    const discountBlock = document.getElementById('discountBlock');
+    const finalBlock = document.getElementById('finalBlock');
+
+    if (discountPercent && !isNaN(discountPercent)) {
+        const discountAmount = total * discountPercent / 100;
+        const finalPrice = total - discountAmount;
+
+        if (discountBlock) discountBlock.style.display = 'flex';
+        if (finalBlock) finalBlock.style.display = 'flex';
+
+        const discountValueEl = document.getElementById('discountValue');
+        if (discountValueEl) {
+            discountValueEl.textContent = `- ${discountAmount.toFixed(2)} лв.`;
+        }
+
+        const finalPriceEl = document.getElementById('finalPrice');
+        if (finalPriceEl) {
+            finalPriceEl.textContent = `${finalPrice.toFixed(2)} лв.`;
+        }
+    } else {
+        if (discountBlock) discountBlock.style.display = 'none';
+        if (finalBlock) finalBlock.style.display = 'none';
     }
 }
 
