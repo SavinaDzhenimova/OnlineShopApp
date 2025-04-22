@@ -6,7 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/OrderItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OrderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/PromoCodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/PromoCodeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/PromoCodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/PromoCodeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/PromoCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/PromoCodeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/shopping-cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/shopping-cart.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +31,9 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="Class" />
-        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -55,6 +65,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OnlineShopApp\onlineshop\src\main\resources\templates" />
       <recent name="D:\OnlineShopApp\onlineshop\src\main\resources\static\images" />
       <recent name="D:\OnlineShopApp\onlineshop\src\main\resources" />
     </key>
@@ -91,11 +102,16 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/PromoCodeController.java</url>
-          <line>100</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/OrderController.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="addOrderDTO.orderItems.get(0).unitPrice" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

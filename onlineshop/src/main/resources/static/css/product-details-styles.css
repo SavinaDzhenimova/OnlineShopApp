@@ -20,7 +20,7 @@ main .image-container img {
     position: absolute;
     top: 15px;
     left: 10px;
-    background: green;
+    background: #4CAF50;
     color: #fff;
     font-size: 12px;
     padding: 0 0.5em;
@@ -91,7 +91,7 @@ main .content-container {
 }
 
 .free-shipping {
-    background: green;
+    background: #4CAF50;
     color: white;
     padding: 0 0.7em;
     border-radius: 15px;
@@ -122,7 +122,7 @@ main .add-cart-item {
 }
 
 .add-cart-item button[type="submit"] {
-    background-color: green;
+    background-color: #4CAF50;
     color: #fff;
     padding: 1em;
     font-weight: 600;
@@ -161,7 +161,7 @@ main .more-info .purchase div {
 }
 
 main .more-info .purchase div i {
-    color: green;
+    color: #4CAF50;
 }
 
 main .more-info .delivery-info {

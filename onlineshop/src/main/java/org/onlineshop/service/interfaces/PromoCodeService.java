@@ -20,5 +20,7 @@ public interface PromoCodeService {
 
     Map<String, Object> applyPromoCode(String promoCode, List<CartItemRequestDTO> cartItems);
 
+    Optional<PromoCode> validatePromoCode(String code);
+
     Optional<PromoCode> getByCode(String code);
 }

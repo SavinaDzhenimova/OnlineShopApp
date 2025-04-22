@@ -148,6 +148,24 @@ public class PromoCodeServiceImpl implements PromoCodeService {
     }
 
     @Override
+    public Optional<PromoCode> validatePromoCode(String code) {
+        if (code == null || code.isBlank()) {
+            return Optional.empty();
+        }
+
+        String trimmedCode = code.trim();
+
+        return promoCodeRepository.findByCode(trimmedCode)
+                .filter(promo -> promo.getCode().equals(trimmedCode))
+                .filter(PromoCode::isActive)
+                .filter(promo -> {
+                    LocalDate today = LocalDate.now();
+                    return (promo.getValidFrom() == null || !today.isBefore(promo.getValidFrom())) &&
+                            (promo.getValidTo() == null || !today.isAfter(promo.getValidTo()));
+                });
+    }
+
+    @Override
     public Optional<PromoCode> getByCode(String code) {
         return this.promoCodeRepository.findByCode(code);
     }

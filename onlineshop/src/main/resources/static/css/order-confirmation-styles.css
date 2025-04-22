@@ -1,0 +1,113 @@
+main .order-confirmation-form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    gap: 1em;
+    border-radius: 1em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 2em 3em;
+}
+
+main .order-confirmation-form .main-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+main .order-confirmation-form .field {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+main .order-confirmation-form .field input {
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+main .order-confirmation-form table {
+    margin-top: 1em;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+main .order-confirmation-form table tr td img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+main .order-confirmation-form table tr th,
+main .order-confirmation-form table tr td {
+    border: 1px solid #ccc;
+    padding: 0.2em 0.5em;
+}
+
+main .order-confirmation-form table tr th {
+    background-color: #000;
+    color: #fff;
+    border-color: #fff;
+}
+
+main .order-confirmation-form .price-section {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-self: center;
+    font-weight: 500;
+}
+
+main .order-confirmation-form .price-section div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+main .order-confirmation-form .price-section .discount #discount {
+    color: #C00;
+}
+
+main .order-confirmation-form .make-order-btn,
+main .order-confirmation-form .shopping-cart-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    font-weight: 600;
+    padding: 1em;
+    width: 60%;
+    align-self: center;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    border-radius: 1em;
+}
+
+main .order-confirmation-form .shopping-cart-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #aaa;
+    text-align: center;
+    padding: 0.5em 1em;
+}
+
+main .order-confirmation-form .shopping-cart-btn:hover {
+    border: 1px solid #000
+}
+
+main .order-confirmation-form .warn-msg {
+    font-style: oblique;
+    font-size: 12px;
+}
+
+main .order-confirmation-form .warn-msg::before {
+    display: inline-block;
+    content: '*';
+    color: #C00;
+    padding-right: 0.3em;
+}

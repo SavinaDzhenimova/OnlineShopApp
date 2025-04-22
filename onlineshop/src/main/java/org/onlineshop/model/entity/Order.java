@@ -9,13 +9,22 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
+    @Column(nullable = false, name = "full_name")
+    private String fullName;
+
+    @Column(nullable = false, name = "phone_number")
+    private String phoneNumber;
+
+    @Column(nullable = false, name = "delivery_address")
+    private String deliveryAddress;
+
     @Column(nullable = false, name = "ordered_on")
     private LocalDateTime orderedOn;
 
     @Column(name = "delivered_on")
     private LocalDateTime deliveredOn;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -23,6 +32,30 @@ public class Order extends BaseEntity {
     private BigDecimal totalPrice;
 
     public Order() {
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     public LocalDateTime getOrderedOn() {

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/order-confirmation-styles.css">
+    <title>Направи поръчка</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Направи поръчка</h1>
+
+        <form class="order-confirmation-form"
+              th:method="POST"
+              th:action="@{/orders/make-order}"
+              th:object="${addOrderDTO}">
+
+            <div class="main-info">
+                <div class="field">
+                    <label th:for="fullName">Име и фамилия</label>
+                    <input type="text" th:field="*{fullName}" name="fullName" id="fullName">
+                    <small th:if="${#fields.hasErrors('fullName')}"
+                           th:errors="*{fullName}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="email">Имейл</label>
+                    <input type="email" th:field="*{email}" name="email" id="email">
+                    <small th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="phoneNumber">Мобилен телефон</label>
+                    <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber">
+                    <small th:if="${#fields.hasErrors('phoneNumber')}"
+                           th:errors="*{phoneNumber}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="address">Адрес за доставка</label>
+                    <input type="text" th:field="*{address}" name="address" id="address">
+                    <small th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+            </div>
+
+            <table class="order-items-table">
+                <tr>
+                    <th>Изображение</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Избран размер</th>
+                    <th>Количество</th>
+                    <th>Единична цена</th>
+                    <th>Сумарна цена</th>
+                </tr>
+                <tr th:each="orderItem, iterStat : ${orderItems}">
+                    <td>
+                        <img th:src="${orderItem.getImageUrl()}" th:alt="${orderItem.getName()}"/>
+                    </td>
+                    <td th:text="${orderItem.getName()}"></td>
+                    <td th:text="${orderItem.getCategory()}"></td>
+                    <td th:text="'№ ' + ${orderItem.getSelectedSize()}"></td>
+                    <td th:text="${orderItem.getSelectedQuantity()} + ' бр.'"></td>
+                    <td th:text="${orderItem.getUnitPrice()} + ' лв.'"></td>
+                    <td th:text="${orderItem.getUnitPrice() * orderItem.getSelectedQuantity()} + ' лв.'"></td>
+
+                    <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].selectedSize}" />
+                    <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].selectedQuantity}" />
+                    <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" />
+                </tr>
+            </table>
+
+            <div class="price-section">
+                <div class="total-price">
+                    <p>Обща сума:</p><span id="totalPrice" th:text="${totalPrice} + ' лв.'"></span>
+                    <input type="hidden" th:field="*{totalPrice}" />
+                </div>
+                <div class="discount" th:if="${discount != null and discount != 0}">
+                    <p>Отстъпка:</p>
+                    <span class="price-value" id="discount" th:text="'-' + ${discount} + ' лв.'"></span>
+                    <input type="hidden" th:field="*{discount}" />
+                </div>
+                <div class="final-price" th:if="${finalPrice != null and finalPrice != 0}">
+                    <p>Крайна сума:</p>
+                    <span class="price-value" id="finalPrice" th:text="${finalPrice} + ' лв.'"></span>
+                    <input type="hidden" th:field="*{finalPrice}" />
+                </div>
+            </div>
+
+            <p class="warn-msg">Ако искате да направите промени в кода за отстъпка, размера на избраните продукти
+                или количествата, моля върнете се към Вашата количка!</p>
+
+            <button class="make-order-btn" type="submit">Поръчай</button>
+            <a class="shopping-cart-btn" th:href="@{/shopping-cart}">Обратно към количката</a>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.price-value').forEach(span => {
+                const raw = parseFloat(span.textContent);
+                if (!isNaN(raw)) {
+                    span.textContent = raw.toFixed(2) + ' лв.';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

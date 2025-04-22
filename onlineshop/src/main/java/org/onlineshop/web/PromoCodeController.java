@@ -90,8 +90,8 @@ public class PromoCodeController {
 
     @PostMapping("/apply-promo")
     @ResponseBody
-    public Map<String, Object> applyPromo(@RequestParam("promoCode") String promoCode,
-                                          @RequestParam("cartData") String cartDataJson) throws JsonProcessingException {
+    public Map<String, Object> applyPromo(@RequestPart("promoCode") String promoCode,
+                                          @RequestPart("cartData") String cartDataJson) throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
         List<CartItemRequestDTO> cartItems = Arrays.asList(
