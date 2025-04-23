@@ -103,30 +103,19 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 
     @Override
     public Map<String, Object> applyPromoCode(String promoCode, List<CartItemRequestDTO> cartItems) {
-        BigDecimal total = BigDecimal.ZERO;
+        BigDecimal total = cartItems.stream()
+                .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getSelectedQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        for (CartItemRequestDTO item : cartItems) {
-            BigDecimal itemTotal = item.getUnitPrice().multiply(BigDecimal.valueOf(item.getSelectedQuantity()));
-            total = total.add(itemTotal);
-        }
-
-        BigDecimal discount = BigDecimal.ZERO;
-
-        Optional<PromoCode> optionalPromo = promoCodeRepository.findByCode(promoCode);
+        Optional<PromoCode> optionalPromo = validatePromoCode(promoCode);
 
         if (optionalPromo.isEmpty()) {
-            return buildInvalidResponse(total, discount);
+            return buildInvalidResponse(total, BigDecimal.ZERO);
         }
 
-        PromoCode promo = optionalPromo.get();
-
-        if (!promo.isActive() || !promo.getCode().equals(promoCode)) {
-            return buildInvalidResponse(total, discount);
-        }
-
-        BigDecimal discountPercent = promo.getDiscountValue();
-        discount = total.multiply(discountPercent).divide(BigDecimal.valueOf(100));
-
+        PromoCode validPromoCode = optionalPromo.get();
+        BigDecimal discountPercent = validPromoCode.getDiscountValue();
+        BigDecimal discount = total.multiply(discountPercent).divide(BigDecimal.valueOf(100));
         BigDecimal finalPrice = total.subtract(discount);
 
         Map<String, Object> response = new HashMap<>();

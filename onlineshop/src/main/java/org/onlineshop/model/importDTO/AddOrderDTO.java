@@ -1,25 +1,42 @@
 package org.onlineshop.model.importDTO;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import org.onlineshop.model.annotations.ValidEmail;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddOrderDTO {
 
+    @NotNull
+    @Size(min = 5, max = 50)
     private String fullName;
 
+    @NotNull
+    @ValidEmail
     private String email;
 
+    @NotNull
+    @Size(min = 7, max = 15)
     private String phoneNumber;
 
+    @NotNull
+    @Size(min = 10, max = 70)
     private String address;
 
+    @NotNull
+    @Positive
     private BigDecimal totalPrice;
 
     private BigDecimal discount;
 
     private BigDecimal finalPrice;
 
+    @NotEmpty
     private List<AddOrderItemDTO> orderItems;
 
     public AddOrderDTO() {

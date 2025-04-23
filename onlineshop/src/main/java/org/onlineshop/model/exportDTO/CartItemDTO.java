@@ -26,6 +26,8 @@ public class CartItemDTO {
 
     private BigDecimal quantityPrice;
 
+    private Long productId;
+
     private Long tempId;
 
     public CartItemDTO() {
@@ -102,6 +104,14 @@ public class CartItemDTO {
 
     public void setQuantitySizes(Set<QuantitySizeDTO> quantitySizes) {
         this.quantitySizes = quantitySizes;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getTempId() {

@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 category: getCategory(item),
                 selectedQuantity: item.querySelector('.quantity-selector').value,
                 selectedSize: item.querySelector('.size-selector select').value,
-                unitPrice: parseFloat(item.querySelector('input[id^="unit-price-"]').value)
+                unitPrice: parseFloat(item.querySelector('input[id^="unit-price-"]').value),
+                productId: item.dataset.productId
             };
 
             orderItems.push(orderItem);

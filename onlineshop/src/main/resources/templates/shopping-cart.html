@@ -32,7 +32,9 @@
         </div>
 
         <div class="shopping-cart-items" th:if="${not shoppingCart.cartItems.empty}">
-            <div class="cart-item" th:each="cartItem : ${shoppingCart.getCartItems()}">
+            <div class="cart-item"
+                 th:attr="data-product-id=${cartItem.getProductId()}"
+                 th:each="cartItem : ${shoppingCart.getCartItems()}">
                 <img th:src="${cartItem.getImageUrl()}"/>
 
                 <div class="product-title">

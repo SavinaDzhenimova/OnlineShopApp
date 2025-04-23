@@ -10,6 +10,8 @@ public class AddOrderItemDTO {
 
     private BigDecimal unitPrice;
 
+    private Long productId;
+
     public AddOrderItemDTO() {
     }
 
@@ -35,5 +37,13 @@ public class AddOrderItemDTO {
 
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

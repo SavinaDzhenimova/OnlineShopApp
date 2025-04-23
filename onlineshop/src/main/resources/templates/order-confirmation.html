@@ -75,6 +75,7 @@
                     <td th:text="${orderItem.getUnitPrice()} + ' лв.'"></td>
                     <td th:text="${orderItem.getUnitPrice() * orderItem.getSelectedQuantity()} + ' лв.'"></td>
 
+                    <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].productId}" />
                     <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].selectedSize}" />
                     <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].selectedQuantity}" />
                     <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" />

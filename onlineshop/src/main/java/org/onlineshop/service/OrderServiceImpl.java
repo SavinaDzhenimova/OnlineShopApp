@@ -10,6 +10,7 @@ import org.onlineshop.model.importDTO.OrderItemRequestDTO;
 import org.onlineshop.repository.OrderRepository;
 import org.onlineshop.service.interfaces.OrderService;
 import org.onlineshop.service.interfaces.PromoCodeService;
+import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,10 +22,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final PromoCodeService promoCodeService;
+    private final CurrentUserProvider currentUserProvider;
 
-    public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService) {
+    public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
+                            CurrentUserProvider currentUserProvider) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
+        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
@@ -75,9 +79,12 @@ public class OrderServiceImpl implements OrderService {
         List<AddOrderItemDTO> orderItems = createdOrder.getOrderItems().stream()
                 .map(orderItem -> {
                     AddOrderItemDTO addOrderItemDTO = new AddOrderItemDTO();
+
                     addOrderItemDTO.setSelectedSize(orderItem.getSelectedSize());
                     addOrderItemDTO.setSelectedQuantity(orderItem.getSelectedQuantity());
                     addOrderItemDTO.setUnitPrice(orderItem.getUnitPrice());
+                    addOrderItemDTO.setProductId(orderItem.getProductId());
+
                     return addOrderItemDTO;
                 }).toList();
 
@@ -92,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Result makeOrder(AddOrderDTO addOrderDTO) {
 
-        
+
 
         return new Result(true, "Успешно направихте своята поръчка!");
     }

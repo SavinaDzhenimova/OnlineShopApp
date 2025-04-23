@@ -1,7 +1,6 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
-import org.onlineshop.model.enums.SizeName;
 
 import java.math.BigDecimal;
 
@@ -23,8 +22,9 @@ public class OrderItem extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Enumerated(EnumType.STRING)
-    private SizeName size;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "size_id", referencedColumnName = "id")
+    private ShoeSize size;
 
     public OrderItem() {
     }
@@ -61,11 +61,11 @@ public class OrderItem extends BaseEntity {
         this.price = price;
     }
 
-    public SizeName getSize() {
+    public ShoeSize getSize() {
         return size;
     }
 
-    public void setSize(SizeName size) {
+    public void setSize(ShoeSize size) {
         this.size = size;
     }
 }

@@ -78,7 +78,7 @@ public class OrderController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.addOrderDTO",
                             bindingResult);
 
-            return new ModelAndView("order-confirmation");
+            return new ModelAndView("redirect:/orders/confirmation");
         }
 
         Result result = this.orderService.makeOrder(addOrderDTO);

@@ -31,6 +31,16 @@ public class Order extends BaseEntity {
     @Column(nullable = false, name = "total_price")
     private BigDecimal totalPrice;
 
+    @Column
+    private BigDecimal discount;
+
+    @Column(name = "final_price")
+    private BigDecimal finalPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "promo_code_id", referencedColumnName = "id")
+    private PromoCode promoCode;
+
     public Order() {
     }
 
@@ -88,5 +98,29 @@ public class Order extends BaseEntity {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(BigDecimal finalPrice) {
+        this.finalPrice = finalPrice;
+    }
+
+    public PromoCode getPromoCode() {
+        return promoCode;
+    }
+
+    public void setPromoCode(PromoCode promoCode) {
+        this.promoCode = promoCode;
     }
 }
