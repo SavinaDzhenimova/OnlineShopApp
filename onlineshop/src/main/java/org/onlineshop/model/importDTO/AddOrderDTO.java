@@ -32,6 +32,10 @@ public class AddOrderDTO {
     @Positive
     private BigDecimal totalPrice;
 
+    private String promoCode;
+
+    private BigDecimal discountPercent;
+
     private BigDecimal discount;
 
     private BigDecimal finalPrice;
@@ -81,6 +85,22 @@ public class AddOrderDTO {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getPromoCode() {
+        return promoCode;
+    }
+
+    public void setPromoCode(String promoCode) {
+        this.promoCode = promoCode;
+    }
+
+    public BigDecimal getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public void setDiscountPercent(BigDecimal discountPercent) {
+        this.discountPercent = discountPercent;
     }
 
     public BigDecimal getDiscount() {

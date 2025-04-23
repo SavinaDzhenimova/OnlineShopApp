@@ -60,7 +60,6 @@ main .order-confirmation-form .price-section {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    align-self: center;
     font-weight: 500;
 }
 
@@ -68,10 +67,18 @@ main .order-confirmation-form .price-section div {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 main .order-confirmation-form .price-section .discount #discount {
     color: #C00;
+}
+
+main .order-confirmation-form .price-section .discount .promo-code {
+    width: 100%;
+    font-size: 12px;
+    font-style: oblique;
+    opacity: 0.7;
 }
 
 main .order-confirmation-form .make-order-btn,

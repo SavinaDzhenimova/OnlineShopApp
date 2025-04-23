@@ -1,19 +1,21 @@
 package org.onlineshop.service;
 
 import jakarta.servlet.http.HttpSession;
-import org.onlineshop.model.entity.PromoCode;
-import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.entity.*;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.AddOrderItemDTO;
 import org.onlineshop.model.importDTO.OrderItemRequestDTO;
 import org.onlineshop.repository.OrderRepository;
 import org.onlineshop.service.interfaces.OrderService;
+import org.onlineshop.service.interfaces.ProductService;
 import org.onlineshop.service.interfaces.PromoCodeService;
+import org.onlineshop.service.interfaces.ShoeSizeService;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +25,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final PromoCodeService promoCodeService;
     private final CurrentUserProvider currentUserProvider;
+    private final ShoeSizeService shoeSizeService;
+    private final ProductService productService;
 
     public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
-                            CurrentUserProvider currentUserProvider) {
+                            CurrentUserProvider currentUserProvider, ShoeSizeService shoeSizeService,
+                            ProductService productService) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
         this.currentUserProvider = currentUserProvider;
+        this.shoeSizeService = shoeSizeService;
+        this.productService = productService;
     }
 
     @Override
@@ -90,6 +97,8 @@ public class OrderServiceImpl implements OrderService {
 
         addOrderDTO.setOrderItems(orderItems);
         addOrderDTO.setTotalPrice(createdOrder.getTotalPrice());
+        addOrderDTO.setPromoCode(createdOrder.getPromoCode());
+        addOrderDTO.setDiscountPercent(createdOrder.getDiscountPercent());
         addOrderDTO.setDiscount(createdOrder.getDiscount());
         addOrderDTO.setFinalPrice(createdOrder.getFinalPrice());
 
@@ -98,8 +107,49 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Result makeOrder(AddOrderDTO addOrderDTO) {
+        if (addOrderDTO == null) {
+            return new Result(false, "Поръчката, която се опитвате да направите, не съществува!");
+        }
 
+        Order order = new Order();
 
+        order.setFullName(addOrderDTO.getFullName());
+        order.setDeliveryAddress(addOrderDTO.getAddress());
+        order.setPhoneNumber(addOrderDTO.getPhoneNumber());
+        order.setEmail(addOrderDTO.getEmail());
+        order.setTotalPrice(addOrderDTO.getTotalPrice());
+        order.setDiscount(addOrderDTO.getDiscount() != null ? addOrderDTO.getDiscount() : BigDecimal.ZERO);
+        order.setFinalPrice(addOrderDTO.getFinalPrice() != null ? addOrderDTO.getFinalPrice() : addOrderDTO.getTotalPrice());
+        order.setOrderedOn(LocalDateTime.now());
+
+        this.orderRepository.saveAndFlush(order);
+
+        List<OrderItem> orderItems = addOrderDTO.getOrderItems().stream()
+                .map(addOrderItemDTO -> {
+                    OrderItem orderItem = new OrderItem();
+
+                    Optional<ShoeSize> optionalShoeSize = this.shoeSizeService.getBySize(addOrderItemDTO.getSelectedSize());
+                    if (optionalShoeSize.isEmpty()) {
+                        throw new IllegalArgumentException("Избраният размер не съществува!");
+                    }
+
+                    Optional<Product> optionalProduct = this.productService.getById(addOrderItemDTO.getProductId());
+                    if (optionalProduct.isEmpty()) {
+                        throw new IllegalArgumentException("Избраният продукт не съществува!");
+                    }
+
+                    orderItem.setSize(optionalShoeSize.get());
+                    orderItem.setQuantity(addOrderItemDTO.getSelectedQuantity());
+                    orderItem.setPrice(addOrderItemDTO.getUnitPrice());
+                    orderItem.setProduct(optionalProduct.get());
+                    orderItem.setOrder(order);
+
+                    return orderItem;
+                }).toList();
+
+        order.setOrderItems(orderItems);
+
+        this.orderRepository.saveAndFlush(order);
 
         return new Result(true, "Успешно направихте своята поръчка!");
     }

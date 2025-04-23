@@ -1,27 +1,42 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import org.onlineshop.model.annotations.ValidEmail;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
     @Column(nullable = false, name = "full_name")
+    @Size(min = 5, max = 50)
     private String fullName;
 
+    @Column(nullable = false)
+    @ValidEmail
+    private String email;
+
     @Column(nullable = false, name = "phone_number")
+    @Size(min = 7, max = 15)
     private String phoneNumber;
 
     @Column(nullable = false, name = "delivery_address")
+    @Size(min = 10, max = 70)
     private String deliveryAddress;
 
     @Column(nullable = false, name = "ordered_on")
+    @FutureOrPresent
     private LocalDateTime orderedOn;
 
     @Column(name = "delivered_on")
+    @FutureOrPresent
     private LocalDateTime deliveredOn;
 
     @ManyToOne
@@ -29,19 +44,26 @@ public class Order extends BaseEntity {
     private User user;
 
     @Column(nullable = false, name = "total_price")
+    @Positive
     private BigDecimal totalPrice;
 
     @Column
+    @Positive
     private BigDecimal discount;
 
     @Column(name = "final_price")
+    @Positive
     private BigDecimal finalPrice;
 
     @ManyToOne
     @JoinColumn(name = "promo_code_id", referencedColumnName = "id")
     private PromoCode promoCode;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems;
+
     public Order() {
+        this.orderItems = new ArrayList<>();
     }
 
     public String getFullName() {
@@ -50,6 +72,14 @@ public class Order extends BaseEntity {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {
@@ -122,5 +152,13 @@ public class Order extends BaseEntity {
 
     public void setPromoCode(PromoCode promoCode) {
         this.promoCode = promoCode;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

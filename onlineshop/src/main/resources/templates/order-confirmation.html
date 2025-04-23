@@ -90,7 +90,13 @@
                 <div class="discount" th:if="${discount != null and discount != 0}">
                     <p>Отстъпка:</p>
                     <span class="price-value" id="discount" th:text="'-' + ${discount} + ' лв.'"></span>
+                    <p class="promo-code">(с промо код
+                        <span th:text="${promoCode}"></span> за
+                        <span th:text="${discountPercent}"></span>% отстъпка)
+                    </p>
                     <input type="hidden" th:field="*{discount}" />
+                    <input type="hidden" id="discountPercent" th:field="*{discountPercent}" />
+                    <input type="hidden" id="appliedPromoCode" th:field="*{promoCode}" />
                 </div>
                 <div class="final-price" th:if="${finalPrice != null and finalPrice != 0}">
                     <p>Крайна сума:</p>
