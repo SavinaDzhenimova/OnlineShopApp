@@ -3,6 +3,7 @@ package org.onlineshop.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import org.onlineshop.model.annotations.ValidEmail;
 
@@ -32,11 +33,9 @@ public class Order extends BaseEntity {
     private String deliveryAddress;
 
     @Column(nullable = false, name = "ordered_on")
-    @FutureOrPresent
     private LocalDateTime orderedOn;
 
     @Column(name = "delivered_on")
-    @FutureOrPresent
     private LocalDateTime deliveredOn;
 
     @ManyToOne
@@ -48,11 +47,11 @@ public class Order extends BaseEntity {
     private BigDecimal totalPrice;
 
     @Column
-    @Positive
+    @PositiveOrZero
     private BigDecimal discount;
 
     @Column(name = "final_price")
-    @Positive
+    @PositiveOrZero
     private BigDecimal finalPrice;
 
     @ManyToOne

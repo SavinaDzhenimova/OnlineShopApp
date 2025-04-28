@@ -147,7 +147,7 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
     }
 
     @Override
-    public Result removeItemFromShoppingCart(User loggedUser, Long cartItemId, HttpSession session) {
+    public Result removeItemFromShoppingCart(User loggedUser, Long cartItemId) {
         ShoppingCart shoppingCart = loggedUser.getShoppingCart();
 
         boolean removed = shoppingCart.getCartItems().removeIf(cartItem ->

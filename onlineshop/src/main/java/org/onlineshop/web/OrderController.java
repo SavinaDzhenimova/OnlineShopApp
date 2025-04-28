@@ -2,6 +2,7 @@ package org.onlineshop.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.onlineshop.model.entity.Order;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
@@ -71,7 +72,8 @@ public class OrderController {
 
     @PostMapping("/make-order")
     public ModelAndView makeOrder(@Valid @ModelAttribute("addOrderDTO") AddOrderDTO addOrderDTO,
-                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                  HttpSession session) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addOrderDTO", addOrderDTO)
@@ -81,7 +83,7 @@ public class OrderController {
             return new ModelAndView("redirect:/orders/confirmation");
         }
 
-        Result result = this.orderService.makeOrder(addOrderDTO);
+        Result result = this.orderService.makeOrder(addOrderDTO, session);
 
         if (result.isSuccess()) {
             redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
@@ -92,5 +94,26 @@ public class OrderController {
         }
 
         return new ModelAndView("redirect:/orders/success");
+    }
+
+    @GetMapping("/success")
+    public ModelAndView showSuccess() {
+
+        return new ModelAndView("order-success");
+    }
+
+    @GetMapping("/track/{id}")
+    public ModelAndView trackOrder(@PathVariable("id") Long id) {
+        Order order = this.orderService.getById(id);
+
+        ModelAndView modelAndView = new ModelAndView("order-tracking");
+
+        if (order != null) {
+            modelAndView.addObject("order", order);
+        } else {
+            modelAndView.addObject("error", "Поръчката не съществува!");
+        }
+
+        return modelAndView;
     }
 }

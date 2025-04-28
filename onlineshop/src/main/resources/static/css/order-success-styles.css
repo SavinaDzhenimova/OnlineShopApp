@@ -1,0 +1,25 @@
+main .order-success {
+    width: 40%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 2em;
+    border-radius: 1em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+main .order-success i {
+    font-size: 60px;
+    color: #4CAF50;
+}
+
+main .order-success .success {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+main .order-success p a {
+    text-decoration: underline;
+}

@@ -71,7 +71,7 @@ public class PromoCodeController {
             return new ModelAndView("redirect:/promo-codes/add-promo-code");
         }
 
-        return new ModelAndView("redirect:/users/profile");
+        return new ModelAndView("redirect:/promo-codes");
     }
 
     @DeleteMapping("/delete-promo-code/{id}")

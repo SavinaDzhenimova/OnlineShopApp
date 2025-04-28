@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <th:block th:replace="~{fragments/commons::head}"></th:block>
+  <link rel="stylesheet" href="/css/order-success-styles.css">
+  <title>Успешна поръчка</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <div class="order-success">
+            <i class="fa-regular fa-circle-check"></i>
+
+            <p class="success">Успешно направихте своята поръчка!</p>
+
+            <p>Благодарим Ви, че избрахте нас! Може да следите поръчка си <a th:href="${successMessage}">тук</a>.</p>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

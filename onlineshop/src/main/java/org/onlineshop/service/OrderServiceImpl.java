@@ -7,10 +7,7 @@ import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.AddOrderItemDTO;
 import org.onlineshop.model.importDTO.OrderItemRequestDTO;
 import org.onlineshop.repository.OrderRepository;
-import org.onlineshop.service.interfaces.OrderService;
-import org.onlineshop.service.interfaces.ProductService;
-import org.onlineshop.service.interfaces.PromoCodeService;
-import org.onlineshop.service.interfaces.ShoeSizeService;
+import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -27,15 +25,20 @@ public class OrderServiceImpl implements OrderService {
     private final CurrentUserProvider currentUserProvider;
     private final ShoeSizeService shoeSizeService;
     private final ProductService productService;
+    private final ShoppingCartServiceLogged shoppingCartServiceLogged;
+    private final ShoppingCartServiceGuest shoppingCartServiceGuest;
 
     public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
                             CurrentUserProvider currentUserProvider, ShoeSizeService shoeSizeService,
-                            ProductService productService) {
+                            ProductService productService, ShoppingCartServiceLogged shoppingCartServiceLogged,
+                            ShoppingCartServiceGuest shoppingCartServiceGuest) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
         this.currentUserProvider = currentUserProvider;
         this.shoeSizeService = shoeSizeService;
         this.productService = productService;
+        this.shoppingCartServiceLogged = shoppingCartServiceLogged;
+        this.shoppingCartServiceGuest = shoppingCartServiceGuest;
     }
 
     @Override
@@ -106,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result makeOrder(AddOrderDTO addOrderDTO) {
+    public Result makeOrder(AddOrderDTO addOrderDTO, HttpSession session) {
         if (addOrderDTO == null) {
             return new Result(false, "Поръчката, която се опитвате да направите, не съществува!");
         }
@@ -121,6 +124,30 @@ public class OrderServiceImpl implements OrderService {
         order.setDiscount(addOrderDTO.getDiscount() != null ? addOrderDTO.getDiscount() : BigDecimal.ZERO);
         order.setFinalPrice(addOrderDTO.getFinalPrice() != null ? addOrderDTO.getFinalPrice() : addOrderDTO.getTotalPrice());
         order.setOrderedOn(LocalDateTime.now());
+
+        Optional<PromoCode> optionalPromoCode = this.promoCodeService.getByCode(addOrderDTO.getPromoCode());
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        optionalPromoCode.ifPresent(order::setPromoCode);
+
+        if (loggedUser != null) {
+            order.setUser(loggedUser);
+
+            List<Long> idsToRemove = loggedUser.getShoppingCart().getCartItems().stream()
+                    .map(BaseEntity::getId).toList();
+
+            idsToRemove.forEach(id -> this.shoppingCartServiceLogged.removeItemFromShoppingCart(loggedUser, id));
+
+        } else {
+            ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
+
+            if (shoppingCart != null) {
+                List<Long> idsToRemove = shoppingCart.getCartItems().stream()
+                        .map(CartItem::getTempId).toList();
+
+                idsToRemove.forEach(id -> this.shoppingCartServiceGuest.removeItemFromShoppingCart(id, session));
+            }
+        }
 
         this.orderRepository.saveAndFlush(order);
 
@@ -151,6 +178,18 @@ public class OrderServiceImpl implements OrderService {
 
         this.orderRepository.saveAndFlush(order);
 
-        return new Result(true, "Успешно направихте своята поръчка!");
+        String orderTrackingUrl = "/orders/track/" + order.getId();
+        return new Result(true, orderTrackingUrl);
+    }
+
+    @Override
+    public Order getById(Long id) {
+        Optional<Order> optionalOrder = this.orderRepository.findById(id);
+
+        if (optionalOrder.isEmpty()) {
+            return null;
+        }
+
+        return optionalOrder.get();
     }
 }

@@ -16,7 +16,7 @@ public interface ShoppingCartServiceLogged {
 
     Result addItemToCart(Product product, AddCartItemDTO addCartItemDTO, ShoppingCart cart);
 
-    Result removeItemFromShoppingCart(User loggedUser, Long cartItemId, HttpSession session);
+    Result removeItemFromShoppingCart(User loggedUser, Long cartItemId);
 
     void saveAndFlush(ShoppingCart shoppingCart);
 }

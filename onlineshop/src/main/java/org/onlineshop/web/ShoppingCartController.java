@@ -101,7 +101,7 @@ public class ShoppingCartController {
         User loggedUser = this.currentUserProvider.getLoggedUser();
 
         if (loggedUser != null) {
-            result = this.shoppingCartServiceLogged.removeItemFromShoppingCart(loggedUser, cartItemId, session);
+            result = this.shoppingCartServiceLogged.removeItemFromShoppingCart(loggedUser, cartItemId);
         } else {
             result = this.shoppingCartServiceGuest.removeItemFromShoppingCart(cartItemId, session);
         }

@@ -1,6 +1,7 @@
 package org.onlineshop.service.interfaces;
 
 import jakarta.servlet.http.HttpSession;
+import org.onlineshop.model.entity.Order;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
@@ -15,5 +16,7 @@ public interface OrderService {
 
     Optional<AddOrderDTO> prepareAddOrderDTOFromSession(HttpSession session);
 
-    Result makeOrder(AddOrderDTO addOrderDTO);
+    Result makeOrder(AddOrderDTO addOrderDTO, HttpSession httpSession);
+
+    Order getById(Long id);
 }
