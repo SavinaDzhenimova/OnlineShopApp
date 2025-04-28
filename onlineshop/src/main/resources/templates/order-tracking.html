@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/order-tracking-styles.css">
+    <title>Статус на поръчка</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Поръчка номер №<span th:text="${order.getId()}"></span></h1>
+
+        <div class="delivery-info">
+            <h2>Данни за купувача</h2>
+
+            <p>Име и фамилия: <span th:text="${order.getFullName()}"></span></p>
+            <p>Имейл: <span th:text="${order.getEmail()}"></span></p>
+            <p>Мобилен телефон: <span th:text="${order.getPhoneNumber()}"></span></p>
+            <p>Адрес за доставка: <span th:text="${order.getDeliveryAddress()}"></span></p>
+            <p>Статус на поръчката: <span th:text="${order.getStatus()}"></span></p>
+        </div>
+
+        <div class="order-items-info">
+            <h2>Поръчани продукти</h2>
+
+            <table class="order-items-table">
+                <tr>
+                    <th>Изображение</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Избран размер</th>
+                    <th>Количество</th>
+                    <th>Единична цена</th>
+                    <th>Сумарна цена</th>
+                </tr>
+                <tr th:each="orderItem : ${orderItems}">
+                    <td>
+                        <img th:src="${orderItem.getImageUrl()}" th:alt="${orderItem.getName()}"/>
+                    </td>
+                    <td th:text="${orderItem.getName()}"></td>
+                    <td>
+                        <span th:if="${orderItem.getCategories().contains('Мъжки обувки')}">Мъжки обувки</span>
+                        <span th:if="${orderItem.getCategories().contains('Дамски обувки')}">Дамски обувки</span>
+                        <span th:if="${orderItem.getCategories().contains('Детски обувки')}">Детски обувки</span>
+                    </td>
+                    <td th:text="'№ ' + ${orderItem.getSelectedSize()}"></td>
+                    <td th:text="${orderItem.getSelectedQuantity()} + ' бр.'"></td>
+                    <td th:text="${orderItem.getUnitPrice()} + ' лв.'"></td>
+                    <td th:text="${orderItem.getUnitPrice() * orderItem.getSelectedQuantity()} + ' лв.'"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="price-section">
+            <div class="total-price">
+                <p>Обща сума:
+                    <span id="totalPrice" th:text="${order.getTotalPrice()} + ' лв.'"></span>
+                </p>
+            </div>
+            <div class="discount" th:if="${order.getDiscount() != null and order.getDiscount() != 0}">
+                <p>Отстъпка:
+                    <span class="price-value" id="discount" th:text="'-' + ${order.getDiscount()} + ' лв.'"></span>
+                    <span class="promo-code-message">(с промо код
+                        <span th:text="${order.getPromoCode()}"></span> за
+                        <span th:text="${order.getDiscountPercent()}"></span>% отстъпка)
+                    </span>
+                </p>
+            </div>
+            <div class="final-price" th:if="${order.getFinalPrice() != null and order.getFinalPrice() != 0}">
+                <p>Крайна сума:
+                    <span class="price-value" id="finalPrice" th:text="${order.getFinalPrice()} + ' лв.'"></span>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

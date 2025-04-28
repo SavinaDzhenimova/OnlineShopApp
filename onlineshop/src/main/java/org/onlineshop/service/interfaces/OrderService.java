@@ -3,6 +3,7 @@ package org.onlineshop.service.interfaces;
 import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Order;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.OrderItemRequestDTO;
@@ -18,5 +19,7 @@ public interface OrderService {
 
     Result makeOrder(AddOrderDTO addOrderDTO, HttpSession httpSession);
 
-    Order getById(Long id);
+    OrderDTO getOrderInfo(Long id);
+
+    Optional<Order> getById(Long id);
 }

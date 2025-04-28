@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import org.onlineshop.model.annotations.ValidEmail;
+import org.onlineshop.model.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -35,6 +36,10 @@ public class Order extends BaseEntity {
     @Column(nullable = false, name = "ordered_on")
     private LocalDateTime orderedOn;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
     @Column(name = "delivered_on")
     private LocalDateTime deliveredOn;
 
@@ -58,7 +63,7 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "promo_code_id", referencedColumnName = "id")
     private PromoCode promoCode;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     public Order() {
@@ -103,6 +108,14 @@ public class Order extends BaseEntity {
 
     public void setOrderedOn(LocalDateTime orderedOn) {
         this.orderedOn = orderedOn;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getDeliveredOn() {

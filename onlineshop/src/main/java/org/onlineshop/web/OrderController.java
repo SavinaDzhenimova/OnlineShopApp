@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Order;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.AddOrderItemDTO;
@@ -104,15 +105,13 @@ public class OrderController {
 
     @GetMapping("/track/{id}")
     public ModelAndView trackOrder(@PathVariable("id") Long id) {
-        Order order = this.orderService.getById(id);
 
         ModelAndView modelAndView = new ModelAndView("order-tracking");
 
-        if (order != null) {
-            modelAndView.addObject("order", order);
-        } else {
-            modelAndView.addObject("error", "Поръчката не съществува!");
-        }
+        OrderDTO orderDTO = this.orderService.getOrderInfo(id);
+
+        modelAndView.addObject("order", orderDTO);
+        modelAndView.addObject("orderItems", orderDTO.getOrderItems());
 
         return modelAndView;
     }
