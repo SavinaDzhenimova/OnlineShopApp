@@ -22,6 +22,7 @@
             <p>Имейл: <span th:text="${order.getEmail()}"></span></p>
             <p>Мобилен телефон: <span th:text="${order.getPhoneNumber()}"></span></p>
             <p>Адрес за доставка: <span th:text="${order.getDeliveryAddress()}"></span></p>
+            <p>Поръчана на: <span th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></span></p>
             <p>Статус на поръчката: <span th:text="${order.getStatus()}"></span></p>
         </div>
 
@@ -66,7 +67,8 @@
                 <p>Отстъпка:
                     <span class="price-value" id="discount" th:text="'-' + ${order.getDiscount()} + ' лв.'"></span>
                     <span class="promo-code-message">(с промо код
-                        <span th:text="${order.getPromoCode()}"></span> за
+                        <span th:if="${order.getPromoCode() != null and !#strings.isEmpty(order.getPromoCode())}"
+                              th:text="${order.getPromoCode()}"></span> за
                         <span th:text="${order.getDiscountPercent()}"></span>% отстъпка)
                     </span>
                 </p>

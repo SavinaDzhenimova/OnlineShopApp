@@ -136,8 +136,13 @@ public class OrderServiceImpl implements OrderService {
 
         optionalPromoCode.ifPresent(order::setPromoCode);
 
+        this.orderRepository.saveAndFlush(order);
+
         if (loggedUser != null) {
             order.setUser(loggedUser);
+            loggedUser.getOrders().add(order);
+
+            this.currentUserProvider.saveAndFlushUser(loggedUser);
 
             List<Long> idsToRemove = loggedUser.getShoppingCart().getCartItems().stream()
                     .map(BaseEntity::getId).toList();
@@ -154,8 +159,6 @@ public class OrderServiceImpl implements OrderService {
                 idsToRemove.forEach(id -> this.shoppingCartServiceGuest.removeItemFromShoppingCart(id, session));
             }
         }
-
-        this.orderRepository.saveAndFlush(order);
 
         List<OrderItem> orderItems = addOrderDTO.getOrderItems().stream()
                 .map(addOrderItemDTO -> {
@@ -197,6 +200,12 @@ public class OrderServiceImpl implements OrderService {
         }
 
         Order order = optionalOrder.get();
+
+        return this.mapOrderToDto(order);
+    }
+
+    @Override
+    public OrderDTO mapOrderToDto(Order order) {
         OrderDTO orderDTO = new OrderDTO();
 
         orderDTO.setId(order.getId());
@@ -206,11 +215,12 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setDeliveryAddress(order.getDeliveryAddress());
         orderDTO.setOrderedOn(order.getOrderedOn());
         orderDTO.setStatus(this.mapOrderStatusToString(order.getStatus()));
+        orderDTO.setStatusClass(this.mapStatusClass(order.getStatus()));
         orderDTO.setTotalPrice(order.getTotalPrice());
         orderDTO.setFinalPrice(order.getFinalPrice());
-        orderDTO.setDiscount(order.getDiscount());
-        orderDTO.setPromoCode(order.getPromoCode().getCode());
-        orderDTO.setDiscountPercent(order.getPromoCode().getDiscountValue());
+        orderDTO.setDiscount(order.getDiscount() != null ? order.getDiscount() : BigDecimal.ZERO);
+        orderDTO.setPromoCode(order.getPromoCode() != null ? order.getPromoCode().getCode() : "");
+        orderDTO.setDiscountPercent(order.getPromoCode() != null ? order.getPromoCode().getDiscountValue() : BigDecimal.ZERO);
 
         List<OrderItemDTO> orderItemsList = order.getOrderItems().stream()
                 .map(orderItem -> {
@@ -230,6 +240,21 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setOrderItems(orderItemsList);
 
         return orderDTO;
+    }
+
+    private String mapStatusClass(OrderStatus status) {
+        String statusClass = "";
+
+        switch (status) {
+            case PENDING -> statusClass = "pending";
+            case PROCESSING -> statusClass = "processing";
+            case SHIPPED -> statusClass = "shipped";
+            case DELIVERED -> statusClass = "delivered";
+            case CANCELLED -> statusClass = "cancelled";
+            case RETURNED -> statusClass = "returned";
+        }
+
+        return statusClass;
     }
 
     private String mapOrderStatusToString(OrderStatus status) {

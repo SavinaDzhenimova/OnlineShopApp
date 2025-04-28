@@ -30,4 +30,8 @@ public class CurrentUserProvider {
 
         return optionalUser.get();
     }
+
+    public void saveAndFlushUser(User user) {
+        this.userRepository.saveAndFlush(user);
+    }
 }

@@ -21,5 +21,7 @@ public interface OrderService {
 
     OrderDTO getOrderInfo(Long id);
 
+    OrderDTO mapOrderToDto(Order order);
+
     Optional<Order> getById(Long id);
 }

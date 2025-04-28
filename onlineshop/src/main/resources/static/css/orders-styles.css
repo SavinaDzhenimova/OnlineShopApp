@@ -1,0 +1,58 @@
+main .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .orders-list .order-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 2em 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+}
+
+main .orders-list .order-info .order-status {
+    color: #fff;
+    padding: 0 1em;
+    border-radius: 0.5em;
+}
+
+.order-status.delivered {
+    background-color: #28a745;
+}
+
+.order-status.cancelled {
+    background-color: #C00;
+}
+
+.order-status.pending {
+    background-color: #007bff;
+}
+
+.order-status.processing {
+    background-color: #ffc107;
+    color: black;
+}
+
+.order-status.shipped {
+    background-color: #ADFF2FFF;
+    color: black;
+}
+
+.order-status.returned {
+    background-color: #ccc;
+    color: black;
+}
+
+main .orders-list .order-info .price {
+    font-weight: 500;
+}
+
+main .orders-list .order-info a {
+    text-decoration: underline;
+}
+
+main .orders-list .order-info a:hover {
+    text-decoration: none;
+}

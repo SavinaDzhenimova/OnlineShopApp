@@ -1,11 +1,9 @@
 package org.onlineshop.service;
 
 import jakarta.servlet.http.HttpSession;
-import org.onlineshop.model.entity.Result;
-import org.onlineshop.model.entity.Role;
-import org.onlineshop.model.entity.ShoppingCart;
-import org.onlineshop.model.entity.User;
+import org.onlineshop.model.entity.*;
 import org.onlineshop.model.enums.RoleName;
+import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
@@ -19,10 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,19 +26,21 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final UserDetailsServiceImpl userDetailsService;
     private final ShoppingCartServiceLogged shoppingCartService;
+    private final OrderService orderService;
     private final PasswordResetService passwordResetService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserProvider currentUserProvider;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
-                           ShoppingCartServiceLogged shoppingCartService, PasswordResetService passwordResetService,
-                           EmailService emailService, PasswordEncoder passwordEncoder,
-                           CurrentUserProvider currentUserProvider) {
+                           ShoppingCartServiceLogged shoppingCartService, OrderService orderService,
+                           PasswordResetService passwordResetService, EmailService emailService,
+                           PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
         this.shoppingCartService = shoppingCartService;
+        this.orderService = orderService;
         this.passwordResetService = passwordResetService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
@@ -238,6 +235,17 @@ public class UserServiceImpl implements UserService {
 
             return guestCart;
         }
+    }
+
+    @Override
+    public List<OrderDTO> getLoggedUserOrders() {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        Set<Order> loggedUserOrders = loggedUser.getOrders();
+
+        return loggedUserOrders.stream()
+                .map(this.orderService::mapOrderToDto)
+                .toList();
     }
 
     @Override

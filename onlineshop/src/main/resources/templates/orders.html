@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/orders-styles.css">
+    <title>Моите поръчки</title>
+</head>
+
+<body>
+
+<header th:replace="~{fragments/commons::header}"></header>
+
+<main>
+    <h1>Моите поръчки</h1>
+
+    <p th:if="${warningMessage} and ${#lists.isEmpty(orders)}" th:text="${warningMessage}"></p>
+
+    <div class="orders-list" th:if="${not #lists.isEmpty(orders)}">
+        <section class="order-info" th:each="order : ${orders}">
+            <p th:text="${order.getId()}"></p>
+            <p th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></p>
+            <p th:text="${order.getFullName()}"></p>
+            <p class="order-status" th:text="${order.getStatus()}" th:classappend="${order.getStatusClass()}">
+            </p>
+            <p class="price" th:text="${order.getFinalPrice()} + ' лв.'"></p>
+            <a th:href="@{/orders/track/{id}(id=${order.getId()})}">Виж поръчката</a>
+        </section>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

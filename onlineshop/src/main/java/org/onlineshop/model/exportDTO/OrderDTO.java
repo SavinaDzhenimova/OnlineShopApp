@@ -21,6 +21,8 @@ public class OrderDTO {
 
     private String status;
 
+    private String statusClass;
+
     private BigDecimal totalPrice;
 
     private BigDecimal discount;
@@ -91,6 +93,14 @@ public class OrderDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStatusClass() {
+        return statusClass;
+    }
+
+    public void setStatusClass(String statusClass) {
+        this.statusClass = statusClass;
     }
 
     public BigDecimal getTotalPrice() {

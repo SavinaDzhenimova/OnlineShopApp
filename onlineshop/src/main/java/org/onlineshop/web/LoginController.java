@@ -1,6 +1,7 @@
 package org.onlineshop.web;
 
 import jakarta.validation.Valid;
+import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.service.interfaces.UserService;
@@ -10,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -25,6 +28,15 @@ public class LoginController {
     public ModelAndView login() {
 
         return new ModelAndView("login-form");
+    }
+
+    @GetMapping("/login-error")
+    public ModelAndView loginError(RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("failureMessage",
+                "Невалидно потребителско име или парола!");
+
+        return new ModelAndView("redirect:/users/login");
     }
 
     @GetMapping("/profile")
@@ -63,12 +75,18 @@ public class LoginController {
         return new ModelAndView("redirect:/users/profile");
     }
 
-    @GetMapping("/login-error")
-    public ModelAndView loginError(RedirectAttributes redirectAttributes) {
+    @GetMapping("/my-orders")
+    public ModelAndView showMyOrders() {
+        List<OrderDTO> loggedUserOrders = this.userService.getLoggedUserOrders();
 
-        redirectAttributes.addFlashAttribute("failureMessage",
-                "Невалидно потребителско име или парола!");
+        ModelAndView modelAndView = new ModelAndView("orders");
 
-        return new ModelAndView("redirect:/users/login");
+        if (loggedUserOrders.isEmpty()) {
+            modelAndView.addObject("warningMessage", "Все още нямате направени поръчки.");
+        } else {
+            modelAndView.addObject("orders", loggedUserOrders);
+        }
+
+        return modelAndView;
     }
 }
