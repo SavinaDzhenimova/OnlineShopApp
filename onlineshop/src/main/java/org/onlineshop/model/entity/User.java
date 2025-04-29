@@ -42,7 +42,7 @@ public class User extends BaseEntity {
     @PositiveOrZero
     private BigDecimal totalOutcome;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Order> orders;
 
     @ManyToOne(optional = false)

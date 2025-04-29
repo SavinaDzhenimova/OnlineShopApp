@@ -10,8 +10,11 @@ import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.AddOrderItemDTO;
 import org.onlineshop.model.importDTO.OrderItemRequestDTO;
 import org.onlineshop.repository.OrderRepository;
+import org.onlineshop.service.events.ForgotPasswordEvent;
+import org.onlineshop.service.events.MakeOrderEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -31,12 +34,14 @@ public class OrderServiceImpl implements OrderService {
     private final ProductService productService;
     private final ShoppingCartServiceLogged shoppingCartServiceLogged;
     private final ShoppingCartServiceGuest shoppingCartServiceGuest;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
                             CurrentUserProvider currentUserProvider, ShoeSizeService shoeSizeService,
                             QuantitySizeService quantitySizeService, CategoryService categoryService,
                             ProductService productService, ShoppingCartServiceLogged shoppingCartServiceLogged,
-                            ShoppingCartServiceGuest shoppingCartServiceGuest) {
+                            ShoppingCartServiceGuest shoppingCartServiceGuest,
+                            ApplicationEventPublisher applicationEventPublisher) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
         this.currentUserProvider = currentUserProvider;
@@ -46,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
         this.productService = productService;
         this.shoppingCartServiceLogged = shoppingCartServiceLogged;
         this.shoppingCartServiceGuest = shoppingCartServiceGuest;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -204,6 +210,15 @@ public class OrderServiceImpl implements OrderService {
 
         this.orderRepository.saveAndFlush(order);
 
+        String promoCodeName = order.getPromoCode() != null ? order.getPromoCode().getCode() : null;
+        BigDecimal discountPercent = order.getPromoCode() != null ? order.getPromoCode().getDiscountValue() : BigDecimal.ZERO;
+
+        this.applicationEventPublisher.publishEvent(
+                new MakeOrderEvent(this, order.getFullName(), order.getEmail(), order.getDeliveryAddress(),
+                        order.getPhoneNumber(), order.getTotalPrice(), order.getDiscount(), order.getFinalPrice(),
+                        this.mapOrderStatusToString(order.getStatus()), order.getOrderedOn(),
+                        promoCodeName, discountPercent, order.getOrderItems()));
+
         String orderTrackingUrl = "/orders/track/" + order.getId();
         return new Result(true, orderTrackingUrl);
     }
@@ -252,7 +267,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository.saveAndFlush(order);
 
         return new Result(true, "Успешно променихте статуса на поръчка №" + order.getId() +
-                " от \"" + this.mapOrderStatusToString(orderStatus) + 
+                " от \"" + this.mapOrderStatusToString(orderStatus) +
                 "\"" + " на \"" + this.mapOrderStatusToString(order.getStatus()) + "\"");
     }
 

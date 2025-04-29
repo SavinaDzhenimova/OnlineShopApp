@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поръчка</title>
+    <style>
+
+
+        .content ul {
+            list-style-type: disc;
+        }
+
+        span {
+            font-weight: 600;
+            font-style: oblique;
+        }
+
+        a {
+            padding: 0.5em;
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-weight: 600;
+            border-radius: 2em;
+            font-size: 14px;
+        }
+
+        table tr td img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        table tr th,
+        table tr td {
+            border: 1px solid #ccc;
+            padding: 0.2em 0.5em;
+        }
+    </style>
+</head>
+
+<body style="width: 100%; display: flex; justify-content: center;">
+
+    <div style="display: flex; padding: 1em 2em; flex-direction: column; gap: 1em; align-items: center; width: 1000px;
+            border-radius: 0.3em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        <h1 style="color: #0A67AA; text-align: center; font-size: 30px; font-weight: 600; position: relative;">
+            Нова поръчка</h1>
+
+        <div style="display: flex; flex-direction: column; gap: 1em; font-size: 16px; line-height: 1.2; color: #666666;">
+            <p>Благодарим Ви за поръчката, <span th:text="${fullName}">Клиент</span>!</p>
+
+            <p>Вашата поръчка е успешно приета на
+              <strong th:text="${#temporals.format(orderedOn, 'dd.MM.yyyy HH:mm')}">дата</strong>.</p>
+
+            <h3>Детайли за поръчката:</h3>
+            <ul>
+                <li><strong>Телефон:</strong> <span th:text="${phoneNumber}">телефон</span></li>
+                <li><strong>Email:</strong> <span th:text="${email}">имейл</span></li>
+                <li><strong>Адрес за доставка:</strong> <span th:text="${deliveryAddress}">адрес</span></li>
+                <li><strong>Статус:</strong> <span th:text="${status}">статус</span></li>
+                <li><strong>Обща цена:</strong> <span th:text="${totalPrice}">0.00</span> лв.</li>
+            </ul>
+
+            <table style="width: 100%; margin-top: 1em; text-align: center; border-collapse: collapse;">
+                <tr>
+                    <th style="background-color: #000; color: #fff; border-color: #fff;
+                    border: 1px solid #ccc; padding: 0.2em 0.5em;">Изображение</th>
+                    <th style="background-color: #000; color: #fff; border-color: #fff;
+                    border: 1px solid #ccc; padding: 0.2em 0.5em;">Наименование</th>
+                    <th style="background-color: #000; color: #fff; border-color: #fff;
+                    border: 1px solid #ccc; padding: 0.2em 0.5em;">Избран размер</th>
+                    <th style="background-color: #000; color: #fff; border-color: #fff;
+                    border: 1px solid #ccc; padding: 0.2em 0.5em;">Количество</th>
+                    <th style="background-color: #000; color: #fff; border-color: #fff;
+                    border: 1px solid #ccc; padding: 0.2em 0.5em;">Единична цена</th>
+                    <th style="background-color: #000; color: #fff; border-color: #fff;
+                    border: 1px solid #ccc; padding: 0.2em 0.5em;">Сумарна цена</th>
+                </tr>
+                <tr th:each="orderItem : ${orderItems}">
+                    <td style="border: 1px solid #ccc; padding: 0.2em 0.5em;">
+                        <img th:src="${orderItem.product.images[0].imageUrl}"
+                             th:alt="${orderItem.getProduct().getName()}"/>
+                    </td>
+                    <td style="border: 1px solid #ccc; padding: 0.2em 0.5em;"
+                        th:text="${orderItem.getProduct().getName()}"></td>
+                    <td style="border: 1px solid #ccc; padding: 0.2em 0.5em;"
+                        th:text="'№ ' + ${orderItem.getSize().getSize()}"></td>
+                    <td style="border: 1px solid #ccc; padding: 0.2em 0.5em;"
+                        th:text="${orderItem.getQuantity()} + ' бр.'"></td>
+                    <td style="border: 1px solid #ccc; padding: 0.2em 0.5em;"
+                        th:text="${orderItem.getPrice()} + ' лв.'"></td>
+                    <td style="border: 1px solid #ccc; padding: 0.2em 0.5em;"
+                        th:text="${orderItem.getPrice() * orderItem.getQuantity()} + ' лв.'"></td>
+                </tr>
+            </table>
+
+            <div th:if="${discount != null && discount != 0}">
+                <strong>Отстъпка:</strong> <span th:text="${discount}">0.00</span> лв.
+            </div>
+
+            <div th:if="${promoCodeName != null}">
+                <strong>Промо код:</strong> <span th:text="${promoCodeName}">код</span>
+            </div>
+
+            <div th:if="${discountPercent != null and discountPercent != 0}">
+                <strong>Процент отстъпка:</strong> <span th:text="${discountPercent}">%</span>%
+            </div>
+
+            <div><strong>Крайна цена:</strong> <span th:text="${finalPrice}">0.00</span> лв.</div>
+
+            <p>Ще се свържем с Вас при нужда. Благодарим, че избрахте нашия онлайн магазин!</p>
+
+            <p>С най-добри пожелания,<br>
+              Екипът на Runtastic Shoes</p>
+        </div>
+    </div>
+
+</body>
+</html>

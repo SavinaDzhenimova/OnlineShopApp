@@ -11,8 +11,10 @@ import org.onlineshop.model.importDTO.AddAddressDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
+import org.onlineshop.service.events.ForgotPasswordEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,11 +37,13 @@ public class UserServiceImpl implements UserService {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserProvider currentUserProvider;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
                            ShoppingCartServiceLogged shoppingCartService, OrderService orderService,
                            AddressService addressService, PasswordResetService passwordResetService, EmailService emailService,
-                           PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider) {
+                           PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider,
+                           ApplicationEventPublisher applicationEventPublisher) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
@@ -50,6 +54,7 @@ public class UserServiceImpl implements UserService {
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.currentUserProvider = currentUserProvider;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -173,7 +178,8 @@ public class UserServiceImpl implements UserService {
         String token = UUID.randomUUID().toString();
         this.passwordResetService.createTokenForUser(user, token);
 
-        this.emailService.sendForgotPasswordEmail(user.getFullName(), user.getEmail(), token);
+        this.applicationEventPublisher.publishEvent(
+                new ForgotPasswordEvent(this, user.getFullName(), user.getEmail(), token));
 
         return new Result(true, "Моля проверете пощата си за имейл с линк за смяна на паролата!");
     }
