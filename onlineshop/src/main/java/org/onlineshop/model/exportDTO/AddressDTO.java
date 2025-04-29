@@ -6,6 +6,8 @@ public class AddressDTO {
 
     private String region;
 
+    private String addressType;
+
     private String town;
 
     private String postalCode;
@@ -29,6 +31,14 @@ public class AddressDTO {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public String getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
     }
 
     public String getTown() {

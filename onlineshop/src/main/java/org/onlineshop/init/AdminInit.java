@@ -4,6 +4,7 @@ import org.onlineshop.model.entity.Address;
 import org.onlineshop.model.entity.Role;
 import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.enums.AddressType;
 import org.onlineshop.model.enums.Region;
 import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.repository.AddressRepository;
@@ -53,6 +54,7 @@ public class AdminInit implements CommandLineRunner {
             Address address = new Address();
 
             address.setRegion(Region.SMOLYAN);
+            address.setAddressType(AddressType.PERSONAL);
             address.setTown("Мадан");
             address.setPostalCode("4900");
             address.setStreet("Република 15");

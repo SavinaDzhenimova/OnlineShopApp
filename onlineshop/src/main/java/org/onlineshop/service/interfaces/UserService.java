@@ -7,6 +7,7 @@ import org.onlineshop.model.entity.User;
 import org.onlineshop.model.exportDTO.AddressDTO;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
+import org.onlineshop.model.importDTO.AddAddressDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 
@@ -38,4 +39,7 @@ public interface UserService {
     List<AddressDTO> getLoggedUserAddresses();
 
     Result deleteAddress(Long id);
+
+    Result addAddress(AddAddressDTO addAddressDTO);
+
 }

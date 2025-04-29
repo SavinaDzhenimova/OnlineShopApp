@@ -91,33 +91,4 @@ public class LoginController {
 
         return modelAndView;
     }
-
-    @GetMapping("/my-addresses")
-    public ModelAndView showMyAddresses() {
-        ModelAndView modelAndView = new ModelAndView("addresses");
-
-        List<AddressDTO> loggedUserAddresses = this.userService.getLoggedUserAddresses();
-
-        if (loggedUserAddresses.isEmpty()) {
-            modelAndView.addObject("warningMessage", "Все още нямате добавени адреси.");
-        } else {
-            modelAndView.addObject("addresses", loggedUserAddresses);
-        }
-
-        return modelAndView;
-    }
-
-    @DeleteMapping("/delete-address/{id}")
-    public ModelAndView deleteAddress(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-
-        Result result = this.userService.deleteAddress(id);
-
-        if (result.isSuccess()) {
-            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
-        } else {
-            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
-        }
-
-        return new ModelAndView("redirect:/users/my-addresses");
-    }
 }

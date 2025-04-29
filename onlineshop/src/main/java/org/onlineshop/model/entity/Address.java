@@ -3,6 +3,7 @@ package org.onlineshop.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.onlineshop.model.enums.AddressType;
 import org.onlineshop.model.enums.Region;
 
 import java.util.Objects;
@@ -14,6 +15,10 @@ public class Address extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Region region;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AddressType addressType;
 
     @Column(nullable = false)
     @Size(min = 4, max = 15)
@@ -40,6 +45,14 @@ public class Address extends BaseEntity {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public AddressType getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType;
     }
 
     public String getTown() {

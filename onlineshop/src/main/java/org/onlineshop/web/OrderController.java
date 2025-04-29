@@ -124,8 +124,12 @@ public class OrderController {
 
         List<OrderDTO> orders = this.orderService.getAllOrders();
 
-        modelAndView.addObject("orders", orders);
-        modelAndView.addObject("allOrders", true);
+        if (orders.isEmpty()) {
+            modelAndView.addObject("warningMessage", "Няма поръчки за преглеждане.");
+        } else {
+            modelAndView.addObject("orders", orders);
+            modelAndView.addObject("allOrders", true);
+        }
 
         return modelAndView;
     }

@@ -29,15 +29,18 @@
         <div class="addresses-list" th:if="${not #lists.isEmpty(addresses)}">
             <section class="address-info" th:each="address : ${addresses}">
                 <p class="town" th:text="${address.getTown()}"></p>
-                <p th:text="'Пощенски код: ' + ${address.getPostalCode()}"></p>
-                <p th:text="'Улица: ' + ${address.getStreet()}"></p>
-                <p th:text="'Област: ' + ${address.getRegion()}"></p>
+                <p th:text="${address.getPostalCode()}"></p>
+                <p th:text="${address.getStreet()}"></p>
+                <p th:text="${address.getRegion()}"></p>
+                <p th:text="${address.getAddressType()}"></p>
                 <form th:action="@{/users/delete-address/{id}(id=${address.getId()})}"
                       th:method="DELETE">
                     <button type="submit">Изтрий адрес</button>
                 </form>
             </section>
         </div>
+
+        <a class="add-address-btn" th:href="@{/users/add-address}">Добави адрес</a>
     </main>
 
     <footer th:replace="~{fragments/commons::footer}"></footer>

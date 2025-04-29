@@ -84,6 +84,9 @@
                                 th:value="${region}"
                                 th:text="${region.displayName}"></option>
                     </select>
+                    <small th:if="${#fields.hasErrors('region')}"
+                           th:errors="*{region}"
+                           class="text-danger">Dish name error message</small>
                 </div>
 
                 <div class="field">

@@ -2,10 +2,12 @@ package org.onlineshop.service;
 
 import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
+import org.onlineshop.model.enums.AddressType;
 import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.exportDTO.AddressDTO;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
+import org.onlineshop.model.importDTO.AddAddressDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
@@ -88,6 +90,7 @@ public class UserServiceImpl implements UserService {
         Address address = new Address();
 
         address.setRegion(userRegisterDTO.getRegion());
+        address.setAddressType(AddressType.PERSONAL);
         address.setTown(userRegisterDTO.getTown());
         address.setPostalCode(userRegisterDTO.getPostalCode());
         address.setStreet(userRegisterDTO.getStreet());
@@ -268,12 +271,34 @@ public class UserServiceImpl implements UserService {
 
                     addressDTO.setId(address.getId());
                     addressDTO.setRegion(address.getRegion().getDisplayName());
+                    addressDTO.setAddressType(address.getAddressType().getDisplayName());
                     addressDTO.setTown(address.getTown());
                     addressDTO.setPostalCode(address.getPostalCode());
                     addressDTO.setStreet(address.getStreet());
 
                     return addressDTO;
                 }).toList();
+    }
+
+    @Override
+    public Result addAddress(AddAddressDTO addAddressDTO) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        Address address = new Address();
+
+        address.setRegion(addAddressDTO.getRegion());
+        address.setAddressType(addAddressDTO.getAddressType());
+        address.setTown(addAddressDTO.getTown());
+        address.setPostalCode(addAddressDTO.getPostalCode());
+        address.setStreet(addAddressDTO.getStreet());
+        address.setUser(loggedUser);
+
+        this.addressService.saveAndFlush(address);
+
+        loggedUser.getAddresses().add(address);
+        this.userRepository.saveAndFlush(loggedUser);
+
+        return new Result(true, "Успешно добавихте нов адрес!");
     }
 
     @Override
