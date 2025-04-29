@@ -31,7 +31,8 @@ public class SecurityConfig {
                                 "/orders/confirmation", "/orders/success", "/orders/track/**").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
-                        .requestMatchers("/products/add-product", "/promo-codes/**").hasRole("ADMIN")
+                        .requestMatchers("/products/add-product", "/promo-codes/**", "/orders/all",
+                                "/orders/update-status/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

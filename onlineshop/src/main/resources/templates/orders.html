@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
@@ -13,9 +14,18 @@
 <header th:replace="~{fragments/commons::header}"></header>
 
 <main>
-    <h1>Моите поръчки</h1>
+    <h1 sec:authorize="hasRole('ADMIN')" th:if="${allOrders}">Всички поръчки</h1>
+    <h1 th:unless="${allOrders}">Моите поръчки</h1>
 
     <p th:if="${warningMessage} and ${#lists.isEmpty(orders)}" th:text="${warningMessage}"></p>
+
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <p class="success" th:text="${successMessage}"></p>
+    </div>
+
+    <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+        <p th:text="${failureMessage}"></p>
+    </div>
 
     <div class="orders-list" th:if="${not #lists.isEmpty(orders)}">
         <section class="order-info" th:each="order : ${orders}">
@@ -26,6 +36,12 @@
             </p>
             <p class="price" th:text="${order.getFinalPrice()} + ' лв.'"></p>
             <a th:href="@{/orders/track/{id}(id=${order.getId()})}">Виж поръчката</a>
+            <form sec:authorize="hasRole('ADMIN')"
+                  th:if="${allOrders}"
+                  th:action="@{/orders/update-status/{id}(id=${order.getId()})}"
+                  th:method="PUT">
+                <button type="submit">Обнови статус</button>
+            </form>
         </section>
     </div>
 </main>

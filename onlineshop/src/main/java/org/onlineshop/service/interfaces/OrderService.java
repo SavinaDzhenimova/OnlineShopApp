@@ -24,4 +24,8 @@ public interface OrderService {
     OrderDTO mapOrderToDto(Order order);
 
     Optional<Order> getById(Long id);
+
+    List<OrderDTO> getAllOrders();
+
+    Result updateOrderStatus(Long id);
 }

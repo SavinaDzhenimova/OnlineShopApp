@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -114,5 +115,32 @@ public class OrderController {
         modelAndView.addObject("orderItems", orderDTO.getOrderItems());
 
         return modelAndView;
+    }
+
+    @GetMapping("/all")
+    public ModelAndView showAllOrders() {
+
+        ModelAndView modelAndView = new ModelAndView("orders");
+
+        List<OrderDTO> orders = this.orderService.getAllOrders();
+
+        modelAndView.addObject("orders", orders);
+        modelAndView.addObject("allOrders", true);
+
+        return modelAndView;
+    }
+
+    @PutMapping("/update-status/{id}")
+    public ModelAndView updateOrderStatus(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+
+        Result result = this.orderService.updateOrderStatus(id);
+
+        if (result.isSuccess()) {
+            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
+        } else {
+            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+        }
+
+        return new ModelAndView("redirect:/orders/all");
     }
 }

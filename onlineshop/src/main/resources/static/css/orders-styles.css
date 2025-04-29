@@ -15,7 +15,7 @@ main .orders-list .order-info {
 main .orders-list .order-info .order-status {
     color: #fff;
     padding: 0 1em;
-    border-radius: 0.5em;
+    border-radius: 1em;
 }
 
 .order-status.delivered {
@@ -43,6 +43,19 @@ main .orders-list .order-info .order-status {
 .order-status.returned {
     background-color: #ccc;
     color: black;
+}
+
+main .orders-list .order-info form button[type="submit"] {
+    padding: 0.5em 1em;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    font-weight: 600;
+}
+
+main .orders-list .order-info form button[type="submit"]:hover {
+    background-color: #bbb;
+    color: #fff;
 }
 
 main .orders-list .order-info .price {

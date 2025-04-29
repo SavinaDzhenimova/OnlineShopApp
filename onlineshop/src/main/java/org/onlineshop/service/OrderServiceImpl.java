@@ -49,6 +49,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderDTO> getAllOrders() {
+        List<Order> orders = this.orderRepository.findAll();
+
+        return orders.stream()
+                .map(this::mapOrderToDto)
+                .toList();
+    }
+
+    @Override
     public OrderRequestDTO createOrder(String promoCode, List<OrderItemRequestDTO> orderItems) {
         BigDecimal total = BigDecimal.ZERO;
 
@@ -210,11 +219,41 @@ public class OrderServiceImpl implements OrderService {
         }
 
         QuantitySize quantitySize = optionalQuantitySize.get();
-        
+
         int newQuantity = optionalQuantitySize.get().getQuantity() - addOrderItemDTO.getSelectedQuantity();
         quantitySize.setQuantity(newQuantity);
 
         this.quantitySizeService.saveAndFlush(quantitySize);
+    }
+
+    @Override
+    public Result updateOrderStatus(Long id) {
+        Optional<Order> optionalOrder = this.orderRepository.findById(id);
+
+        if (optionalOrder.isEmpty()) {
+            return new Result(false, "Поръчката, която се опитвате да актуализирате, не съществува!");
+        }
+
+        Order order = optionalOrder.get();
+        OrderStatus orderStatus = order.getStatus();
+
+        if (orderStatus.equals(OrderStatus.DELIVERED) || orderStatus.equals(OrderStatus.CANCELLED)
+                || orderStatus.equals(OrderStatus.RETURNED)) {
+
+            return new Result(false, "Статусът на тази поръчка не може да бъде обновен!");
+        }
+
+        switch (orderStatus) {
+            case PENDING -> order.setStatus(OrderStatus.PROCESSING);
+            case PROCESSING -> order.setStatus(OrderStatus.SHIPPED);
+            case SHIPPED -> order.setStatus(OrderStatus.DELIVERED);
+        }
+
+        this.orderRepository.saveAndFlush(order);
+
+        return new Result(true, "Успешно променихте статуса на поръчка №" + order.getId() +
+                " от \"" + this.mapOrderStatusToString(orderStatus) + 
+                "\"" + " на \"" + this.mapOrderStatusToString(order.getStatus()) + "\"");
     }
 
     @Override
