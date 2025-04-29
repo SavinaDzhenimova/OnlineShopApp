@@ -210,16 +210,14 @@ public class OrderServiceImpl implements OrderService {
 
         this.orderRepository.saveAndFlush(order);
 
-        String promoCodeName = order.getPromoCode() != null ? order.getPromoCode().getCode() : null;
-        BigDecimal discountPercent = order.getPromoCode() != null ? order.getPromoCode().getDiscountValue() : BigDecimal.ZERO;
+        String orderTrackingUrl = "/orders/track/" + order.getId();
 
         this.applicationEventPublisher.publishEvent(
                 new MakeOrderEvent(this, order.getFullName(), order.getEmail(), order.getDeliveryAddress(),
                         order.getPhoneNumber(), order.getTotalPrice(), order.getDiscount(), order.getFinalPrice(),
                         this.mapOrderStatusToString(order.getStatus()), order.getOrderedOn(),
-                        promoCodeName, discountPercent, order.getOrderItems()));
+                        "http://localhost:8090" + orderTrackingUrl));
 
-        String orderTrackingUrl = "/orders/track/" + order.getId();
         return new Result(true, orderTrackingUrl);
     }
 

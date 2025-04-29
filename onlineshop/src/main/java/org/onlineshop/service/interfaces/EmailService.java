@@ -12,6 +12,5 @@ public interface EmailService {
 
     void sendMakeOrderEmail(String fullName, String email, String deliveryAddress, String phoneNumber,
                             BigDecimal totalPrice, BigDecimal discount, BigDecimal finalPrice, String status,
-                            LocalDateTime orderedOn, String promoCodeName, BigDecimal discountPercent,
-                            List<OrderItem> orderItems);
+                            LocalDateTime orderedOn, String orderTrackingUrl);
 }

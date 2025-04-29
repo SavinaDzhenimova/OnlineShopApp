@@ -27,15 +27,11 @@ public class MakeOrderEvent extends ApplicationEvent {
 
     private LocalDateTime orderedOn;
 
-    private String promoCodeName;
-
-    private BigDecimal discountPercent;
-
-    private List<OrderItem> orderItems;
+    private String orderTrackingUrl;
 
     public MakeOrderEvent(Object source, String fullName, String email, String deliveryAddress, String phoneNumber,
                           BigDecimal totalPrice, BigDecimal discount, BigDecimal finalPrice, String status,
-                          LocalDateTime orderedOn, String promoCodeName, BigDecimal discountPercent, List<OrderItem> orderItems) {
+                          LocalDateTime orderedOn, String orderTrackingUrl) {
         super(source);
         this.fullName = fullName;
         this.email = email;
@@ -46,9 +42,7 @@ public class MakeOrderEvent extends ApplicationEvent {
         this.finalPrice = finalPrice;
         this.status = status;
         this.orderedOn = orderedOn;
-        this.promoCodeName = promoCodeName;
-        this.discountPercent = discountPercent;
-        this.orderItems = orderItems;
+        this.orderTrackingUrl = orderTrackingUrl;
     }
 
     public String getFullName() {
@@ -123,27 +117,11 @@ public class MakeOrderEvent extends ApplicationEvent {
         this.orderedOn = orderedOn;
     }
 
-    public String getPromoCodeName() {
-        return promoCodeName;
+    public String getOrderTrackingUrl() {
+        return orderTrackingUrl;
     }
 
-    public void setPromoCodeName(String promoCodeName) {
-        this.promoCodeName = promoCodeName;
-    }
-
-    public BigDecimal getDiscountPercent() {
-        return discountPercent;
-    }
-
-    public void setDiscountPercent(BigDecimal discountPercent) {
-        this.discountPercent = discountPercent;
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderTrackingUrl(String orderTrackingUrl) {
+        this.orderTrackingUrl = orderTrackingUrl;
     }
 }

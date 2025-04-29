@@ -2,7 +2,6 @@ package org.onlineshop.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.onlineshop.model.entity.OrderItem;
 import org.onlineshop.service.interfaces.EmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,7 +13,6 @@ import org.thymeleaf.context.Context;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -46,21 +44,19 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendMakeOrderEmail(String fullName, String email, String deliveryAddress, String phoneNumber,
                                    BigDecimal totalPrice, BigDecimal discount, BigDecimal finalPrice, String status,
-                                   LocalDateTime orderedOn, String promoCodeName, BigDecimal discountPercent,
-                                   List<OrderItem> orderItems) {
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("fullName", fullName);
-        variables.put("email", email);
-        variables.put("deliveryAddress", deliveryAddress);
-        variables.put("phoneNumber", phoneNumber);
-        variables.put("totalPrice", totalPrice);
-        variables.put("discount", discount);
-        variables.put("finalPrice", finalPrice);
-        variables.put("status", status);
-        variables.put("orderedOn", orderedOn);
-        variables.put("promoCodeName", promoCodeName);
-        variables.put("discountPercent", discountPercent);
-        variables.put("orderItems", orderItems);
+                                   LocalDateTime orderedOn, String orderTrackingUrl) {
+        Map<String, Object> variables = Map.of(
+                "fullName", fullName,
+                "email", email,
+                "deliveryAddress", deliveryAddress,
+                "phoneNumber", phoneNumber,
+                "totalPrice", totalPrice,
+                "discount", discount,
+                "finalPrice", finalPrice,
+                "status", status,
+                "orderedOn", orderedOn,
+                "orderTrackingUrl", orderTrackingUrl
+        );
 
         String content = generateEmailContent("/email/make-order-email", variables);
         sendEmail(email, "Успешно направена поръчка", content);

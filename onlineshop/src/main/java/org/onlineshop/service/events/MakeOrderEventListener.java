@@ -19,7 +19,6 @@ public class MakeOrderEventListener {
         this.emailService.sendMakeOrderEmail(makeOrderEvent.getFullName(), makeOrderEvent.getEmail(),
                 makeOrderEvent.getDeliveryAddress(), makeOrderEvent.getPhoneNumber(), makeOrderEvent.getTotalPrice(),
                 makeOrderEvent.getDiscount(), makeOrderEvent.getFinalPrice(), makeOrderEvent.getStatus(),
-                makeOrderEvent.getOrderedOn(), makeOrderEvent.getPromoCodeName(), makeOrderEvent.getDiscountPercent(),
-                makeOrderEvent.getOrderItems());
+                makeOrderEvent.getOrderedOn(), makeOrderEvent.getOrderTrackingUrl());
     }
 }
