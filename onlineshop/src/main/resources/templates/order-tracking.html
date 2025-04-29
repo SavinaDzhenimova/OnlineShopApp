@@ -13,7 +13,7 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <h1>Поръчка номер №<span th:text="${order.getId()}"></span></h1>
+        <h1>Поръчка №<span th:text="${order.getId()}"></span></h1>
 
         <div class="delivery-info">
             <h2>Данни за купувача</h2>
@@ -23,7 +23,8 @@
             <p>Мобилен телефон: <span th:text="${order.getPhoneNumber()}"></span></p>
             <p>Адрес за доставка: <span th:text="${order.getDeliveryAddress()}"></span></p>
             <p>Поръчана на: <span th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></span></p>
-            <p>Статус на поръчката: <span th:text="${order.getStatus()}"></span></p>
+            <p class="order-status" th:classappend="${order.getStatusClass()}">Статус на поръчката
+                <span th:text="${order.getStatus()}"></span></p>
         </div>
 
         <div class="order-items-info">

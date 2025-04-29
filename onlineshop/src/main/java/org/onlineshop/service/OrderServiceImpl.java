@@ -26,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
     private final PromoCodeService promoCodeService;
     private final CurrentUserProvider currentUserProvider;
     private final ShoeSizeService shoeSizeService;
+    private final QuantitySizeService quantitySizeService;
     private final CategoryService categoryService;
     private final ProductService productService;
     private final ShoppingCartServiceLogged shoppingCartServiceLogged;
@@ -33,13 +34,14 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
                             CurrentUserProvider currentUserProvider, ShoeSizeService shoeSizeService,
-                            CategoryService categoryService, ProductService productService,
-                            ShoppingCartServiceLogged shoppingCartServiceLogged,
+                            QuantitySizeService quantitySizeService, CategoryService categoryService,
+                            ProductService productService, ShoppingCartServiceLogged shoppingCartServiceLogged,
                             ShoppingCartServiceGuest shoppingCartServiceGuest) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
         this.currentUserProvider = currentUserProvider;
         this.shoeSizeService = shoeSizeService;
+        this.quantitySizeService = quantitySizeService;
         this.categoryService = categoryService;
         this.productService = productService;
         this.shoppingCartServiceLogged = shoppingCartServiceLogged;
@@ -142,6 +144,9 @@ public class OrderServiceImpl implements OrderService {
             order.setUser(loggedUser);
             loggedUser.getOrders().add(order);
 
+            BigDecimal loggedUserTotalOutcome = loggedUser.getTotalOutcome().add(order.getTotalPrice());
+            loggedUser.setTotalOutcome(loggedUserTotalOutcome);
+
             this.currentUserProvider.saveAndFlushUser(loggedUser);
 
             List<Long> idsToRemove = loggedUser.getShoppingCart().getCartItems().stream()
@@ -174,6 +179,8 @@ public class OrderServiceImpl implements OrderService {
                         throw new IllegalArgumentException("Избраният продукт не съществува!");
                     }
 
+                    this.updateOrderedProductQuantity(optionalProduct.get(), addOrderItemDTO);
+
                     orderItem.setSize(optionalShoeSize.get());
                     orderItem.setQuantity(addOrderItemDTO.getSelectedQuantity());
                     orderItem.setPrice(addOrderItemDTO.getUnitPrice());
@@ -183,12 +190,31 @@ public class OrderServiceImpl implements OrderService {
                     return orderItem;
                 }).toList();
 
+
         order.setOrderItems(orderItems);
 
         this.orderRepository.saveAndFlush(order);
 
         String orderTrackingUrl = "/orders/track/" + order.getId();
         return new Result(true, orderTrackingUrl);
+    }
+
+    private void updateOrderedProductQuantity(Product product, AddOrderItemDTO addOrderItemDTO) {
+        Optional<QuantitySize> optionalQuantitySize = product.getQuantitySize().stream()
+                .filter(quantitySize -> quantitySize.getProduct().getId() == product.getId()
+                        && quantitySize.getSize().getSize() == addOrderItemDTO.getSelectedSize())
+                .findFirst();
+
+        if (optionalQuantitySize.isEmpty()) {
+            throw new IllegalArgumentException("Избраният размер и продукт не съществуват!");
+        }
+
+        QuantitySize quantitySize = optionalQuantitySize.get();
+        
+        int newQuantity = optionalQuantitySize.get().getQuantity() - addOrderItemDTO.getSelectedQuantity();
+        quantitySize.setQuantity(newQuantity);
+
+        this.quantitySizeService.saveAndFlush(quantitySize);
     }
 
     @Override

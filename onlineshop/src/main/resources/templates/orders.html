@@ -19,7 +19,7 @@
 
     <div class="orders-list" th:if="${not #lists.isEmpty(orders)}">
         <section class="order-info" th:each="order : ${orders}">
-            <p th:text="${order.getId()}"></p>
+            <p th:text="'#' + ${order.getId()}"></p>
             <p th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></p>
             <p th:text="${order.getFullName()}"></p>
             <p class="order-status" th:text="${order.getStatus()}" th:classappend="${order.getStatusClass()}">
