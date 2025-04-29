@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/addresses-styles.css">
+    <title>Моите адреси</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Моите адреси</h1>
+
+        <p th:if="${warningMessage} and ${#lists.isEmpty(addresses)}" th:text="${warningMessage}"></p>
+
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
+
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
+
+        <div class="addresses-list" th:if="${not #lists.isEmpty(addresses)}">
+            <section class="address-info" th:each="address : ${addresses}">
+                <p class="town" th:text="${address.getTown()}"></p>
+                <p th:text="'Пощенски код: ' + ${address.getPostalCode()}"></p>
+                <p th:text="'Улица: ' + ${address.getStreet()}"></p>
+                <p th:text="'Област: ' + ${address.getRegion()}"></p>
+                <form th:action="@{/users/delete-address/{id}(id=${address.getId()})}"
+                      th:method="DELETE">
+                    <button type="submit">Изтрий адрес</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

@@ -15,6 +15,8 @@
     <main>
         <h1>Промо кодове</h1>
 
+        <p th:if="${warningMessage} and ${#lists.isEmpty(promoCodes.getPromoCodes())}" th:text="${warningMessage}"></p>
+
         <div th:if="${successMessage}" class="alert alert-success" role="alert">
             <p class="success" th:text="${successMessage}"></p>
         </div>

@@ -1,14 +1,12 @@
 package org.onlineshop.model.user;
 
-import org.onlineshop.model.entity.DiscountCard;
-import org.onlineshop.model.entity.Order;
-import org.onlineshop.model.entity.Role;
-import org.onlineshop.model.entity.ShoppingCart;
+import org.onlineshop.model.entity.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public class UserDetailsDTO extends User {
@@ -17,11 +15,9 @@ public class UserDetailsDTO extends User {
 
     private String fullName;
 
-    private String address;
+    private List<Address> addresses;
 
     private String phoneNumber;
-
-    private String deliveryAddress;
 
     private DiscountCard discountCard;
 
@@ -38,9 +34,8 @@ public class UserDetailsDTO extends User {
                           Collection<? extends GrantedAuthority> authorities,
                           Long id,
                           String fullName,
-                          String address,
+                          List<Address> addresses,
                           String phoneNumber,
-                          String deliveryAddress,
                           DiscountCard discountCard,
                           BigDecimal totalOutcome,
                           Set<Order> orders,
@@ -49,9 +44,8 @@ public class UserDetailsDTO extends User {
         super(email, password, authorities);
         this.id = id;
         this.fullName = fullName;
-        this.address = address;
+        this.addresses = addresses;
         this.phoneNumber = phoneNumber;
-        this.deliveryAddress = deliveryAddress;
         this.discountCard = discountCard;
         this.totalOutcome = totalOutcome;
         this.orders = orders;
@@ -75,12 +69,12 @@ public class UserDetailsDTO extends User {
         this.fullName = fullName;
     }
 
-    public String getAddress() {
-        return address;
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     public String getPhoneNumber() {
@@ -89,14 +83,6 @@ public class UserDetailsDTO extends User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
     }
 
     public DiscountCard getDiscountCard() {

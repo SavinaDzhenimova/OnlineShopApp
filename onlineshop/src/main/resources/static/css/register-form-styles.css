@@ -37,12 +37,12 @@ main form fieldset .password-field {
     gap: 3em;
 }
 
-
 main form fieldset .password-field .field {
     width: 100%;
 }
 
-main form fieldset .field input {
+main form fieldset .field input,
+main form .address-fieldset .field select {
     outline: none;
     border: 1px solid #ccc;
     border-radius: 0.5em;
@@ -51,6 +51,18 @@ main form fieldset .field input {
 
 main form fieldset .field input:focus {
     border: 1.5px solid #000;
+}
+
+main form .address-fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+main form .address-fieldset .field {
+    width: 48%;
 }
 
 main form .checkbox-section .checkbox-field {

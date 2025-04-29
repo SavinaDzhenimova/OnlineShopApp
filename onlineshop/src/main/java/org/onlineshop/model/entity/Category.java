@@ -9,7 +9,7 @@ public class Category extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
-    private org.onlineshop.model.enums.CategoryName categoryName;
+    private CategoryName categoryName;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -21,7 +21,7 @@ public class Category extends BaseEntity {
         return categoryName;
     }
 
-    public void setCategoryName(org.onlineshop.model.enums.CategoryName categoryName) {
+    public void setCategoryName(CategoryName categoryName) {
         this.categoryName = categoryName;
     }
 

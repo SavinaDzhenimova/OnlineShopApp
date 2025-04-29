@@ -6,7 +6,9 @@ import jakarta.validation.constraints.Size;
 import org.onlineshop.model.annotations.ValidEmail;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,13 +27,8 @@ public class User extends BaseEntity {
     @Size(min = 7, max = 15)
     private String phoneNumber;
 
-    @Column(nullable = false)
-    @Size(min = 10, max = 70)
-    private String address;
-
-    @Column(name = "delivery_address")
-    @Size(min = 10, max = 70)
-    private String deliveryAddress;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Address> addresses;
 
     @Column(nullable = false)
     @Size(min = 8)
@@ -62,6 +59,7 @@ public class User extends BaseEntity {
     private Set<Product> favourites;
 
     public User() {
+        this.addresses = new ArrayList<>();
         this.orders = new HashSet<>();
         this.favourites = new HashSet<>();
     }
@@ -90,20 +88,12 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     public String getPassword() {

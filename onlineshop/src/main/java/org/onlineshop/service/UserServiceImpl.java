@@ -3,6 +3,7 @@ package org.onlineshop.service;
 import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.enums.RoleName;
+import org.onlineshop.model.exportDTO.AddressDTO;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserDetailsServiceImpl userDetailsService;
     private final ShoppingCartServiceLogged shoppingCartService;
     private final OrderService orderService;
+    private final AddressService addressService;
     private final PasswordResetService passwordResetService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
@@ -34,13 +36,14 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
                            ShoppingCartServiceLogged shoppingCartService, OrderService orderService,
-                           PasswordResetService passwordResetService, EmailService emailService,
+                           AddressService addressService, PasswordResetService passwordResetService, EmailService emailService,
                            PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.userDetailsService = userDetailsService;
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
+        this.addressService = addressService;
         this.passwordResetService = passwordResetService;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
@@ -76,12 +79,21 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRegisterDTO.getEmail());
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
         user.setTotalOutcome(BigDecimal.ZERO);
-        user.setAddress(userRegisterDTO.getAddress());
         user.setPassword(this.passwordEncoder.encode(userRegisterDTO.getPassword()));
         user.setRole(optionalRole.get());
         user.setOrders(new HashSet<>());
 
         this.userRepository.saveAndFlush(user);
+
+        Address address = new Address();
+
+        address.setRegion(userRegisterDTO.getRegion());
+        address.setTown(userRegisterDTO.getTown());
+        address.setPostalCode(userRegisterDTO.getPostalCode());
+        address.setStreet(userRegisterDTO.getStreet());
+        address.setUser(user);
+
+        user.getAddresses().add(address);
 
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
@@ -241,11 +253,60 @@ public class UserServiceImpl implements UserService {
     public List<OrderDTO> getLoggedUserOrders() {
         User loggedUser = this.currentUserProvider.getLoggedUser();
 
-        Set<Order> loggedUserOrders = loggedUser.getOrders();
-
-        return loggedUserOrders.stream()
+        return loggedUser.getOrders().stream()
                 .map(this.orderService::mapOrderToDto)
                 .toList();
+    }
+
+    @Override
+    public List<AddressDTO> getLoggedUserAddresses() {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        return loggedUser.getAddresses().stream()
+                .map(address -> {
+                    AddressDTO addressDTO = new AddressDTO();
+
+                    addressDTO.setId(address.getId());
+                    addressDTO.setRegion(address.getRegion().getDisplayName());
+                    addressDTO.setTown(address.getTown());
+                    addressDTO.setPostalCode(address.getPostalCode());
+                    addressDTO.setStreet(address.getStreet());
+
+                    return addressDTO;
+                }).toList();
+    }
+
+    @Override
+    public Result deleteAddress(Long id) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        Optional<Address> optionalAddress = this.addressService.getById(id);
+
+        if (optionalAddress.isEmpty()) {
+            return new Result(false, "Адресът, който се опитвате да изтриете, не съществува!");
+        }
+
+        Address address = optionalAddress.get();
+
+        if (!address.getUser().getEmail().equals(loggedUser.getEmail())) {
+            return new Result(false, "Нямате права да изтриете този адрес!");
+        }
+
+        loggedUser.getAddresses().remove(address);
+        this.userRepository.saveAndFlush(loggedUser);
+
+        address.setUser(null);
+        this.addressService.saveAndFlush(address);
+
+        this.addressService.deleteById(id);
+
+        Optional<Address> optionalAddressAfterDeletion = this.addressService.getById(id);
+
+        if (optionalAddressAfterDeletion.isPresent()) {
+            return new Result(false, "Адресът не можа да бъде изтрит!");
+        }
+
+        return new Result(true, "Успешно изтрихте избрания адрес!");
     }
 
     @Override

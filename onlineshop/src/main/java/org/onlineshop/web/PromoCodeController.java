@@ -34,7 +34,11 @@ public class PromoCodeController {
 
         PromoCodesListDTO promoCodesList = this.promoCodeService.getAllPromoCodes();
 
-        modelAndView.addObject("promoCodes", promoCodesList);
+        if (promoCodesList.getPromoCodes().isEmpty()) {
+            modelAndView.addObject("warningMessage", "Все още няма добавени промо кодове.");
+        } else {
+            modelAndView.addObject("promoCodes", promoCodesList);
+        }
 
         return modelAndView;
     }

@@ -71,12 +71,42 @@
                            th:errors="*{phoneNumber}"
                            class="text-danger">Dish name error message</small>
                 </div>
+            </fieldset>
+
+            <fieldset class="address-fieldset">
+                <legend>Адрес</legend>
 
                 <div class="field">
-                    <label th:for="address">Адрес (използва се за доставки)</label>
-                    <input type="text" th:field="*{address}" name="address" id="address">
-                    <small th:if="${#fields.hasErrors('address')}"
-                           th:errors="*{address}"
+                    <label th:for="region">Област:</label>
+                    <select th:field="*{region}" id="region" name="region">
+                        <option value="">-- Избери област --</option>
+                        <option th:each="region : ${regions}"
+                                th:value="${region}"
+                                th:text="${region.displayName}"></option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label th:for="town">Град</label>
+                    <input type="text" th:field="*{town}" name="town" id="town">
+                    <small th:if="${#fields.hasErrors('town')}"
+                           th:errors="*{town}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="postalCode">Пощенски код</label>
+                    <input type="text" th:field="*{postalCode}" name="postalCode" id="postalCode">
+                    <small th:if="${#fields.hasErrors('postalCode')}"
+                           th:errors="*{postalCode}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="street">Улица</label>
+                    <input type="text" th:field="*{street}" name="street" id="street">
+                    <small th:if="${#fields.hasErrors('street')}"
+                           th:errors="*{street}"
                            class="text-danger">Dish name error message</small>
                 </div>
             </fieldset>

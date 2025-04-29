@@ -1,9 +1,12 @@
 package org.onlineshop.init;
 
+import org.onlineshop.model.entity.Address;
 import org.onlineshop.model.entity.Role;
 import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.enums.Region;
 import org.onlineshop.model.enums.RoleName;
+import org.onlineshop.repository.AddressRepository;
 import org.onlineshop.repository.RoleRepository;
 import org.onlineshop.repository.ShoppingCartRepository;
 import org.onlineshop.repository.UserRepository;
@@ -24,13 +27,15 @@ public class AdminInit implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ShoppingCartRepository shoppingCartRepository;
+    private final AddressRepository addressRepository;
 
     public AdminInit(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-                     ShoppingCartRepository shoppingCartRepository) {
+                     ShoppingCartRepository shoppingCartRepository, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -44,13 +49,24 @@ public class AdminInit implements CommandLineRunner {
             user.setFullName("Admin One");
             user.setPhoneNumber("0895121616");
             user.setEmail("runtastic.shoes.contacts@gmail.com");
-            user.setAddress("Str. Republika 15, 4900 Madan, Smolyan");
+
+            Address address = new Address();
+
+            address.setRegion(Region.SMOLYAN);
+            address.setTown("Мадан");
+            address.setPostalCode("4900");
+            address.setStreet("Република 15");
+
+            user.getAddresses().add(address);
             user.setPassword(this.passwordEncoder.encode("Admin1234"));
             user.setOrders(new HashSet<>());
             user.setRole(role);
             user.setTotalOutcome(BigDecimal.ZERO);
 
             this.userRepository.saveAndFlush(user);
+
+            address.setUser(user);
+            this.addressRepository.saveAndFlush(address);
 
             ShoppingCart shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);

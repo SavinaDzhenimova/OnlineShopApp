@@ -2,12 +2,14 @@ package org.onlineshop.web;
 
 import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
+import org.onlineshop.model.enums.Region;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.Arrays;
 import java.util.List;
 
 @ControllerAdvice
@@ -46,6 +48,11 @@ public class GlobalController {
     @ModelAttribute("shoeSizes")
     public List<ShoeSize> shoeSizes() {
         return this.shoeSizeService.getAllShoeSizes();
+    }
+
+    @ModelAttribute("regions")
+    public List<Region> regions() {
+        return List.of(Region.values());
     }
 
     @ModelAttribute

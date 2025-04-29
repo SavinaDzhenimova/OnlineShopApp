@@ -7,6 +7,7 @@ main .orders-list {
 main .orders-list .order-info {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 2em 1.5em;
     border: 1px solid #ccc;
     border-radius: 1em;
@@ -14,39 +15,40 @@ main .orders-list .order-info {
 
 main .orders-list .order-info .order-status {
     color: #fff;
-    padding: 0 1em;
+    padding: 0.2em 1em;
     border-radius: 1em;
+    font-weight: 500;
 }
 
-.order-status.delivered {
+main .orders-list .order-info .order-status.delivered {
     background-color: #28a745;
 }
 
-.order-status.cancelled {
+main .orders-list .order-info .order-status.cancelled {
     background-color: #C00;
 }
 
-.order-status.pending {
+main .orders-list .order-info .order-status.pending {
     background-color: #007bff;
 }
 
-.order-status.processing {
+main .orders-list .order-info .order-status.processing {
     background-color: #ffc107;
-    color: black;
+    color: #000;
 }
 
-.order-status.shipped {
+main .orders-list .order-info .order-status.shipped {
     background-color: #ADFF2FFF;
-    color: black;
+    color: #000;
 }
 
-.order-status.returned {
+main .orders-list .order-info .order-status.returned {
     background-color: #ccc;
     color: black;
 }
 
 main .orders-list .order-info form button[type="submit"] {
-    padding: 0.5em 1em;
+    padding: 0.7em 1em;
     outline: none;
     border: none;
     border-radius: 1em;

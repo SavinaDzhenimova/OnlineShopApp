@@ -3,6 +3,7 @@ package org.onlineshop.model.user;
 import jakarta.validation.constraints.*;
 import org.onlineshop.model.annotations.ValidEmail;
 import org.onlineshop.model.annotations.ValidPassword;
+import org.onlineshop.model.enums.Region;
 
 public class UserRegisterDTO {
 
@@ -24,9 +25,20 @@ public class UserRegisterDTO {
     @Size(min = 7, max = 15, message = "Мобилният телефон трябва да бъде между 7 и 15 символа!")
     private String phoneNumber;
 
-    @NotBlank(message = "Моля въведете адрес за доставки!")
-    @Size(min = 10, max = 70, message = "Адресът трябва да бъде между 10 и 70 символа!")
-    private String address;
+    @NotNull(message = "Моля изберете област!")
+    private Region region;
+
+    @NotNull(message = "Моля въведете име на град!")
+    @Size(min = 4, max = 15, message = "Името на градът трябва да бъде между 4 и 15 символа!")
+    private String town;
+
+    @NotNull(message = "Моля въведете пощенски код!")
+    @Pattern(regexp = "\\d{4}", message = "Пощенският код трябва да съдържа точно 4 цифри!")
+    private String postalCode;
+
+    @NotNull(message = "Моля въведете име на улица!")
+    @Size(min = 5, max = 30, message = "Името на улицата трябва да бъде между 5 и 30 символа!")
+    private String street;
 
     private boolean newsletter;
 
@@ -76,12 +88,36 @@ public class UserRegisterDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public boolean isNewsletter() {

@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.exportDTO.AddressDTO;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
@@ -33,4 +34,8 @@ public interface UserService {
     VipStatusDTO calculateVipStatus();
 
     ShoppingCart getLoggedUserShoppingCart(HttpSession session);
+
+    List<AddressDTO> getLoggedUserAddresses();
+
+    Result deleteAddress(Long id);
 }

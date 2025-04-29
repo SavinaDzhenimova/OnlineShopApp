@@ -5,6 +5,10 @@ main .admin-menu {
     position: relative;
 }
 
+main h2 {
+    padding-top: 1em;
+}
+
 main h2::after {
     display: block;
     content: '';
@@ -13,14 +17,15 @@ main h2::after {
     background-color: #ccc;
 }
 
+main .profile-menu::after,
 main .admin-menu::after {
     display: block;
     content: '';
     background-color: #ccc;
     width: 100%;
-    height: 1px;
+    height: 0.5px;
     position: absolute;
-    bottom: -2em;
+    bottom: -1em;
     left: 0;
 }
 
