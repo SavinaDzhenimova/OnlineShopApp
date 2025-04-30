@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div style="padding: 1em 2em; border-radius: 0.5em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        <h1 style="text-align: center;">Успешна регистрация в Runtastic Shoes</h1>
+
+        <div style="font-size: 16px;">
+            <p style="padding-bottom: 0.5em;">Здравей, <strong th:text="${fullName}">[Име]</strong>,</p>
+
+            <p style="padding-bottom: 1em;">Благодарим ти, че се регистрира в нашия онлайн магазин!</p>
+
+            <p style="padding-bottom: 0.5em;">Имейлът, с който се регистрира:
+                <strong th:text="${email}">[email]</strong></p>
+
+            <p style="padding-bottom: 1em;">Това е мобилният телефон, който си посочил за връзка:
+                <strong th:text="${phoneNumber}">[email]</strong></p>
+
+            <p style="padding-bottom: 1em;">Вече можеш да следиш своите поръчки, да използваш промоции и да пазаруваш лесно и бързо.</p>
+
+            <p style="padding-bottom: 1em;">Ако не ти е позната тази регистрация, моля свържи се с нас незабавно.</p>
+
+            <p>С най-добри пожелания,<br>Екипът на <strong>Runtastic Shoes</strong></p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -12,6 +12,7 @@ import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.repository.UserRepository;
 import org.onlineshop.service.events.ForgotPasswordEvent;
+import org.onlineshop.service.events.UserRegisterEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.context.ApplicationEventPublisher;
@@ -120,6 +121,9 @@ public class UserServiceImpl implements UserService {
         if (optionalUserAfterRegistration.isEmpty()) {
             return new Result(false, "Нещо се обърка! Не можахме да Ви регистрираме!");
         }
+
+        this.applicationEventPublisher.publishEvent(
+                new UserRegisterEvent(this, user.getFullName(), user.getEmail(), user.getPhoneNumber()));
 
         return new Result(true, "Успешно се регистрирахте!");
     }

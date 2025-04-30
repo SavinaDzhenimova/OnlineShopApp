@@ -10,6 +10,8 @@ public interface EmailService {
 
     void sendForgotPasswordEmail(String fullName, String email, String token);
 
+    void sendUserRegisterEmail(String fullName, String email, String phoneNumber);
+
     void sendUpdateOrderStatusEmail(Long id, String fullName, String email, String previousStatus, String currentStatus);
 
     void sendMakeOrderEmail(String fullName, String email, String deliveryAddress, String phoneNumber,
