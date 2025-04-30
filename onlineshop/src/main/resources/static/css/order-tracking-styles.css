@@ -21,29 +21,29 @@ main .delivery-info .order-status span {
     font-size: 16px;
 }
 
-.order-status.delivered span {
+main .delivery-info .order-status.delivered span {
     background-color: #28a745;
 }
 
-.order-status.cancelled span {
+main .delivery-info .order-status.cancelled span {
     background-color: #C00;
 }
 
-.order-status.pending span {
+main .delivery-info .order-status.pending span {
     background-color: #007bff;
 }
 
-.order-status.processing span {
+main .delivery-info .order-status.processing span {
     background-color: #ffc107;
-    color: black;
+    color: #000;
 }
 
-.order-status.shipped span {
+main .delivery-info .order-status.shipped span {
     background-color: #ADFF2FFF;
-    color: black;
+    color: #000;
 }
 
-.order-status.returned span {
+main .delivery-info .order-status.returned span {
     background-color: #ccc;
     color: black;
 }

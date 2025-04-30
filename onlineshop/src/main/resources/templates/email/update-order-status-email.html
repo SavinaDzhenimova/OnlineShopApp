@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div style="padding: 1em 2em; border-radius: 0.5em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        <h1 style="text-align: center;">Променен статус на поръчка</h1>
+
+        <p style="font-size: 16px;">Здравейте, <strong th:text="${fullName}">Клиент</strong>,</p>
+
+        <p style="font-size: 16px;">
+          Статусът на Вашата поръчка №<strong th:text="${id}">#123</strong> беше променен.
+        </p>
+
+        <div style="margin: 1em 0; font-size: 16px;">
+            <p style="padding-bottom: 0.5em;"><strong>Предишен статус:</strong>
+                <span th:text="${previousStatus}">OLD</span>
+            </p>
+            <p style="padding-bottom: 0.5em;"><strong>Нов статус:</strong>
+                <span th:text="${currentStatus}">NEW</span>
+            </p>
+        </div>
+
+        <p style="font-size: 16px; margin-top: 1em;">Можете да следите поръчката си
+            <a th:href="'http://localhost:8090/orders/track/' + ${id}"
+              style="text-decoration: underline; color: #0A67AA;">тук</a>.
+        </p>
+
+        <p style="font-size: 16px; margin: 1em 0;">Благодарим Ви, че избрахте нашия онлайн магазин!</p>
+
+        <p>С най-добри пожелания,<br>Екипът на Runtastic Shoes</p>
+    </div>
+
+</body>
+</html>

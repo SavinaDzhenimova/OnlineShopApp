@@ -12,7 +12,6 @@ import org.thymeleaf.context.Context;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -39,6 +38,20 @@ public class EmailServiceImpl implements EmailService {
 
         String content = generateEmailContent("/email/forgot-password-email", variables);
         sendEmail(email, "Линк за промяна на парола", content);
+    }
+
+    @Override
+    public void sendUpdateOrderStatusEmail(Long id, String fullName, String email, String previousStatus, String currentStatus) {
+        Map<String, Object> variables = Map.of(
+                "id", id,
+                "fullName", fullName,
+                "email", email,
+                "previousStatus", previousStatus,
+                "currentStatus", currentStatus
+        );
+
+        String content = generateEmailContent("/email/update-order-status-email", variables);
+        sendEmail(email, "Променен статус на поръчка", content);
     }
 
     @Override

@@ -12,6 +12,7 @@ import org.onlineshop.model.importDTO.OrderItemRequestDTO;
 import org.onlineshop.repository.OrderRepository;
 import org.onlineshop.service.events.ForgotPasswordEvent;
 import org.onlineshop.service.events.MakeOrderEvent;
+import org.onlineshop.service.events.UpdateOrderStatusEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.context.ApplicationEventPublisher;
@@ -263,6 +264,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
         this.orderRepository.saveAndFlush(order);
+
+        this.applicationEventPublisher.publishEvent(
+                new UpdateOrderStatusEvent(this, order.getId(), order.getFullName(), order.getEmail(),
+                        this.mapOrderStatusToString(orderStatus), this.mapOrderStatusToString(order.getStatus())));
 
         return new Result(true, "Успешно променихте статуса на поръчка №" + order.getId() +
                 " от \"" + this.mapOrderStatusToString(orderStatus) +

@@ -6,50 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style="width: 100%; display: flex; justify-content: center;">
+<body>
 
-    <div style="display: flex; padding: 1em 2em; flex-direction: column; gap: 1em; width: 1000px;
-            border-radius: 0.5em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-        <h1 style="text-align: center; font-size: 22px; font-weight: 600;">
-            Нова поръчка</h1>
+    <div style="padding: 1em 2em; border-radius: 0.5em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        <h1 style="text-align: center;">Нова поръчка</h1>
 
-        <div style="display: flex; flex-direction: column; gap: 1em; font-size: 16px;">
-            <p>Благодарим Ви за поръчката, <span th:text="${fullName}">Клиент</span>!</p>
+        <div style="font-size: 16px;">
+            <p style="margin-bottom: 1em;">Благодарим Ви за поръчката, <span th:text="${fullName}">Клиент</span>!</p>
 
-            <p>Вашата поръчка е успешно приета на
-              <strong th:text="${#temporals.format(orderedOn, 'dd.MM.yyyy HH:mm')}">дата</strong>.</p>
+            <p style="margin-bottom: 1em;">Вашата поръчка е успешно приета на
+                <strong th:text="${#temporals.format(orderedOn, 'dd.MM.yyyy HH:mm')}">дата</strong>.</p>
 
-            <h3 style="padding-top: 1em;">Детайли за поръчката:</h3>
-            <ul style="display: flex; flex-direction: column; gap: 0.5em;">
-                <li><strong>Телефон:</strong> <span th:text="${phoneNumber}">телефон</span></li>
-                <li><strong>Email:</strong> <span th:text="${email}">имейл</span></li>
-                <li><strong>Адрес за доставка:</strong> <span th:text="${deliveryAddress}">адрес</span></li>
-                <li><strong>Статус:</strong> <span th:text="${status}">статус</span></li>
+            <h3 style="padding-top: 1em; margin-bottom: 0.5em;">Детайли за поръчката:</h3>
+            <ul style="margin: 0 0 1em 1em; padding: 0;">
+                <li style="margin-bottom: 0.5em;"><strong>Телефон:</strong>
+                    <span th:text="${phoneNumber}">телефон</span></li>
+                <li style="margin-bottom: 0.5em;"><strong>Email:</strong>
+                    <span th:text="${email}">имейл</span></li>
+                <li style="margin-bottom: 0.5em;"><strong>Адрес за доставка:</strong>
+                    <span th:text="${deliveryAddress}">адрес</span></li>
+                <li style="margin-bottom: 0.5em;"><strong>Статус:</strong>
+                    <span th:text="${status}">статус</span></li>
             </ul>
 
-            <div><strong>Обща цена:</strong> <span th:text="${totalPrice}">0.00</span> лв.</div>
+            <p style="margin-bottom: 0.5em;"><strong>Обща цена:</strong> <span th:text="${totalPrice}">0.00</span> лв.</p>
 
-            <div th:if="${discount != null && discount != 0}">
+            <div th:if="${discount != null && discount != 0}" style="margin-bottom: 0.5em;">
                 <strong>Отстъпка:</strong> <span th:text="${discount}">0.00</span> лв.
             </div>
 
-            <div th:if="${promoCodeName != null}">
+            <div th:if="${promoCodeName != null}" style="margin-bottom: 0.5em;">
                 <strong>Промо код:</strong> <span th:text="${promoCodeName}">код</span>
             </div>
 
-            <div th:if="${discountPercent != null and discountPercent != 0}">
+            <div th:if="${discountPercent != null and discountPercent != 0}" style="margin-bottom: 0.5em;">
                 <strong>Процент отстъпка:</strong> <span th:text="${discountPercent}">%</span>%
             </div>
 
-            <div><strong>Крайна цена:</strong> <span th:text="${finalPrice}">0.00</span> лв.</div>
+            <p style="margin-bottom: 1em;"><strong>Крайна цена:</strong> <span th:text="${finalPrice}">0.00</span> лв.</p>
 
-            <p>Следете поръчката си и промените в нейния статус
+            <p style="margin-bottom: 1em;">Следете поръчката си и промените в нейния статус
                 <a style="text-decoration: underline" th:href="${orderTrackingUrl}">тук</a>.</p>
 
-            <p>Ще се свържем с Вас при нужда. Благодарим, че избрахте нашия онлайн магазин!</p>
+            <p style="margin-bottom: 1em;">Ще се свържем с Вас при нужда. Благодарим, че избрахте нашия онлайн магазин!</p>
 
             <p>С най-добри пожелания,<br>
-              Екипът на Runtastic Shoes</p>
+                Екипът на Runtastic Shoes</p>
         </div>
     </div>
 
