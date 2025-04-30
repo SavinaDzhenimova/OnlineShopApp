@@ -3,6 +3,7 @@ package org.onlineshop.service;
 import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.enums.OrderStatus;
+import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderItemDTO;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
@@ -276,6 +277,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO getOrderInfo(Long id) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
         Optional<Order> optionalOrder = this.orderRepository.findById(id);
 
         if (optionalOrder.isEmpty()) {
@@ -283,6 +286,11 @@ public class OrderServiceImpl implements OrderService {
         }
 
         Order order = optionalOrder.get();
+
+        if (order.getUser() != null && !loggedUser.getRole().getRoleName().equals(RoleName.ADMIN) &&
+                !order.getUser().getEmail().equals(loggedUser.getEmail())) {
+            return null;
+        }
 
         return this.mapOrderToDto(order);
     }

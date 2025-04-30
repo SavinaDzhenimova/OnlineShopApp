@@ -1,0 +1,51 @@
+h1 {
+    width: 100%;
+    padding-bottom: 0.5em;
+    font-family: 'Lobster';
+    font-weight: 300;
+    font-size: 30px;
+    text-align: center;
+}
+
+main h1::after {
+    display: block;
+    content: '';
+    background-color: #ccc;
+    width: 12%;
+    height: 2px;
+    position: absolute;
+    left: 44%;
+}
+
+main {
+    padding: 1.5em 6em 2em 6em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+
+main .error-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em 0 2em 0;
+}
+
+main .error-info .error-description {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+main .error-info p a {
+    color: #0A67AA;
+}
+
+main .error-info p a:hover {
+    text-decoration: underline;
+}
+
+main .error-image img {
+    width: 300px;
+    height: 300px;
+}
