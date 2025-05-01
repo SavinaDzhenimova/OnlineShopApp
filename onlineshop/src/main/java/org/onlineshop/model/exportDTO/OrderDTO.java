@@ -35,6 +35,12 @@ public class OrderDTO {
 
     private List<OrderItemDTO> orderItems;
 
+    private String discountCardName;
+
+    private BigDecimal discountCardPercent;
+
+    private BigDecimal vipStatusDiscount;
+
     public OrderDTO() {
         this.orderItems = new ArrayList<>();
     }
@@ -125,6 +131,30 @@ public class OrderDTO {
 
     public void setDiscountPercent(BigDecimal discountPercent) {
         this.discountPercent = discountPercent;
+    }
+
+    public String getDiscountCardName() {
+        return discountCardName;
+    }
+
+    public void setDiscountCardName(String discountCardName) {
+        this.discountCardName = discountCardName;
+    }
+
+    public BigDecimal getDiscountCardPercent() {
+        return discountCardPercent;
+    }
+
+    public void setDiscountCardPercent(BigDecimal discountCardPercent) {
+        this.discountCardPercent = discountCardPercent;
+    }
+
+    public BigDecimal getVipStatusDiscount() {
+        return vipStatusDiscount;
+    }
+
+    public void setVipStatusDiscount(BigDecimal vipStatusDiscount) {
+        this.vipStatusDiscount = vipStatusDiscount;
     }
 
     public BigDecimal getFinalPrice() {

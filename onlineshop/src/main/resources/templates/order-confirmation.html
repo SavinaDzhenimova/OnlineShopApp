@@ -98,6 +98,15 @@
                     <input type="hidden" id="discountPercent" th:field="*{discountPercent}" />
                     <input type="hidden" id="appliedPromoCode" th:field="*{promoCode}" />
                 </div>
+                <div class="discountCard" th:if="${discountCard != null}">
+                    <p>ВИП Отстъпка:</p>
+                    <span class="price-value" id="discountCard"
+                          th:text="'-' + ${discountCard.getDiscountValue()} + ' лв.'"></span>
+                    <p class="discount-card">(<span th:text="${discountCard.getDiscountCardName()}"></span> за
+                        <span th:text="${discountCard.getDiscountPercent()}"></span>% отстъпка)
+                    </p>
+                    <input type="hidden" id="vipStatusDiscount" th:field="*{vipStatusDiscount}" />
+                </div>
                 <div class="final-price" th:if="${finalPrice != null and finalPrice != 0}">
                     <p>Крайна сума:</p>
                     <span class="price-value" id="finalPrice" th:text="${finalPrice} + ' лв.'"></span>

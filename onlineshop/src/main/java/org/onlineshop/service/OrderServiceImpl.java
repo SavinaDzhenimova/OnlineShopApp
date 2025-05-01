@@ -34,14 +34,12 @@ public class OrderServiceImpl implements OrderService {
     private final CategoryService categoryService;
     private final ProductService productService;
     private final ShoppingCartServiceLogged shoppingCartServiceLogged;
-    private final ShoppingCartServiceGuest shoppingCartServiceGuest;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
                             CurrentUserProvider currentUserProvider, ShoeSizeService shoeSizeService,
                             QuantitySizeService quantitySizeService, CategoryService categoryService,
                             ProductService productService, ShoppingCartServiceLogged shoppingCartServiceLogged,
-                            ShoppingCartServiceGuest shoppingCartServiceGuest,
                             ApplicationEventPublisher applicationEventPublisher) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
@@ -51,7 +49,6 @@ public class OrderServiceImpl implements OrderService {
         this.categoryService = categoryService;
         this.productService = productService;
         this.shoppingCartServiceLogged = shoppingCartServiceLogged;
-        this.shoppingCartServiceGuest = shoppingCartServiceGuest;
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -128,6 +125,17 @@ public class OrderServiceImpl implements OrderService {
         addOrderDTO.setDiscount(createdOrder.getDiscount());
         addOrderDTO.setFinalPrice(createdOrder.getFinalPrice());
 
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+        DiscountCard discountCard = loggedUser.getDiscountCard();
+
+        if (loggedUser != null && discountCard != null) {
+            BigDecimal discountValue = createdOrder.getTotalPrice().multiply(discountCard.getDiscountPercent())
+                    .divide(BigDecimal.valueOf(100));
+
+            addOrderDTO.setVipStatusDiscount(discountValue);
+            addOrderDTO.setFinalPrice(addOrderDTO.getFinalPrice().subtract(discountValue));
+        }
+
         return Optional.of(addOrderDTO);
     }
 
@@ -145,6 +153,7 @@ public class OrderServiceImpl implements OrderService {
         order.setEmail(addOrderDTO.getEmail());
         order.setTotalPrice(addOrderDTO.getTotalPrice());
         order.setDiscount(addOrderDTO.getDiscount() != null ? addOrderDTO.getDiscount() : BigDecimal.ZERO);
+        order.setVipStatusDiscount(addOrderDTO.getVipStatusDiscount() != null ? addOrderDTO.getVipStatusDiscount() : BigDecimal.ZERO);
         order.setFinalPrice(addOrderDTO.getFinalPrice() != null ? addOrderDTO.getFinalPrice() : addOrderDTO.getTotalPrice());
         order.setOrderedOn(LocalDateTime.now());
         order.setStatus(OrderStatus.PENDING);
@@ -304,6 +313,13 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setTotalPrice(order.getTotalPrice());
         orderDTO.setFinalPrice(order.getFinalPrice());
         orderDTO.setDiscount(order.getDiscount() != null ? order.getDiscount() : BigDecimal.ZERO);
+        orderDTO.setVipStatusDiscount(order.getVipStatusDiscount() != null ? order.getVipStatusDiscount() : BigDecimal.ZERO);
+        orderDTO.setDiscountCardName(order.getUser() != null && order.getUser().getDiscountCard() != null
+                ? order.getUser().getDiscountCard().getDiscountCardName().getDisplayName()
+                : "");
+        orderDTO.setDiscountCardPercent(order.getUser() != null && order.getUser().getDiscountCard() != null
+                ? order.getUser().getDiscountCard().getDiscountPercent()
+                : BigDecimal.ZERO);
         orderDTO.setPromoCode(order.getPromoCode() != null ? order.getPromoCode().getCode() : "");
         orderDTO.setDiscountPercent(order.getPromoCode() != null ? order.getPromoCode().getDiscountValue() : BigDecimal.ZERO);
 

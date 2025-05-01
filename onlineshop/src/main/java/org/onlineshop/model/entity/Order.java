@@ -55,6 +55,10 @@ public class Order extends BaseEntity {
     @PositiveOrZero
     private BigDecimal discount;
 
+    @Column(name = "vip_status_discount")
+    @PositiveOrZero
+    private BigDecimal vipStatusDiscount;
+
     @Column(name = "final_price")
     @PositiveOrZero
     private BigDecimal finalPrice;
@@ -148,6 +152,14 @@ public class Order extends BaseEntity {
 
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    public BigDecimal getVipStatusDiscount() {
+        return vipStatusDiscount;
+    }
+
+    public void setVipStatusDiscount(BigDecimal vipStatusDiscount) {
+        this.vipStatusDiscount = vipStatusDiscount;
     }
 
     public BigDecimal getFinalPrice() {

@@ -93,18 +93,13 @@ main .price-section div {
     flex-wrap: wrap;
 }
 
-main .price-section .discount #discount {
+main .price-section .discount #discount,
+main .price-section .discountCard #discountCard {
     color: #C00;
 }
 
-main .price-section .discount .promo-code {
-    width: 100%;
-    font-size: 12px;
-    font-style: oblique;
-    opacity: 0.7;
-}
-
-main .price-section .discount .promo-code-message {
+main .price-section .discount .promo-code-message,
+main .price-section .discountCard .discount-card-message {
     opacity: 0.7;
     font-size: 12px;
     font-style: oblique;

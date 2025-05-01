@@ -3,10 +3,10 @@ package org.onlineshop.service;
 import org.onlineshop.model.entity.DiscountCard;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.enums.DiscountCardName;
+import org.onlineshop.model.exportDTO.DiscountCardDTO;
 import org.onlineshop.repository.DiscountCardRepository;
 import org.onlineshop.service.interfaces.DiscountCardService;
 import org.onlineshop.service.interfaces.UserService;
-import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -55,5 +55,25 @@ public class DiscountCardServiceImpl implements DiscountCardService {
         this.userService.saveAndFlushUser(loggedUser);
 
         return message;
+    }
+
+    @Override
+    public DiscountCardDTO getDiscountCard(User loggedUser, BigDecimal orderTotalPrice) {
+        DiscountCardDTO discountCardDTO = new DiscountCardDTO();
+
+        if (loggedUser != null && loggedUser.getDiscountCard() != null) {
+            DiscountCard discountCard = loggedUser.getDiscountCard();
+
+            discountCardDTO.setDiscountCardName(discountCard.getDiscountCardName().getDisplayName());
+            discountCardDTO.setDiscountPercent(discountCard.getDiscountPercent());
+
+            BigDecimal discountValue = orderTotalPrice.multiply(discountCard.getDiscountPercent())
+                    .divide(BigDecimal.valueOf(100));
+            discountCardDTO.setDiscountValue(discountValue);
+
+            return discountCardDTO;
+        }
+
+        return null;
     }
 }

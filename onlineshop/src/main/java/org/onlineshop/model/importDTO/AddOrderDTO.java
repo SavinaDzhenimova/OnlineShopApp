@@ -38,6 +38,8 @@ public class AddOrderDTO {
 
     private BigDecimal discount;
 
+    private BigDecimal vipStatusDiscount;
+
     private BigDecimal finalPrice;
 
     @NotEmpty
@@ -109,6 +111,14 @@ public class AddOrderDTO {
 
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    public BigDecimal getVipStatusDiscount() {
+        return vipStatusDiscount;
+    }
+
+    public void setVipStatusDiscount(BigDecimal vipStatusDiscount) {
+        this.vipStatusDiscount = vipStatusDiscount;
     }
 
     public BigDecimal getFinalPrice() {

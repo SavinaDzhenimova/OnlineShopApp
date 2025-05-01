@@ -70,11 +70,13 @@ main .order-confirmation-form .price-section div {
     flex-wrap: wrap;
 }
 
-main .order-confirmation-form .price-section .discount #discount {
+main .order-confirmation-form .price-section .discount #discount,
+main .order-confirmation-form .price-section .discountCard #discountCard {
     color: #C00;
 }
 
-main .order-confirmation-form .price-section .discount .promo-code {
+main .order-confirmation-form .price-section .discount .promo-code,
+main .order-confirmation-form .price-section .discountCard .discount-card {
     width: 100%;
     font-size: 12px;
     font-style: oblique;

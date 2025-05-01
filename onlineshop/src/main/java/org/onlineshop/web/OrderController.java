@@ -2,8 +2,10 @@ package org.onlineshop.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.onlineshop.model.entity.DiscountCard;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.exportDTO.DiscountCardDTO;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
@@ -67,12 +69,19 @@ public class OrderController {
             model.addAttribute("addOrderDTO", addOrderDTO);
         }
 
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+        DiscountCardDTO discountCardDTO = this.discountCardService.getDiscountCard(loggedUser, createdOrder.getTotalPrice());
+
+        if (loggedUser != null && discountCardDTO != null) {
+            modelAndView.addObject("discountCard", discountCardDTO);
+        }
+
         modelAndView.addObject("orderItems", createdOrder.getOrderItems());
         modelAndView.addObject("promoCode", createdOrder.getPromoCode());
-        modelAndView.addObject("totalPrice", createdOrder.getTotalPrice());
-        modelAndView.addObject("discount", createdOrder.getDiscount());
-        modelAndView.addObject("discountPercent", createdOrder.getDiscountPercent());
-        modelAndView.addObject("finalPrice", createdOrder.getFinalPrice());
+        modelAndView.addObject("totalPrice", addOrderDTO.getTotalPrice());
+        modelAndView.addObject("discount", addOrderDTO.getDiscount());
+        modelAndView.addObject("discountPercent", addOrderDTO.getDiscountPercent());
+        modelAndView.addObject("finalPrice", addOrderDTO.getFinalPrice());
 
         return modelAndView;
     }

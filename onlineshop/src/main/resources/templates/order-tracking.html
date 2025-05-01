@@ -74,6 +74,16 @@
                     </span>
                 </p>
             </div>
+            <div class="discountCard" th:if="${order.getVipStatusDiscount() != null and order.getVipStatusDiscount() != 0}">
+                <p>ВИП Отстъпка:
+                    <span class="price-value" id="discountCard" th:text="'-' + ${order.getVipStatusDiscount()} + ' лв.'"></span>
+                    <span class="discount-card-message">(<span
+                            th:if="${order.getVipStatusDiscount() != null and order.getVipStatusDiscount() != 0}"
+                            th:text="${order.getDiscountCardName()}"></span> за
+                        <span th:text="${order.getDiscountCardPercent()}"></span>% отстъпка)
+                    </span>
+                </p>
+            </div>
             <div class="final-price" th:if="${order.getFinalPrice() != null and order.getFinalPrice() != 0}">
                 <p>Крайна сума:
                     <span class="price-value" id="finalPrice" th:text="${order.getFinalPrice()} + ' лв.'"></span>
