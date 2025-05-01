@@ -18,7 +18,9 @@
 
             <p class="success">Успешно направихте своята поръчка!</p>
 
-            <p>Благодарим Ви, че избрахте нас! Може да следите поръчка си <a th:href="${successMessage}">тук</a>.</p>
+            <p th:if="${newDiscountCardMessage}" th:text="${newDiscountCardMessage}"></p>
+
+            <p>Благодарим Ви, че избрахте нас! Може да следите поръчката си <a th:href="${successMessage}">тук</a>.</p>
         </div>
     </main>
 

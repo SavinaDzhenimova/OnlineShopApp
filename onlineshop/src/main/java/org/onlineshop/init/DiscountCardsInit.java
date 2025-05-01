@@ -6,6 +6,7 @@ import org.onlineshop.repository.DiscountCardRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 @Component
@@ -33,7 +34,14 @@ public class DiscountCardsInit implements CommandLineRunner {
                             case VIP_1200 -> "При изпратени поръчки на стойност над 1201 лв. получаваш 10% допълнителна отстъпка.";
                         };
 
+                        BigDecimal discountPercent = switch (discountCardName) {
+                            case VIP_300 -> BigDecimal.valueOf(5);
+                            case VIP_700 -> BigDecimal.valueOf(7);
+                            case VIP_1200 -> BigDecimal.valueOf(10);
+                        };
+
                         discountCard.setDescription(description);
+                        discountCard.setDiscountPercent(discountPercent);
                         this.discountCardRepository.saveAndFlush(discountCard);
                     });
         }

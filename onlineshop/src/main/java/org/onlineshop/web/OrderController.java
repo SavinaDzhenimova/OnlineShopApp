@@ -2,14 +2,14 @@ package org.onlineshop.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.onlineshop.model.entity.Order;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.entity.User;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
-import org.onlineshop.model.importDTO.AddOrderItemDTO;
-import org.onlineshop.model.user.UserRegisterDTO;
+import org.onlineshop.service.interfaces.DiscountCardService;
 import org.onlineshop.service.interfaces.OrderService;
+import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,9 +27,14 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
+    private final DiscountCardService discountCardService;
+    private final CurrentUserProvider currentUserProvider;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, DiscountCardService discountCardService,
+                           CurrentUserProvider currentUserProvider) {
         this.orderService = orderService;
+        this.discountCardService = discountCardService;
+        this.currentUserProvider = currentUserProvider;
     }
 
     @PostMapping(value = "/create-order", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -86,6 +91,13 @@ public class OrderController {
         }
 
         Result result = this.orderService.makeOrder(addOrderDTO, session);
+
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        if (loggedUser != null) {
+            String discountCard = this.discountCardService.checkForDiscountCard(loggedUser, loggedUser.getTotalOutcome());
+            redirectAttributes.addFlashAttribute("newDiscountCardMessage", discountCard);
+        }
 
         if (result.isSuccess()) {
             redirectAttributes.addFlashAttribute("successMessage", result.getMessage());

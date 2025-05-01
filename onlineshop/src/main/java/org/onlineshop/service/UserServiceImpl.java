@@ -35,14 +35,13 @@ public class UserServiceImpl implements UserService {
     private final OrderService orderService;
     private final AddressService addressService;
     private final PasswordResetService passwordResetService;
-    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserProvider currentUserProvider;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
                            ShoppingCartServiceLogged shoppingCartService, OrderService orderService,
-                           AddressService addressService, PasswordResetService passwordResetService, EmailService emailService,
+                           AddressService addressService, PasswordResetService passwordResetService,
                            PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider,
                            ApplicationEventPublisher applicationEventPublisher) {
         this.userRepository = userRepository;
@@ -52,7 +51,6 @@ public class UserServiceImpl implements UserService {
         this.orderService = orderService;
         this.addressService = addressService;
         this.passwordResetService = passwordResetService;
-        this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.currentUserProvider = currentUserProvider;
         this.applicationEventPublisher = applicationEventPublisher;
@@ -220,9 +218,9 @@ public class UserServiceImpl implements UserService {
         String nextLevel = "";
         String message = null;
 
-        if (totalOutcome.compareTo(BigDecimal.valueOf(1200)) >= 0) {
+        if (totalOutcome.compareTo(BigDecimal.valueOf(1201)) >= 0) {
             message = "Поздравления! Вие сте достигнали ниво ВИП 1200!";
-        } else if (totalOutcome.compareTo(BigDecimal.valueOf(700)) >= 0) {
+        } else if (totalOutcome.compareTo(BigDecimal.valueOf(701)) >= 0) {
             nextLevel = "ВИП 1200";
             amountToNextLevel = BigDecimal.valueOf(1200).subtract(totalOutcome);
         } else if (totalOutcome.compareTo(BigDecimal.valueOf(300)) >= 0) {
@@ -241,7 +239,6 @@ public class UserServiceImpl implements UserService {
 
         return vipStatusDTO;
     }
-
 
     @Override
     public ShoppingCart getLoggedUserShoppingCart(HttpSession session) {
@@ -347,5 +344,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void saveAndFlushUser(User user) {
+        this.userRepository.saveAndFlush(user);
     }
 }

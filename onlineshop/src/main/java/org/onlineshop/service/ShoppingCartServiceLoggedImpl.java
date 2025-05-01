@@ -164,6 +164,18 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
     }
 
     @Override
+    public void deleteItemsFromLoggedUserShoppingCartAfterOrder(User loggedUser) {
+        List<CartItem> cartItems = new ArrayList<>(loggedUser.getShoppingCart().getCartItems());
+
+        for (CartItem item : cartItems) {
+            this.cartItemService.deleteById(item.getId());
+        }
+
+        loggedUser.getShoppingCart().getCartItems().clear();
+        this.shoppingCartRepository.saveAndFlush(loggedUser.getShoppingCart());
+    }
+
+    @Override
     public void saveAndFlush(ShoppingCart shoppingCart) {
         this.shoppingCartRepository.saveAndFlush(shoppingCart);
     }

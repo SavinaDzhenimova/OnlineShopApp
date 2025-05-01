@@ -42,4 +42,5 @@ public interface UserService {
 
     Result addAddress(AddAddressDTO addAddressDTO);
 
+    void saveAndFlushUser(User user);
 }

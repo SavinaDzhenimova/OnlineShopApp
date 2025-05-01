@@ -11,7 +11,6 @@ import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.AddOrderItemDTO;
 import org.onlineshop.model.importDTO.OrderItemRequestDTO;
 import org.onlineshop.repository.OrderRepository;
-import org.onlineshop.service.events.ForgotPasswordEvent;
 import org.onlineshop.service.events.MakeOrderEvent;
 import org.onlineshop.service.events.UpdateOrderStatusEvent;
 import org.onlineshop.service.interfaces.*;
@@ -166,19 +165,14 @@ public class OrderServiceImpl implements OrderService {
 
             this.currentUserProvider.saveAndFlushUser(loggedUser);
 
-            List<Long> idsToRemove = loggedUser.getShoppingCart().getCartItems().stream()
-                    .map(BaseEntity::getId).toList();
-
-            idsToRemove.forEach(id -> this.shoppingCartServiceLogged.removeItemFromShoppingCart(loggedUser, id));
+            this.shoppingCartServiceLogged.deleteItemsFromLoggedUserShoppingCartAfterOrder(loggedUser);
 
         } else {
             ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("guestCart");
 
-            if (shoppingCart != null) {
-                List<Long> idsToRemove = shoppingCart.getCartItems().stream()
-                        .map(CartItem::getTempId).toList();
-
-                idsToRemove.forEach(id -> this.shoppingCartServiceGuest.removeItemFromShoppingCart(id, session));
+            if (shoppingCart != null && shoppingCart.getCartItems() != null) {
+                shoppingCart.getCartItems().clear();
+                session.removeAttribute("guestCart");
             }
         }
 
