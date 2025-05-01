@@ -21,17 +21,28 @@ public class MakeOrderEvent extends ApplicationEvent {
 
     private BigDecimal discount;
 
+    private String promoCodeName;
+
+    private BigDecimal discountPercent;
+
     private BigDecimal finalPrice;
 
     private String status;
 
     private LocalDateTime orderedOn;
 
+    private String discountCardName;
+
+    private BigDecimal discountCardPercent;
+
+    private BigDecimal vipStatusDiscount;
+
     private String orderTrackingUrl;
 
     public MakeOrderEvent(Object source, String fullName, String email, String deliveryAddress, String phoneNumber,
-                          BigDecimal totalPrice, BigDecimal discount, BigDecimal finalPrice, String status,
-                          LocalDateTime orderedOn, String orderTrackingUrl) {
+                          BigDecimal totalPrice, BigDecimal discount, String promoCodeName, BigDecimal discountPercent,
+                          BigDecimal finalPrice, String status, LocalDateTime orderedOn, String discountCardName,
+                          BigDecimal discountCardPercent, BigDecimal vipStatusDiscount, String orderTrackingUrl) {
         super(source);
         this.fullName = fullName;
         this.email = email;
@@ -39,9 +50,14 @@ public class MakeOrderEvent extends ApplicationEvent {
         this.phoneNumber = phoneNumber;
         this.totalPrice = totalPrice;
         this.discount = discount;
+        this.promoCodeName = promoCodeName;
+        this.discountPercent = discountPercent;
         this.finalPrice = finalPrice;
         this.status = status;
         this.orderedOn = orderedOn;
+        this.discountCardName = discountCardName;
+        this.discountCardPercent = discountCardPercent;
+        this.vipStatusDiscount = vipStatusDiscount;
         this.orderTrackingUrl = orderTrackingUrl;
     }
 
@@ -93,6 +109,22 @@ public class MakeOrderEvent extends ApplicationEvent {
         this.discount = discount;
     }
 
+    public String getPromoCodeName() {
+        return promoCodeName;
+    }
+
+    public void setPromoCodeName(String promoCodeName) {
+        this.promoCodeName = promoCodeName;
+    }
+
+    public BigDecimal getDiscountPercent() {
+        return discountPercent;
+    }
+
+    public void setDiscountPercent(BigDecimal discountPercent) {
+        this.discountPercent = discountPercent;
+    }
+
     public BigDecimal getFinalPrice() {
         return finalPrice;
     }
@@ -115,6 +147,30 @@ public class MakeOrderEvent extends ApplicationEvent {
 
     public void setOrderedOn(LocalDateTime orderedOn) {
         this.orderedOn = orderedOn;
+    }
+
+    public String getDiscountCardName() {
+        return discountCardName;
+    }
+
+    public void setDiscountCardName(String discountCardName) {
+        this.discountCardName = discountCardName;
+    }
+
+    public BigDecimal getDiscountCardPercent() {
+        return discountCardPercent;
+    }
+
+    public void setDiscountCardPercent(BigDecimal discountCardPercent) {
+        this.discountCardPercent = discountCardPercent;
+    }
+
+    public BigDecimal getVipStatusDiscount() {
+        return vipStatusDiscount;
+    }
+
+    public void setVipStatusDiscount(BigDecimal vipStatusDiscount) {
+        this.vipStatusDiscount = vipStatusDiscount;
     }
 
     public String getOrderTrackingUrl() {

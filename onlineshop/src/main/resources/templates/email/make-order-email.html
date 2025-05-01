@@ -33,14 +33,12 @@
 
             <div th:if="${discount != null && discount != 0}" style="margin-bottom: 0.5em;">
                 <strong>Отстъпка:</strong> <span th:text="${discount}">0.00</span> лв.
+                (с промо код <span th:text="${promoCodeName}"></span> за <span th:text="${discountPercent} + '%'"></span> отстъпка)
             </div>
 
-            <div th:if="${promoCodeName != null}" style="margin-bottom: 0.5em;">
-                <strong>Промо код:</strong> <span th:text="${promoCodeName}">код</span>
-            </div>
-
-            <div th:if="${discountPercent != null and discountPercent != 0}" style="margin-bottom: 0.5em;">
-                <strong>Процент отстъпка:</strong> <span th:text="${discountPercent}">%</span>%
+            <div th:if="${vipStatusDiscount != null && vipStatusDiscount != 0}" style="margin-bottom: 0.5em;">
+                <strong>ВИП отстъпка:</strong> <span th:text="${vipStatusDiscount}"></span>
+                (<span th:text="${discountCardName}"></span> за <span th:text="${discountCardPercent} + '%'"></span> отстъпка)
             </div>
 
             <p style="margin-bottom: 1em;"><strong>Крайна цена:</strong> <span th:text="${finalPrice}">0.00</span> лв.</p>
