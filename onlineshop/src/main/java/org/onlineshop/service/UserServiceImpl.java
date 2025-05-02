@@ -379,45 +379,57 @@ public class UserServiceImpl implements UserService {
             return new Result(false, "Продуктът, който искате да добавите в списъка Ви с любими, не съществува!");
         }
 
-        Optional<Product> optionalFavouriteProduct = loggedUser.getFavourites().stream()
-                .filter(product -> product.getId() == id)
-                .findFirst();
+        if (loggedUser != null) {
+            boolean alreadyInFavourites = loggedUser.getFavourites().stream()
+                    .anyMatch(product -> product.getId().equals(id));
 
-        if (optionalFavouriteProduct.isPresent()) {
-            return new Result(false, "Продуктът вече е добавен в списъка Ви с любими!");
+            if (alreadyInFavourites) {
+                return new Result(false, "Продуктът вече е добавен в списъка Ви с любими!");
+            }
+
+            loggedUser.getFavourites().add(optionalProduct.get());
+            this.userRepository.saveAndFlush(loggedUser);
+
+        } else {
+            List<Long> guestFavourites = (List<Long>) session.getAttribute("guestFavourites");
+
+            if (guestFavourites == null) {
+                guestFavourites = new ArrayList<>();
+                session.setAttribute("guestFavourites", guestFavourites);
+            }
+
+            if (guestFavourites.contains(id)) {
+                return new Result(false, "Продуктът вече е в списъка Ви с любими!");
+            }
+
+            guestFavourites.add(id);
         }
 
-        loggedUser.getFavourites().add(optionalProduct.get());
-
-        this.userRepository.saveAndFlush(loggedUser);
-
-        return new Result(true, "Успешно добавихте този продукт в списъка Ви с любими!");
+        return new Result(true, "Продуктът е добавен в списъка Ви с любими!");
     }
 
     @Override
     public Result removeProductFromFavourites(Long id, HttpSession session) {
         User loggedUser = this.currentUserProvider.getLoggedUser();
 
-        Optional<Product> optionalProduct = loggedUser.getFavourites().stream()
-                .filter(product -> product.getId() == id)
-                .findFirst();
+        if (loggedUser != null) {
+            boolean removed = loggedUser.getFavourites()
+                    .removeIf(product -> product.getId().equals(id));
 
-        if (optionalProduct.isEmpty()) {
-            return new Result(false,
-                    "Продуктът, който искате да премахнете от списъка Ви с любими, не съществува!");
+            if (removed) {
+                this.userRepository.saveAndFlush(loggedUser);
+
+                return new Result(true, "Продуктът е премахнат от списъка Ви с любими.");
+            }
+        } else {
+            List<Long> guestFavourites = (List<Long>) session.getAttribute("guestFavourites");
+
+            if (guestFavourites != null && guestFavourites.remove(id)) {
+                return new Result(true, "Продуктът е премахнат от списъка Ви с любими.");
+            }
         }
 
-        Product productToRemove = optionalProduct.get();
-
-        boolean isRemoved = loggedUser.getFavourites().remove(productToRemove);
-
-        if (!isRemoved) {
-            return new Result(false, "Този продукт не успя да бъде премахнат от списъка Ви с любими!");
-        }
-
-        this.userRepository.saveAndFlush(loggedUser);
-
-        return new Result(true, "Успешно премахнахте този продукт от списъка Ви с любими!");
+        return new Result(false, "Продуктът не беше намерен.");
     }
 
     @Override

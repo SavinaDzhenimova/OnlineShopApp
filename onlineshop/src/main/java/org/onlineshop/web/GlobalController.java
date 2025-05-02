@@ -9,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @ControllerAdvice
 public class GlobalController {
@@ -20,14 +20,17 @@ public class GlobalController {
     private final ColorService colorService;
     private final CategoryService categoryService;
     private final ShoeSizeService shoeSizeService;
+    private final ProductService productService;
     private final CurrentUserProvider currentUserProvider;
 
     public GlobalController(BrandService brandService, ColorService colorService, CategoryService categoryService,
-                            ShoeSizeService shoeSizeService, CurrentUserProvider currentUserProvider) {
+                            ShoeSizeService shoeSizeService, ProductService productService,
+                            CurrentUserProvider currentUserProvider) {
         this.brandService = brandService;
         this.colorService = colorService;
         this.categoryService = categoryService;
         this.shoeSizeService = shoeSizeService;
+        this.productService = productService;
         this.currentUserProvider = currentUserProvider;
     }
 
@@ -87,12 +90,21 @@ public class GlobalController {
         if (loggedUser != null) {
             favourites = loggedUser.getFavourites().stream().toList();
         } else {
-            favourites = (List<Product>) session.getAttribute("favourites");
+            List<Long> favouriteIds = (List<Long>) session.getAttribute("guestFavourites");
+
+            if (favouriteIds != null) {
+                favourites = favouriteIds.stream()
+                        .map(id -> this.productService.getById(id).orElse(null))
+                        .filter(Objects::nonNull)
+                        .toList();
+            } else {
+                favourites = Collections.emptyList();
+            }
         }
 
-        boolean hasItemsInFavourites = favourites != null && !favourites.isEmpty();
+        boolean hasItemsInFavourites = !favourites.isEmpty();
 
-        int favouriteItemsCount = favourites != null ? favourites.size() : 0;
+        int favouriteItemsCount = favourites.size();
 
         model.addAttribute("hasItemsInFavourites", hasItemsInFavourites);
         model.addAttribute("favouriteItemsCount", favouriteItemsCount);
