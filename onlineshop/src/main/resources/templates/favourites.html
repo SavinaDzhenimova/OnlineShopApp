@@ -26,7 +26,13 @@
             <p th:text="${failureMessage}"></p>
         </div>
 
-        <div class="products-list">
+        <div th:if="${favourites.products.empty}" class="empty-favourites-message">
+            <p>Все още нямаш добавени продукти в списъка ти с любими.
+                Можеш да разгледаш най-новото в Runtastic Shoes и да направиш своя избор.</p>
+            <a th:href="@{/products/all}" class="view-products-btn">Виж нашите предложения</a>
+        </div>
+
+        <div class="products-list" th:if="${not favourites.products.empty}">
             <a class="product-card"
                th:each="favourite : ${favourites.getProducts()}"
                th:href="@{/products/product/{id}(id=${favourite.getId()})}">

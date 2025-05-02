@@ -87,11 +87,6 @@ public class UserController {
 
         modelAndView.addObject("favourites", favouriteProducts);
 
-        if (favouriteProducts.getProducts().isEmpty()) {
-            modelAndView.addObject("warningMessage",
-                    "Все още няма добавени продукти в списъка Ви с любими!");
-        }
-
         return modelAndView;
     }
 
@@ -105,8 +100,6 @@ public class UserController {
             redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
         } else {
             redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
-
-            return new ModelAndView("redirect:/products/all");
         }
 
         return new ModelAndView("redirect:/users/favourites");

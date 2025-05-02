@@ -1,3 +1,22 @@
+main .empty-favourites-message {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .empty-favourites-message .view-products-btn {
+    width: 20%;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5em;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 1.5em;
+}
+
 main .products-list {
     display: flex;
     justify-content: flex-start;
