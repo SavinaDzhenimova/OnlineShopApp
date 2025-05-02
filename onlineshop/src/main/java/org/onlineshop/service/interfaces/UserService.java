@@ -6,12 +6,12 @@ import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.exportDTO.AddressDTO;
 import org.onlineshop.model.exportDTO.OrderDTO;
+import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.importDTO.AddAddressDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,4 +43,11 @@ public interface UserService {
     Result addAddress(AddAddressDTO addAddressDTO);
 
     void saveAndFlushUser(User user);
+
+    ProductsListDTO getFavouriteProducts(HttpSession session);
+
+    Result addProductToFavourites(Long id, HttpSession session);
+
+    Result removeProductFromFavourites(Long id, HttpSession session);
+
 }

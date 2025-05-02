@@ -18,12 +18,21 @@
 
         <p th:if="${warningMessage}" th:text="${warningMessage}"></p>
 
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
+
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
+
         <div class="products-list">
             <a class="product-card"
                th:each="product : ${products.getProducts()}"
                th:href="@{/products/product/{id}(id=${product.getId()})}">
                 <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
-                <form th:action="@{/profile/add-favourites}" th:method="POST">
+                <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
+                      th:method="POST">
                     <input type="hidden" name="productId" value="${product.id}" />
                     <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
                 </form>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @ControllerAdvice
 public class GlobalController {
@@ -75,5 +76,25 @@ public class GlobalController {
 
         model.addAttribute("hasItemsInCart", hasItemsInCart);
         model.addAttribute("cartItemsCount", cartItemsCount);
+    }
+
+    @ModelAttribute
+    public void addFavouritesIndicatorToModel(HttpSession session, Model model) {
+        List<Product> favourites;
+
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        if (loggedUser != null) {
+            favourites = loggedUser.getFavourites().stream().toList();
+        } else {
+            favourites = (List<Product>) session.getAttribute("favourites");
+        }
+
+        boolean hasItemsInFavourites = favourites != null && !favourites.isEmpty();
+
+        int favouriteItemsCount = favourites != null ? favourites.size() : 0;
+
+        model.addAttribute("hasItemsInFavourites", hasItemsInFavourites);
+        model.addAttribute("favouriteItemsCount", favouriteItemsCount);
     }
 }

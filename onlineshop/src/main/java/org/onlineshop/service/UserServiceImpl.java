@@ -4,9 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.enums.AddressType;
 import org.onlineshop.model.enums.RoleName;
-import org.onlineshop.model.exportDTO.AddressDTO;
-import org.onlineshop.model.exportDTO.OrderDTO;
-import org.onlineshop.model.exportDTO.VipStatusDTO;
+import org.onlineshop.model.exportDTO.*;
 import org.onlineshop.model.importDTO.AddAddressDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
@@ -34,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final ShoppingCartServiceLogged shoppingCartService;
     private final OrderService orderService;
     private final AddressService addressService;
+    private final ProductService productService;
     private final PasswordResetService passwordResetService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserProvider currentUserProvider;
@@ -41,8 +40,9 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
                            ShoppingCartServiceLogged shoppingCartService, OrderService orderService,
-                           AddressService addressService, PasswordResetService passwordResetService,
-                           PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider,
+                           AddressService addressService, ProductService productService,
+                           PasswordResetService passwordResetService, PasswordEncoder passwordEncoder,
+                           CurrentUserProvider currentUserProvider,
                            ApplicationEventPublisher applicationEventPublisher) {
         this.userRepository = userRepository;
         this.roleService = roleService;
@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
         this.addressService = addressService;
+        this.productService = productService;
         this.passwordResetService = passwordResetService;
         this.passwordEncoder = passwordEncoder;
         this.currentUserProvider = currentUserProvider;
@@ -339,6 +340,84 @@ public class UserServiceImpl implements UserService {
         }
 
         return new Result(true, "Успешно изтрихте избрания адрес!");
+    }
+
+    @Override
+    public ProductsListDTO getFavouriteProducts(HttpSession session) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        List<ProductDTO> productDTOS;
+
+        if (loggedUser != null) {
+            productDTOS = loggedUser.getFavourites().stream()
+                    .map(this.productService::mapProductToDTO)
+                    .toList();
+        } else {
+            List<Long> favouriteIds = (List<Long>) session.getAttribute("guestFavourites");
+
+            if (favouriteIds == null) {
+                favouriteIds = new ArrayList<>();
+            }
+
+            productDTOS = favouriteIds.stream()
+                    .map(id -> this.productService.getById(id).orElse(null))
+                    .filter(Objects::nonNull)
+                    .map(this.productService::mapProductToDTO)
+                    .toList();
+        }
+
+        return new ProductsListDTO(productDTOS);
+    }
+
+    @Override
+    public Result addProductToFavourites(Long id, HttpSession session) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        Optional<Product> optionalProduct = this.productService.getById(id);
+
+        if (optionalProduct.isEmpty()) {
+            return new Result(false, "Продуктът, който искате да добавите в списъка Ви с любими, не съществува!");
+        }
+
+        Optional<Product> optionalFavouriteProduct = loggedUser.getFavourites().stream()
+                .filter(product -> product.getId() == id)
+                .findFirst();
+
+        if (optionalFavouriteProduct.isPresent()) {
+            return new Result(false, "Продуктът вече е добавен в списъка Ви с любими!");
+        }
+
+        loggedUser.getFavourites().add(optionalProduct.get());
+
+        this.userRepository.saveAndFlush(loggedUser);
+
+        return new Result(true, "Успешно добавихте този продукт в списъка Ви с любими!");
+    }
+
+    @Override
+    public Result removeProductFromFavourites(Long id, HttpSession session) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        Optional<Product> optionalProduct = loggedUser.getFavourites().stream()
+                .filter(product -> product.getId() == id)
+                .findFirst();
+
+        if (optionalProduct.isEmpty()) {
+            return new Result(false,
+                    "Продуктът, който искате да премахнете от списъка Ви с любими, не съществува!");
+        }
+
+        Product productToRemove = optionalProduct.get();
+
+        boolean isRemoved = loggedUser.getFavourites().remove(productToRemove);
+
+        if (!isRemoved) {
+            return new Result(false, "Този продукт не успя да бъде премахнат от списъка Ви с любими!");
+        }
+
+        this.userRepository.saveAndFlush(loggedUser);
+
+        return new Result(true, "Успешно премахнахте този продукт от списъка Ви с любими!");
     }
 
     @Override

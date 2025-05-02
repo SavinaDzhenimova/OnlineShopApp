@@ -80,7 +80,7 @@
                         <button type="submit"><i class="fa-regular fa-trash-can"></i>Премахни</button>
                     </form>
 
-                    <form th:action="@{/profile/add-favourites/{id}(id=${cartItem.getId()})}"
+                    <form th:action="@{/users/favourites/add-favourite/{id}(id=${cartItem.getProductId()})}"
                           th:method="POST">
                         <button type="submit"><i class="fa-regular fa-heart"></i>Добави в любими</button>
                     </form>

@@ -154,11 +154,13 @@ header .after-nav i {
     padding-right: 0.5em;
 }
 
-.shopping-cart-btn {
+.shopping-cart-btn,
+.favourites-btn {
     position: relative;
 }
 
-.has-items-in-cart {
+.has-items-in-cart,
+.has-items-in-favourites {
     position: absolute;
     top: -0.5em;
     left: 0.5em;

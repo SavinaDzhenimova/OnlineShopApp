@@ -12,6 +12,8 @@ public interface ProductService {
 
     Result addProduct(AddProductDTO addProductDTO);
 
+    ProductDTO mapProductToDTO(Product product);
+
     ProductsListDTO getAllProducts();
 
     ProductDTO getProductInfo(Long id);

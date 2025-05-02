@@ -127,7 +127,8 @@ public class ProductServiceImpl implements ProductService {
         return this.mapProductToDTO(product);
     }
 
-    private ProductDTO mapProductToDTO(Product product) {
+    @Override
+    public ProductDTO mapProductToDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getId());

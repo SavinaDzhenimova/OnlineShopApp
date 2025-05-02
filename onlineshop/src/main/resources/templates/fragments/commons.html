@@ -49,7 +49,12 @@
                        th:href="@{/users/login}"><i class="fa-solid fa-user"></i>Вход/Регистрация</a>
                     <a sec:authorize="isAuthenticated()"
                        th:href="@{/users/profile}"><i class="fa-regular fa-user"></i>Моят профил</a>
-                    <a href="#"><i class="fa-regular fa-heart"></i>Любими</a>
+                    <a class="favourites-btn" th:href="@{/users/favourites}">
+                        <i class="fa-regular fa-heart"></i>Любими
+                        <span class="has-items-in-favourites"
+                              th:if="${hasItemsInFavourites}"
+                              th:text="${favouriteItemsCount}"></span>
+                    </a>
                     <a class="shopping-cart-btn" th:href="@{/shopping-cart}">
                         <i class="fa-solid fa-cart-shopping"></i>Количка
                         <span class="has-items-in-cart"

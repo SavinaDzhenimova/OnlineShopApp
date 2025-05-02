@@ -30,7 +30,7 @@ public class SecurityConfig {
                                 "/shopping-cart/remove-item/**", "/promo-codes/apply-promo", "/orders/create-order",
                                 "/orders/confirmation", "/orders/success", "/orders/track/**").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
-                        .requestMatchers("/users/profile").authenticated()
+                        .requestMatchers("/users/profile", "/users/favourites/**").authenticated()
                         .requestMatchers("/products/add-product", "/promo-codes/**", "/orders/all",
                                 "/orders/update-status/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
