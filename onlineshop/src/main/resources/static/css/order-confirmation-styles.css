@@ -10,11 +10,19 @@ main .order-confirmation-form {
     padding: 2em 3em;
 }
 
-main .order-confirmation-form .main-info {
+main .order-confirmation-form fieldset {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 1em;
+    padding: 1em 2em 2em 2em;
+    border: 1px solid #000;
+    border-radius: 1em;
+}
+
+main .order-confirmation-form legend {
+    padding: 0 1em;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 main .order-confirmation-form .field {
@@ -23,7 +31,8 @@ main .order-confirmation-form .field {
     flex-direction: column;
 }
 
-main .order-confirmation-form .field input {
+main .order-confirmation-form .field input,
+main .order-confirmation-form .field select {
     width: 100%;
     outline: none;
     border: 1px solid #ccc;

@@ -16,7 +16,7 @@ public class Address extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Region region;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "address_type")
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
@@ -24,7 +24,7 @@ public class Address extends BaseEntity {
     @Size(min = 4, max = 15)
     private String town;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "postal_code")
     @Pattern(regexp = "\\d{4}")
     private String postalCode;
 
@@ -92,7 +92,11 @@ public class Address extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return region == address.region && Objects.equals(town, address.town) && Objects.equals(postalCode, address.postalCode) && Objects.equals(street, address.street) && Objects.equals(user, address.user);
+        return region == address.region
+                && Objects.equals(town, address.town)
+                && Objects.equals(postalCode, address.postalCode)
+                && Objects.equals(street, address.street)
+                && Objects.equals(user, address.user);
     }
 
     @Override

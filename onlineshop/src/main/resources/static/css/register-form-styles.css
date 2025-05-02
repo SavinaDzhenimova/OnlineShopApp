@@ -28,7 +28,6 @@ main form fieldset legend {
 main form fieldset .field {
     display: flex;
     flex-direction: column;
-
 }
 
 main form fieldset .password-field {

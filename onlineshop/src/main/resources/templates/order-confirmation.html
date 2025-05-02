@@ -20,7 +20,9 @@
               th:action="@{/orders/make-order}"
               th:object="${addOrderDTO}">
 
-            <div class="main-info">
+            <fieldset>
+                <legend>Данни за купувача</legend>
+
                 <div class="field">
                     <label th:for="fullName">Име и фамилия</label>
                     <input type="text" th:field="*{fullName}" name="fullName" id="fullName">
@@ -44,15 +46,72 @@
                            th:errors="*{phoneNumber}"
                            class="text-danger">Dish name error message</small>
                 </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Информация за доставка</legend>
 
                 <div class="field">
-                    <label th:for="address">Адрес за доставка</label>
-                    <input type="text" th:field="*{address}" name="address" id="address">
-                    <small th:if="${#fields.hasErrors('address')}"
-                           th:errors="*{address}"
+                    <label th:for="region">Област:</label>
+                    <select th:field="*{region}" id="region" name="region">
+                        <option value="">-- Избери област --</option>
+                        <option th:each="region : ${regions}"
+                                th:value="${region}"
+                                th:text="${region.displayName}"></option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('region')}"
+                           th:errors="*{region}"
                            class="text-danger">Dish name error message</small>
                 </div>
-            </div>
+
+                <div class="field">
+                    <label th:for="town">Град</label>
+                    <input type="text" th:field="*{town}" name="town" id="town">
+                    <small th:if="${#fields.hasErrors('town')}"
+                           th:errors="*{town}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="postalCode">Пощенски код</label>
+                    <input type="text" th:field="*{postalCode}" name="postalCode" id="postalCode">
+                    <small th:if="${#fields.hasErrors('postalCode')}"
+                           th:errors="*{postalCode}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="field">
+                    <label th:for="street">Улица</label>
+                    <input type="text" th:field="*{street}" name="street" id="street">
+                    <small th:if="${#fields.hasErrors('street')}"
+                           th:errors="*{street}"
+                           class="text-danger">Dish name error message</small>
+                </div>
+
+                <div class="radio-buttons-field">
+                    <label>Тип адрес</label>
+
+                    <div class="radio-buttons">
+                        <div>
+                            <input type="radio"
+                                   th:field="*{addressType}"
+                                   th:value="OFFICE"
+                                   id="officeOption" />
+                            <label for="officeOption">Офис на Еконт</label>
+                        </div>
+                        <div>
+                            <input type="radio"
+                                   th:field="*{addressType}"
+                                   th:value="PERSONAL"
+                                   id="personalOption" />
+                            <label for="personalOption">Личен адрес</label>
+                        </div>
+                    </div>
+                    <small th:if="${#fields.hasErrors('addressType')}"
+                           th:errors="*{addressType}"
+                           class="text-danger"></small>
+                </div>
+            </fieldset>
 
             <table class="order-items-table">
                 <tr>

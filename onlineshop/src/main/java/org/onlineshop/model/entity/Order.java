@@ -1,12 +1,11 @@
 package org.onlineshop.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.onlineshop.model.annotations.ValidEmail;
+import org.onlineshop.model.enums.AddressType;
 import org.onlineshop.model.enums.OrderStatus;
+import org.onlineshop.model.enums.Region;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,9 +28,25 @@ public class Order extends BaseEntity {
     @Size(min = 7, max = 15)
     private String phoneNumber;
 
-    @Column(nullable = false, name = "delivery_address")
-    @Size(min = 10, max = 70)
-    private String deliveryAddress;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Region region;
+
+    @Column(nullable = false, name = "address_type")
+    @Enumerated(EnumType.STRING)
+    private AddressType addressType;
+
+    @Column(nullable = false)
+    @Size(min = 4, max = 15)
+    private String town;
+
+    @Column(nullable = false, name = "postal_code")
+    @Pattern(regexp = "\\d{4}")
+    private String postalCode;
+
+    @Column(nullable = false)
+    @Size(min = 5, max = 30)
+    private String street;
 
     @Column(nullable = false, name = "ordered_on")
     private LocalDateTime orderedOn;
@@ -98,12 +113,44 @@ public class Order extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getDeliveryAddress() {
-        return deliveryAddress;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public AddressType getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public LocalDateTime getOrderedOn() {

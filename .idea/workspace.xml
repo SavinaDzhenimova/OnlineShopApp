@@ -5,9 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/favourites-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/favourites-styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/favourites.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/favourites.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddOrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddOrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/order-confirmation-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/order-confirmation-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/register-form-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/register-form-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/order-confirmation.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/order-confirmation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746086855075_kecove-nike-court-borough-low-recraft-dv5456-104-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746086855096_kecove-nike-court-borough-low-recraft-dv5456-104-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746086855112_kecove-nike-court-borough-low-recraft-dv5456-104-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746086855122_kecove-nike-court-borough-low-recraft-dv5456-104-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746086855135_kecove-nike-court-borough-low-recraft-dv5456-104-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746086855145_kecove-nike-court-borough-low-recraft-dv5456-104-6.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

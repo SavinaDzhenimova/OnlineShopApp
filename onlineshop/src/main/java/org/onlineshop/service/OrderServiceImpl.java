@@ -2,7 +2,9 @@ package org.onlineshop.service;
 
 import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.*;
+import org.onlineshop.model.enums.AddressType;
 import org.onlineshop.model.enums.OrderStatus;
+import org.onlineshop.model.enums.Region;
 import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderItemDTO;
@@ -33,13 +35,15 @@ public class OrderServiceImpl implements OrderService {
     private final QuantitySizeService quantitySizeService;
     private final CategoryService categoryService;
     private final ProductService productService;
+    private final AddressService addressService;
     private final ShoppingCartServiceLogged shoppingCartServiceLogged;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public OrderServiceImpl(OrderRepository orderRepository, PromoCodeService promoCodeService,
                             CurrentUserProvider currentUserProvider, ShoeSizeService shoeSizeService,
                             QuantitySizeService quantitySizeService, CategoryService categoryService,
-                            ProductService productService, ShoppingCartServiceLogged shoppingCartServiceLogged,
+                            ProductService productService, AddressService addressService,
+                            ShoppingCartServiceLogged shoppingCartServiceLogged,
                             ApplicationEventPublisher applicationEventPublisher) {
         this.orderRepository = orderRepository;
         this.promoCodeService = promoCodeService;
@@ -48,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
         this.quantitySizeService = quantitySizeService;
         this.categoryService = categoryService;
         this.productService = productService;
+        this.addressService = addressService;
         this.shoppingCartServiceLogged = shoppingCartServiceLogged;
         this.applicationEventPublisher = applicationEventPublisher;
     }
@@ -148,7 +153,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
 
         order.setFullName(addOrderDTO.getFullName());
-        order.setDeliveryAddress(addOrderDTO.getAddress());
+        order.setRegion(addOrderDTO.getRegion());
+        order.setTown(addOrderDTO.getTown());
+        order.setPostalCode(addOrderDTO.getPostalCode());
+        order.setStreet(addOrderDTO.getStreet());
+        order.setAddressType(addOrderDTO.getAddressType());
         order.setPhoneNumber(addOrderDTO.getPhoneNumber());
         order.setEmail(addOrderDTO.getEmail());
         order.setTotalPrice(addOrderDTO.getTotalPrice());
@@ -171,6 +180,8 @@ public class OrderServiceImpl implements OrderService {
 
             BigDecimal loggedUserTotalOutcome = loggedUser.getTotalOutcome().add(order.getTotalPrice());
             loggedUser.setTotalOutcome(loggedUserTotalOutcome);
+
+            this.addAddressToLoggedUserIfNotPresent(addOrderDTO, loggedUser);
 
             this.currentUserProvider.saveAndFlushUser(loggedUser);
 
@@ -210,7 +221,6 @@ public class OrderServiceImpl implements OrderService {
                     return orderItem;
                 }).toList();
 
-
         order.setOrderItems(orderItems);
 
         this.orderRepository.saveAndFlush(order);
@@ -226,13 +236,35 @@ public class OrderServiceImpl implements OrderService {
                 : BigDecimal.ZERO;
 
         this.applicationEventPublisher.publishEvent(
-                new MakeOrderEvent(this, order.getFullName(), order.getEmail(), order.getDeliveryAddress(),
+                new MakeOrderEvent(this, order.getFullName(), order.getEmail(),
+                        this.mapAddressToString(order.getRegion(), order.getTown(), order.getPostalCode(),
+                                order.getStreet(), order.getAddressType()),
                         order.getPhoneNumber(), order.getTotalPrice(), order.getDiscount(), promoCodeName,
                         discountPercent, order.getFinalPrice(), this.mapOrderStatusToString(order.getStatus()),
                         order.getOrderedOn(), discountCardName, discountCardPercent, order.getVipStatusDiscount(),
                         "http://localhost:8090" + orderTrackingUrl));
 
         return new Result(true, orderTrackingUrl);
+    }
+
+    private void addAddressToLoggedUserIfNotPresent(AddOrderDTO addOrderDTO, User loggedUser) {
+        Address newAddressToAdd = new Address();
+
+        newAddressToAdd.setRegion(addOrderDTO.getRegion());
+        newAddressToAdd.setTown(addOrderDTO.getTown());
+        newAddressToAdd.setPostalCode(addOrderDTO.getPostalCode());
+        newAddressToAdd.setStreet(addOrderDTO.getStreet());
+        newAddressToAdd.setAddressType(addOrderDTO.getAddressType());
+        newAddressToAdd.setUser(loggedUser);
+
+        boolean isAlreadyAdded = loggedUser.getAddresses().stream()
+                .anyMatch(address -> address.equals(newAddressToAdd));
+
+        if (!isAlreadyAdded) {
+            this.addressService.saveAndFlush(newAddressToAdd);
+            loggedUser.getAddresses().add(newAddressToAdd);
+            this.currentUserProvider.saveAndFlushUser(loggedUser);
+        }
     }
 
     private void updateOrderedProductQuantity(Product product, AddOrderItemDTO addOrderItemDTO) {
@@ -315,7 +347,11 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setFullName(order.getFullName());
         orderDTO.setEmail(order.getEmail());
         orderDTO.setPhoneNumber(order.getPhoneNumber());
-        orderDTO.setDeliveryAddress(order.getDeliveryAddress());
+
+        String deliveryAddress = this.mapAddressToString(order.getRegion(), order.getTown(), order.getPostalCode(),
+                order.getStreet(), order.getAddressType());
+        orderDTO.setDeliveryAddress(deliveryAddress);
+
         orderDTO.setOrderedOn(order.getOrderedOn());
         orderDTO.setStatus(this.mapOrderStatusToString(order.getStatus()));
         orderDTO.setStatusClass(this.mapStatusClass(order.getStatus()));
@@ -350,6 +386,12 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setOrderItems(orderItemsList);
 
         return orderDTO;
+    }
+
+    private String mapAddressToString(Region region, String town, String postalCode, String street,
+                                      AddressType addressType) {
+        return region.getDisplayName() + ", " + town + " " + postalCode + ", " + street + " - "
+                + addressType.getDisplayName();
     }
 
     private String mapStatusClass(OrderStatus status) {

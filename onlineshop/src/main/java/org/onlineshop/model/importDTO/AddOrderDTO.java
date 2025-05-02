@@ -1,10 +1,9 @@
 package org.onlineshop.model.importDTO;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.onlineshop.model.annotations.ValidEmail;
+import org.onlineshop.model.enums.AddressType;
+import org.onlineshop.model.enums.Region;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,9 +23,23 @@ public class AddOrderDTO {
     @Size(min = 7, max = 15)
     private String phoneNumber;
 
-    @NotNull
-    @Size(min = 10, max = 70)
-    private String address;
+    @NotNull(message = "Моля изберете област!")
+    private Region region;
+
+    @NotNull(message = "Моля изберете вид на адреса!")
+    private AddressType addressType;
+
+    @NotNull(message = "Моля въведете име на град!")
+    @Size(min = 4, max = 15, message = "Името на градът трябва да бъде между 4 и 15 символа!")
+    private String town;
+
+    @NotNull(message = "Моля въведете пощенски код!")
+    @Pattern(regexp = "\\d{4}", message = "Пощенският код трябва да съдържа точно 4 цифри!")
+    private String postalCode;
+
+    @NotNull(message = "Моля въведете име на улица!")
+    @Size(min = 5, max = 30, message = "Името на улицата трябва да бъде между 5 и 30 символа!")
+    private String street;
 
     @NotNull
     @Positive
@@ -73,12 +86,44 @@ public class AddOrderDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public AddressType getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public BigDecimal getTotalPrice() {
