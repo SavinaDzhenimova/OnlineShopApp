@@ -67,11 +67,12 @@
             </ul>
 
             <ul class="menu">
+                <li><a th:href="@{/products/all}">Всички</a></li>
                 <li><a th:href="@{/products/women}">Дамски</a></li>
                 <li><a th:href="@{/products/men}">Мъжки</a></li>
                 <li><a th:href="@{/products/children}">Детски</a></li>
-                <li><a th:href="@{/products/sale}">Разпродажба</a></li>
-                <li><a th:href="@{/products/new}">Ново</a></li>
+                <li><a th:href="@{/products/sale}">Разпродажба<i class="fa-solid fa-circle"></i></a></li>
+                <li><a th:href="@{/products/new}">Ново<i class="fa-solid fa-circle"></i></a></li>
             </ul>
         </nav>
 
@@ -88,11 +89,11 @@
             <ul class="categories">
                 <h3>Категории</h3>
 
-                <li><a href="#">Дамски</a></li>
-                <li><a href="#">Мъжки</a></li>
-                <li><a href="#">Детски</a></li>
-                <li><a href="#">Разпродажба</a></li>
-                <li><a href="#">Ново</a></li>
+                <li><a th:href="@{/products/women}">Дамски</a></li>
+                <li><a th:href="@{/products/men}">Мъжки</a></li>
+                <li><a th:href="@{/products/children}">Детски</a></li>
+                <li><a th:href="@{/products/sale}">Разпродажба</a></li>
+                <li><a th:href="@{/products/new}">Ново</a></li>
             </ul>
 
             <ul class="customer-service">

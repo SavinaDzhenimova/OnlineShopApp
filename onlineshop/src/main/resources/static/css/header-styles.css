@@ -134,7 +134,18 @@ header nav .menu li {
 }
 
 header nav .menu li a {
+    display: flex;
+    gap: 0.2em;
     padding: 1em 5em;
+}
+
+header nav .menu li a i {
+    font-size: 10px;
+    color: #C00;
+}
+
+header nav .menu li:last-child a i {
+    color: #32CD32FF;
 }
 
 header nav .menu li:hover {
