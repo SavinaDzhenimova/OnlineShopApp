@@ -18,5 +18,7 @@ public interface ProductService {
 
     ProductDTO getProductInfo(Long id);
 
+    ProductsListDTO getProductsByCategory(String category);
+
     Optional<Product> getById(Long id);
 }

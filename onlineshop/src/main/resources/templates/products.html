@@ -14,7 +14,7 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <h1>Спортни обувки</h1>
+        <h1 th:text="${categoryTitle}">Спортни обувки</h1>
 
         <p th:if="${warningMessage}" th:text="${warningMessage}"></p>
 

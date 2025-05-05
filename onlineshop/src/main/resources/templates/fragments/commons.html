@@ -35,8 +35,10 @@
 
             <ul class="logo-container">
                 <li class="logo">
-                    <img src="/images/logo/logo.jpg" />
-                    <p>Runtastic<br> Shoes</p>
+                    <a class="logo" th:href="@{/}">
+                        <img src="/images/logo/logo.jpg" />
+                        <p>Runtastic<br> Shoes</p>
+                    </a>
                 </li>
                 <li class="search-form">
                     <form>
@@ -65,11 +67,11 @@
             </ul>
 
             <ul class="menu">
-                <li><a href="#">Дамски</a></li>
-                <li><a href="#">Мъжки</a></li>
-                <li><a href="#">Детски</a></li>
-                <li><a href="#">Разпродажба</a></li>
-                <li><a href="#">Ново</a></li>
+                <li><a th:href="@{/products/women}">Дамски</a></li>
+                <li><a th:href="@{/products/men}">Мъжки</a></li>
+                <li><a th:href="@{/products/children}">Детски</a></li>
+                <li><a th:href="@{/products/sale}">Разпродажба</a></li>
+                <li><a th:href="@{/products/new}">Ново</a></li>
             </ul>
         </nav>
 

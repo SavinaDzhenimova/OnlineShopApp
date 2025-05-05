@@ -67,9 +67,35 @@ public class ProductController {
         ProductsListDTO allProducts = this.productService.getAllProducts();
 
         modelAndView.addObject("products", allProducts);
+        modelAndView.addObject("categoryTitle", "Спортни обувки");
 
         if (allProducts.getProducts().isEmpty()) {
             modelAndView.addObject("warningMessage", "Все още няма добавени продукти за разглеждане!");
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/{category}")
+    public ModelAndView showProductsByCategory(@PathVariable("category") String category) {
+
+        ModelAndView modelAndView = new ModelAndView("products");
+
+        ProductsListDTO productsByCategory = this.productService.getProductsByCategory(category);
+
+        modelAndView.addObject("products", productsByCategory);
+
+        if (productsByCategory.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage",
+                    "Все още няма добавени продукти за разглеждане в тази категория!");
+        }
+
+        switch (category) {
+            case "women" -> modelAndView.addObject("categoryTitle", "Дамски обувки");
+            case "men" -> modelAndView.addObject("categoryTitle", "Мъжки обувки");
+            case "children" -> modelAndView.addObject("categoryTitle", "Детски обувки");
+            case "sale" -> modelAndView.addObject("categoryTitle", "Разпродажба на обувки");
+            case "new" -> modelAndView.addObject("categoryTitle", "Нови обувки");
         }
 
         return modelAndView;

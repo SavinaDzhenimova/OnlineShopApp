@@ -1,6 +1,7 @@
 package org.onlineshop.service;
 
 import org.onlineshop.model.entity.*;
+import org.onlineshop.model.enums.CategoryName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
@@ -159,6 +160,26 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> productDTOS = allProducts.stream().map(this::mapProductToDTO).toList();
 
         return new ProductsListDTO(productDTOS);
+    }
+
+    @Override
+    public ProductsListDTO getProductsByCategory(String category) {
+
+        CategoryName categoryName = switch (category) {
+            case "men" -> CategoryName.MEN;
+            case "women" -> CategoryName.WOMEN;
+            case "children" -> CategoryName.CHILDREN;
+            case "new" -> CategoryName.NEW;
+            case "sale" -> CategoryName.SALE;
+            default -> throw new IllegalArgumentException("Невалидна категория: " + category);
+        };
+
+        List<ProductDTO> productDTOList = this.productRepository
+                .findAllByCategoryName(categoryName).stream()
+                .map(this::mapProductToDTO)
+                .toList();
+
+        return new ProductsListDTO(productDTOList);
     }
 
     @Override

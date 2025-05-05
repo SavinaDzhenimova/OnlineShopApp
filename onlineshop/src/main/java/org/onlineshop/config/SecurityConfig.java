@@ -25,11 +25,12 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
-                                "/loyalty-program", "/choose-size", "/users/login", "/users/register",
-                                "/products/all", "/products/product/**", "/shopping-cart", "/shopping-cart/add-item/**",
-                                "/shopping-cart/remove-item/**", "/promo-codes/apply-promo", "/orders/create-order",
-                                "/orders/confirmation", "/orders/success", "/orders/track/**",
-                                "/users/favourites/**").permitAll()
+                                "/loyalty-program", "/choose-size",
+                                "/users/login", "/users/register", "/users/favourites/**",
+                                "/products/all", "/products/product/**", "/products/**",
+                                "/shopping-cart", "/shopping-cart/add-item/**", "/shopping-cart/remove-item/**",
+                                "/orders/create-order", "/orders/confirmation", "/orders/success", "/orders/track/**",
+                                "/promo-codes/apply-promo").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product", "/promo-codes/**", "/orders/all",
