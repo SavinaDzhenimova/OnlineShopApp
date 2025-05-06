@@ -58,10 +58,14 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Set<Product> favourites;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Opinion> opinions;
+
     public User() {
         this.addresses = new ArrayList<>();
         this.orders = new HashSet<>();
         this.favourites = new HashSet<>();
+        this.opinions = new ArrayList<>();
     }
 
     public String getFullName() {
@@ -150,5 +154,13 @@ public class User extends BaseEntity {
 
     public void setFavourites(Set<Product> favourites) {
         this.favourites = favourites;
+    }
+
+    public List<Opinion> getOpinions() {
+        return opinions;
+    }
+
+    public void setOpinions(List<Opinion> opinions) {
+        this.opinions = opinions;
     }
 }

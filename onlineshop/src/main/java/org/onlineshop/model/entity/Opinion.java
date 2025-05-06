@@ -1,12 +1,13 @@
 package org.onlineshop.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import org.onlineshop.model.annotations.ValidEmail;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "opinions")
@@ -32,6 +33,13 @@ public class Opinion extends BaseEntity {
     @Min(1)
     @Max(5)
     private int rating;
+
+    @Column(nullable = false, name = "added_on")
+    private LocalDate addedOn;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     public Opinion() {
     }
@@ -74,5 +82,21 @@ public class Opinion extends BaseEntity {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public LocalDate getAddedOn() {
+        return addedOn;
+    }
+
+    public void setAddedOn(LocalDate addedOn) {
+        this.addedOn = addedOn;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

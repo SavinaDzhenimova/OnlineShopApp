@@ -3,6 +3,8 @@ package org.onlineshop.model.importDTO;
 import jakarta.validation.constraints.*;
 import org.onlineshop.model.annotations.ValidEmail;
 
+import java.time.LocalDate;
+
 public class AddOpinionDTO {
 
     @NotBlank(message = "Моля въведете име и фамилия!")
@@ -21,10 +23,12 @@ public class AddOpinionDTO {
     @Size(min = 5, max = 500, message = "Мнението трябва да бъде между 5 и 500 символа!")
     private String opinion;
 
-    @NotBlank(message = "Трябва да посочите оценка!")
+    @NotNull(message = "Трябва да посочите оценка!")
     @Min(value = 1, message = "Оценката трябва да бъде най-малко 1 звезда!")
     @Max(value = 5, message = "Оценката трябва да бъде не повече от 5 звезди!")
     private int rating;
+
+    private LocalDate addedOn;
 
     public AddOpinionDTO() {
     }
@@ -67,5 +71,13 @@ public class AddOpinionDTO {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public LocalDate getAddedOn() {
+        return addedOn;
+    }
+
+    public void setAddedOn(LocalDate addedOn) {
+        this.addedOn = addedOn;
     }
 }

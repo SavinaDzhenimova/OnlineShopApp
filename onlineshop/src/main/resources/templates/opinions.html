@@ -5,7 +5,7 @@
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
     <link rel="stylesheet" href="/css/opinions-styles.css">
-    <title>Смяна на парола</title>
+    <title>Мнения на клиенти</title>
 </head>
 
 <body>
@@ -16,30 +16,33 @@
         <h1>Мнения от клиентите ни</h1>
 
         <div class="opinions">
-            <div class="opinion">
+            <div class="opinion" th:each="opinion : ${opinions}">
                 <div class="header-opinion">
                     <div class="rating">
-                        <p>5/5</p>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                        <p th:text="${opinion.getRating()} + '/5'"></p>
+
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <i class="fa-solid fa-star"
+                               th:classappend="${i <= opinion.rating} ? 'star-filled' : 'star-empty'"></i>
+                        </span>
                     </div>
-                    <p>01.04.2024</p>
+                    <p th:text="${#temporals.format(opinion.addedOn, 'dd MMM yyyy')}"></p>
                 </div>
 
                 <div class="main-opinion">
-                    <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал.
-                        Цялото семейство се обуваме от сайта</p>
+                    <p th:text="${opinion.getOpinion()}"></p>
                 </div>
 
                 <div class="footer-opinion">
-                    <p class="author">Илияна Кръстева</p>
+                    <p class="author" th:text="${opinion.getAuthor()}">Илияна Кръстева</p>
                 </div>
             </div>
         </div>
 
+        <div class="opinion-links">
+            <a id="write-opinion" th:href="@{/opinions/add-opinion}">Напиши мнение</a>
+            <a th:href="@{/}">Към началната страница</a>
+        </div>
     </main>
 
     <footer th:replace="~{fragments/commons::footer}"></footer>

@@ -2,6 +2,7 @@ package org.onlineshop.web;
 
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.exportDTO.OpinionDTO;
 import org.onlineshop.model.importDTO.AddOpinionDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
 import org.onlineshop.service.interfaces.OpinionService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/opinions")
 public class OpinionController {
@@ -27,7 +30,14 @@ public class OpinionController {
 
     @GetMapping
     public ModelAndView opinions() {
-        return new ModelAndView("opinions");
+
+        ModelAndView modelAndView = new ModelAndView("opinions");
+
+        List<OpinionDTO> opinionDTOList = this.opinionService.getAllOpinions();
+
+        modelAndView.addObject("opinions", opinionDTOList);
+
+        return modelAndView;
     }
 
     @GetMapping("/add-opinion")

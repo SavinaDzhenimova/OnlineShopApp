@@ -1,23 +1,33 @@
 main .opinions {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2em;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 1.5em;
     padding-bottom: 1em;
 }
 
 main .opinions .opinion {
+    flex-basis: calc((100% / 3) - 1.5em);
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 1em;
+    box-sizing: border-box;
+}
+
+main .opinions .opinion .main-opinion {
+    flex: 1;
 }
 
 main .opinions .opinion .header-opinion {
     display: flex;
     justify-content: space-between;
+}
+main .opinions .opinion .header-opinion > p {
+    opacity: 0.7;
 }
 
 main .opinions .opinion .header-opinion .rating {
@@ -31,6 +41,15 @@ main .opinions .opinion .header-opinion .rating {
 main .opinions .opinion .header-opinion .rating p {
     color: #000;
     padding-right: 0.5em;
+    font-weight: 600;
+}
+
+main .opinions .opinion .header-opinion .rating .star-filled {
+    color: gold;
+}
+
+main .opinions .opinion .header-opinion .rating .star-empty {
+    color: #ccc;
 }
 
 main .opinions .opinion .footer-opinion .author::before {
@@ -46,4 +65,26 @@ main .opinion-links {
     display: flex;
     justify-content: center;
     gap: 2em;
+}
+
+main .opinion-links a {
+    align-self: center;
+    padding: 0.5em 1em;
+    background-color: #fff;
+    color: #000;
+    width: 20%;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+}
+
+main .opinion-links #write-opinion {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+main .opinion-links a:hover {
+    border-color: #000;
 }
