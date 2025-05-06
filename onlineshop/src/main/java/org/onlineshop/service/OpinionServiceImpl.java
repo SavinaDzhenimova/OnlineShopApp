@@ -8,6 +8,7 @@ import org.onlineshop.model.importDTO.AddOpinionDTO;
 import org.onlineshop.repository.OpinionRepository;
 import org.onlineshop.service.interfaces.OpinionService;
 import org.onlineshop.service.interfaces.UserService;
+import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,28 +19,43 @@ import java.util.Optional;
 public class OpinionServiceImpl implements OpinionService {
 
     private final OpinionRepository opinionRepository;
-
     private final UserService userService;
+    private final CurrentUserProvider currentUserProvider;
 
-    public OpinionServiceImpl(OpinionRepository opinionRepository, UserService userService) {
+    public OpinionServiceImpl(OpinionRepository opinionRepository, UserService userService,
+                              CurrentUserProvider currentUserProvider) {
         this.opinionRepository = opinionRepository;
         this.userService = userService;
+        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
     public List<OpinionDTO> getAllOpinions() {
 
         return this.opinionRepository.findAll().stream()
-                .map(opinion -> {
-                    OpinionDTO opinionDTO = new OpinionDTO();
+                .map(this::mapOpinionToDto)
+                .toList();
+    }
 
-                    opinionDTO.setAuthor(opinion.getAuthor());
-                    opinionDTO.setOpinion(opinion.getOpinion());
-                    opinionDTO.setRating(opinion.getRating());
-                    opinionDTO.setAddedOn(opinion.getAddedOn());
+    @Override
+    public List<OpinionDTO> getLoggedUserOpinions() {
 
-                    return opinionDTO;
-                }).toList();
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        return loggedUser.getOpinions().stream()
+                .map(this::mapOpinionToDto)
+                .toList();
+    }
+
+    private OpinionDTO mapOpinionToDto(Opinion opinion) {
+        OpinionDTO opinionDTO = new OpinionDTO();
+
+        opinionDTO.setAuthor(opinion.getAuthor());
+        opinionDTO.setOpinion(opinion.getOpinion());
+        opinionDTO.setRating(opinion.getRating());
+        opinionDTO.setAddedOn(opinion.getAddedOn());
+
+        return opinionDTO;
     }
 
     @Override

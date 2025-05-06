@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/opinions")
 public class OpinionController {
 
     private final OpinionService opinionService;
@@ -28,7 +27,7 @@ public class OpinionController {
         this.opinionService = opinionService;
     }
 
-    @GetMapping
+    @GetMapping("/opinions")
     public ModelAndView opinions() {
 
         ModelAndView modelAndView = new ModelAndView("opinions");
@@ -36,11 +35,33 @@ public class OpinionController {
         List<OpinionDTO> opinionDTOList = this.opinionService.getAllOpinions();
 
         modelAndView.addObject("opinions", opinionDTOList);
+        modelAndView.addObject("title", "Мнения от клиентите ни");
+
+        if (opinionDTOList.isEmpty()) {
+            modelAndView.addObject("warningMessage", "Все още няма добавени коментари за разглеждане!");
+        }
 
         return modelAndView;
     }
 
-    @GetMapping("/add-opinion")
+    @GetMapping("/users/my-opinions")
+    public ModelAndView showLoggedUserOpinions() {
+
+        ModelAndView modelAndView = new ModelAndView("opinions");
+
+        List<OpinionDTO> loggedUserOpinions = this.opinionService.getLoggedUserOpinions();
+
+        modelAndView.addObject("opinions", loggedUserOpinions);
+        modelAndView.addObject("title", "Моите мнения");
+
+        if (loggedUserOpinions.isEmpty()) {
+            modelAndView.addObject("warningMessage", "Все още нямате добавени коментари за разглеждане!");
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/opinions/add-opinion")
     public ModelAndView showAddOpinion(Model model) {
 
         if (!model.containsAttribute("addOpinionDTO")) {
@@ -50,7 +71,7 @@ public class OpinionController {
         return new ModelAndView("add-opinion");
     }
 
-    @PostMapping("/add-opinion")
+    @PostMapping("/opinions/add-opinion")
     public ModelAndView addOpinion(@Valid @ModelAttribute("addOpinionDTO") AddOpinionDTO addOpinionDTO,
                                    BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 

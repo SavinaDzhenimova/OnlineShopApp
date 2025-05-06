@@ -12,4 +12,6 @@ public interface OpinionService {
 
     List<OpinionDTO> getAllOpinions();
 
+    List<OpinionDTO> getLoggedUserOpinions();
+
 }

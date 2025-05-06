@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
@@ -13,7 +14,17 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <h1>Мнения от клиентите ни</h1>
+        <h1 th:text="${title}">Мнения от клиентите ни</h1>
+
+        <p th:if="${warningMessage}" th:text="${warningMessage}"></p>
+
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
+
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
 
         <div class="opinions">
             <div class="opinion" th:each="opinion : ${opinions}">
@@ -41,7 +52,8 @@
 
         <div class="opinion-links">
             <a id="write-opinion" th:href="@{/opinions/add-opinion}">Напиши мнение</a>
-            <a th:href="@{/}">Към началната страница</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/}">Към началната страница</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Назад към профил</a>
         </div>
     </main>
 
