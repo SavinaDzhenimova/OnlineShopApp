@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div style="padding: 1em 2em; border-radius: 0.5em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        <h1 style="text-align: center;">Успешен абонамент</h1>
+
+        <div style="font-size: 16px;">
+            <p style="padding-bottom: 0.5em;">Здравей, записа се успешно за бюлетина на Runtastic Shoes. Подаряваме ти 5%
+              отстъпка за твоята следваща поръчка и ти пожелаваме приятно пазаруване!</p>
+
+            <p style="margin-bottom: 1em; background-color: #ccc; color: #000; font-size: 16px; padding: 1em;
+                      border-radius: 1em;">
+              Промо код за отстъпка: <span style="font-weight: 600; font-size: 16px;">NEWS5</span>
+            </p>
+
+            <a style="text-decoration: none; padding: 0.5em 1.5em; background-color: #fff; color: #000; border: 1px solid #ccc;
+                      text-align: center; font-weight: 600; border-radius: 2em; font-size: 14px;
+                      margin-bottom: 3em;"
+               th:href="@{'http://localhost:8090/products/all'}">Пазарувай сега</a>
+
+            <p style="margin-top: 1em;">С най-добри пожелания,<br>
+              Екипът на Runtastic Shoes</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -116,18 +116,21 @@
                 <li><a th:href="@{/general-conditions}">Общи условия</a></li>
             </ul>
 
-            <ul class="subscribe">
+            <ul class="subscribe" id="footer-subscribe">
                 <h3>Електронен бюлетин</h3>
 
-                <li>
-                    <p>Грабни 5% отстъпка за първата си поръчка и научавай<br> първи за нови продукти и промоции.</p>
-                    <p>Запиши се от тук сега!</p>
+                <p>Грабни 5% отстъпка за първата си поръчка и научавай<br> първи за нови продукти и промоции.</p>
+                <p>Запиши се от тук сега!</p>
 
-                    <form>
-                        <input placeholder="Остави имейл...">
-                        <button>Абонирай се</button>
-                    </form>
-                </li>
+                <form th:action="@{/subscribe}"
+                      th:method="POST">
+                    <input type="email" name="email" id="email" placeholder="Остави имейл...">
+                    <input type="hidden" name="source" value="footer">
+                    <button type="submit">Абонирай се</button>
+
+                    <p class="failure-msg" th:if="${failureMessage}" th:text="${failureMessage}"></p>
+                    <p class="success-msg" th:if="${successMessage}" th:text="${successMessage}"></p>
+                </form>
             </ul>
         </section>
 

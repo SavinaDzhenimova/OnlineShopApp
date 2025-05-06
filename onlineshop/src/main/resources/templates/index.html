@@ -65,13 +65,17 @@
                     </a>
                 </article>
 
-                <article class="promo-code-form">
+                <article class="promo-code-form" id="main-subscribe">
                     <img class="second-section-image" src="/images/index/promo-code.jpg">
-                    <form>
+                    <form th:action="@{/subscribe}"
+                          th:method="POST">
                         <input type="email" name="email" id="email" placeholder="Остави имейл...">
+                        <input type="hidden" name="source" value="main">
                         <button>Изпрати</button>
                     </form>
-                    <p>На посочения имейл ще изпратим промокод</p>
+                    <p class="promo-code-msg">На посочения имейл ще изпратим промо код</p>
+                    <p class="failure-msg" th:if="${failureMessage}" th:text="${failureMessage}"></p>
+                    <p class="success-msg" th:if="${successMessage}" th:text="${successMessage}"></p>
                 </article>
 
                 <article>

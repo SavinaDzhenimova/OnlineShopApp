@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final OrderService orderService;
     private final AddressService addressService;
     private final ProductService productService;
+    private final SubscriberService subscriberService;
     private final PasswordResetService passwordResetService;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserProvider currentUserProvider;
@@ -41,8 +42,8 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository, RoleService roleService, UserDetailsServiceImpl userDetailsService,
                            ShoppingCartServiceLogged shoppingCartService, OrderService orderService,
                            AddressService addressService, ProductService productService,
-                           PasswordResetService passwordResetService, PasswordEncoder passwordEncoder,
-                           CurrentUserProvider currentUserProvider,
+                           SubscriberService subscriberService, PasswordResetService passwordResetService,
+                           PasswordEncoder passwordEncoder, CurrentUserProvider currentUserProvider,
                            ApplicationEventPublisher applicationEventPublisher) {
         this.userRepository = userRepository;
         this.roleService = roleService;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
         this.orderService = orderService;
         this.addressService = addressService;
         this.productService = productService;
+        this.subscriberService = subscriberService;
         this.passwordResetService = passwordResetService;
         this.passwordEncoder = passwordEncoder;
         this.currentUserProvider = currentUserProvider;
@@ -111,6 +113,17 @@ public class UserServiceImpl implements UserService {
 
         if (!userRegisterDTO.isPrivacyPolicy()) {
             return new Result(false, "Трябва да се съгласите с Политиката за поверителност!");
+        }
+
+        if (userRegisterDTO.isNewsletter()) {
+            Optional<Subscriber> optionalSubscriber = this.subscriberService.getByEmail(userRegisterDTO.getEmail());
+
+            if (optionalSubscriber.isEmpty()) {
+                Subscriber subscriber = new Subscriber();
+                subscriber.setEmail(userRegisterDTO.getEmail());
+                
+                this.subscriberService.saveAndFlush(subscriber);
+            }
         }
 
         this.userRepository.saveAndFlush(user);

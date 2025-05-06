@@ -44,6 +44,14 @@ footer .links .subscribe form button {
     border-radius: 1em;
 }
 
+footer .links .subscribe form .success-msg {
+    color: #32CD32FF;
+}
+
+footer .links .subscribe form .failure-msg {
+    color: #C00;
+}
+
 footer .social-media,
 footer .copyright {
     background-color: #222;
