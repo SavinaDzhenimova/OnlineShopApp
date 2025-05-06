@@ -19,19 +19,19 @@
 
         <section class="site-main-section">
             <section class="choose-shoes">
-                <a th:href="@{/products/men}">
+                <a th:href="@{/products/category/men}">
                     <p>Мъжки маратонки</p>
                     <img src="/images/index/men-shoes.png">
                     <p><i class="fa-solid fa-chevron-right"></i></p>
                 </a>
     
-                <a th:href="@{/products/women}">
+                <a th:href="@{/products/category/women}">
                     <p>Дамски маратонки</p>
                     <img src="/images/index/women-shoes.png">
                     <p><i class="fa-solid fa-chevron-right"></i></p>
                 </a>
     
-                <a th:href="@{/products/children}">
+                <a th:href="@{/products/category/children}">
                     <p>Детски маратонки</p>
                     <img src="/images/index/children-shoes.png">
                     <p><i class="fa-solid fa-chevron-right"></i></p>
@@ -93,43 +93,67 @@
                 <div class="popular-brands">
                     <div class="popular-brands-main">
                         <div class="brand">
-                            <a><img src="/images/index/nike-logo.png"></a>
+                            <a th:href="@{/products/brand/nike}">
+                                <img src="/images/index/nike-logo.png" th:href="@{/products/brand/new-balance}">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/index/adidas-logo.png"></a>
+                            <a th:href="@{/products/brand/adidas}">
+                                <img src="/images/index/adidas-logo.png" alt="Adidas" title="Adidas">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/index/puma-logo.png"></a>
+                            <a th:href="@{/products/brand/puma}">
+                                <img src="/images/index/puma-logo.png" alt="Puma" title="Puma">
+                            </a>
                         </div>
                     </div>
 
                     <div class="popular-brands-second">
                         <div class="brand">
-                            <a><img src="/images/brands/brand-guess-dark.svg"></a>
+                            <a th:href="@{/products/brand/guess}">
+                                <img src="/images/brands/brand-guess-dark.svg" alt="Guess" title="Guess">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-skechers-dark.svg"></a>
+                            <a th:href="@{/products/brand/skechers}">
+                                <img src="/images/brands/brand-skechers-dark.svg" alt="Skechers" title="Skechers">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-salomon-dark.svg"></a>
+                            <a th:href="@{/products/brand/salomon}">
+                                <img src="/images/brands/brand-salomon-dark.svg" alt="Salomon" title="Salomon">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-reebok-dark.svg"></a>
+                            <a th:href="@{/products/brand/reebok}">
+                                <img src="/images/brands/brand-reebok-dark.svg" alt="Reebok" title="Reebok">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-new-balance-dark.svg"></a>
+                            <a th:href="@{/products/brand/new-balance}">
+                                <img src="/images/brands/brand-new-balance-dark.svg" alt="New Balance" title="New Balance">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-calvin-klein-dark.svg"></a>
+                            <a th:href="@{/products/brand/calvin-klein}">
+                                <img src="/images/brands/brand-calvin-klein-dark.svg" alt="Calvin Klein" title="Calvin Klein">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-the-north-face-dark.svg"></a>
+                            <a th:href="@{/products/brand/the-north-face}">
+                                <img src="/images/brands/brand-the-north-face-dark.svg" alt="The North Face" title="The North Face">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-champion-dark.svg"></a>
+                            <a th:href="@{/products/brand/champion}">
+                                <img src="/images/brands/brand-champion-dark.svg" alt="Champion" title="Champion">
+                            </a>
                         </div>
                         <div class="brand">
-                            <a><img src="/images/brands/brand-timberland-dark.svg"></a>
+                            <a th:href="@{/products/brand/timberland}">
+                                <img src="/images/brands/brand-timberland-dark.svg" alt="Timberland" title="Timberland">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -141,72 +165,25 @@
                 <h2>Мнения от клиентите ни</h2>
 
                 <div class="opinions">
-                    <div class="opinion">
+                    <div class="opinion" th:each="opinion : ${opinions}">
                         <div class="header-opinion">
                             <div class="rating">
-                                <p>5/5</p>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+                                <p th:text="${opinion.getRating()} + '/5'"></p>
+
+                                <span th:each="i : ${#numbers.sequence(1, 5)}">
+                                    <i class="fa-solid fa-star"
+                                       th:classappend="${i <= opinion.rating} ? 'star-filled' : 'star-empty'"></i>
+                                </span>
                             </div>
-                            <p>01.04.2024</p>
+                            <p th:text="${#temporals.format(opinion.addedOn, 'dd MMM yyyy')}"></p>
                         </div>
 
                         <div class="main-opinion">
-                            <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал.
-                                Цялото семейство се обуваме от сайта</p>
+                            <p th:text="${opinion.getOpinion()}"></p>
                         </div>
 
                         <div class="footer-opinion">
-                            <p class="author">Илияна Кръстева</p>
-                        </div>
-                    </div>
-
-                    <div class="opinion">
-                        <div class="header-opinion">
-                            <div class="rating">
-                                <p>5/5</p>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <p>01.04.2024</p>
-                        </div>
-
-                        <div class="main-opinion">
-                            <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал. 
-                                Цялото семейство се обуваме от сайта</p>
-                        </div>
-
-                        <div class="footer-opinion">
-                            <p class="author">Илияна Кръстева</p>
-                        </div>
-                    </div>
-
-                    <div class="opinion">
-                        <div class="header-opinion">
-                            <div class="rating">
-                                <p>5/5</p>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <p class="date">01.04.2024</p>
-                        </div>
-
-                        <div class="main-opinion">
-                            <p>Маратонките в сайта са топ аз лоша маратонка от тях не съм купувал.
-                                Цялото семейство се обуваме от сайта</p>
-                        </div>
-
-                        <div class="footer-opinion">
-                            <p class="author">Илияна Кръстева</p>
+                            <p class="author" th:text="${opinion.getAuthor()}">Илияна Кръстева</p>
                         </div>
                     </div>
                 </div>

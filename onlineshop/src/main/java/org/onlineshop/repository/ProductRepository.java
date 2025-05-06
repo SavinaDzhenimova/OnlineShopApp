@@ -1,6 +1,7 @@
 package org.onlineshop.repository;
 
 import org.onlineshop.model.entity.Product;
+import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.enums.CategoryName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN p.categories c WHERE c.categoryName = :categoryName")
     List<Product> findAllByCategoryName(@Param("categoryName") CategoryName categoryName);
+
+    @Query("SELECT p FROM Product p JOIN p.brand b WHERE b.brandName = :brandName")
+    List<Product> findAllByBrandName(@Param("brandName") BrandName brandName);
 }

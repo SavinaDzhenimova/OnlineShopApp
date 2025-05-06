@@ -6,11 +6,34 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/BrandsInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/BrandsInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/BrandName.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/BrandName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/repository/ProductRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OpinionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OpinionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/OpinionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/OpinionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/OpinionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/OpinionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/opinions.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/opinions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/brands-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/brands-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/index-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/index-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/opinions-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/opinions-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/products-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/products-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/brands.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/brands.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746201102070_kecove-nike-court-borough-low-recraft-dv5456-104-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746201102077_kecove-nike-court-borough-low-recraft-dv5456-104-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746201102095_kecove-nike-court-borough-low-recraft-dv5456-104-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746201102106_kecove-nike-court-borough-low-recraft-dv5456-104-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746201102118_kecove-nike-court-borough-low-recraft-dv5456-104-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746201102127_kecove-nike-court-borough-low-recraft-dv5456-104-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746434628241_kecove-adidas-barreda-ji2307-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746434628268_kecove-adidas-barreda-ji2307-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746434628289_kecove-adidas-barreda-ji2307-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746434628307_kecove-adidas-barreda-ji2307-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746434628323_kecove-adidas-barreda-ji2307-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1746434628337_kecove-adidas-barreda-ji2307-6.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

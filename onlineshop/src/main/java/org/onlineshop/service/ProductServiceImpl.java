@@ -1,6 +1,7 @@
 package org.onlineshop.service;
 
 import org.onlineshop.model.entity.*;
+import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.enums.CategoryName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
@@ -176,6 +177,50 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductDTO> productDTOList = this.productRepository
                 .findAllByCategoryName(categoryName).stream()
+                .map(this::mapProductToDTO)
+                .toList();
+
+        return new ProductsListDTO(productDTOList);
+    }
+
+    @Override
+    public ProductsListDTO getProductsByBrand(String brand) {
+
+        BrandName brandName = switch (brand) {
+            case "nike" -> BrandName.NIKE;
+            case "adidas" -> BrandName.ADIDAS;
+            case "puma" -> BrandName.PUMA;
+            case "guess" -> BrandName.GUESS;
+            case "skechers" -> BrandName.SKECKERS;
+            case "salomon" -> BrandName.SALOMON;
+            case "reebok" -> BrandName.REEBOK;
+            case "new-balance" -> BrandName.NEW_BALANCE;
+            case "calvin-klein" -> BrandName.CALVIN_KLEIN;
+            case "champion" -> BrandName.CHAMPION;
+            case "asics" -> BrandName.ASICS;
+            case "tommy-hilfiger" -> BrandName.TOMMY_HILFIGER;
+            case "timberland" -> BrandName.TIMBERLAND;
+            case "lacoste" -> BrandName.LACOSTE;
+            case "converse" -> BrandName.CONVERSE;
+            case "the-north-face" -> BrandName.THE_NORTH_FACE;
+            case "napapijri" -> BrandName.NAPAPIJRI;
+            case "us-polo-assn" -> BrandName.US_POLO_ASSN;
+            case "columbia" -> BrandName.COLUMBIA;
+            case "caterpillar" -> BrandName.CATERPILLAR;
+            case "diadora" -> BrandName.DIADORA;
+            case "fila" -> BrandName.FILA;
+            case "kappa" -> BrandName.KAPPA;
+            case "crocks" -> BrandName.CROCKS;
+            case "palladium" -> BrandName.PALLADIUM;
+            case "reef" -> BrandName.REEF;
+            case "rip-curl" -> BrandName.RIP_CURL;
+            case "lotto" -> BrandName.LOTTO;
+            case "under-armor" -> BrandName.UNDER_ARMOR;
+            default -> throw new IllegalArgumentException("Невалидна марка: " + brand);
+        };
+
+        List<ProductDTO> productDTOList = this.productRepository
+                .findAllByBrandName(brandName).stream()
                 .map(this::mapProductToDTO)
                 .toList();
 

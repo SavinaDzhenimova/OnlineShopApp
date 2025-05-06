@@ -12,6 +12,7 @@ import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +31,20 @@ public class OpinionServiceImpl implements OpinionService {
     }
 
     @Override
+    public List<OpinionDTO> getOpinionsForIndexPage() {
+
+        return this.opinionRepository.findAll().stream()
+                .sorted(Comparator.comparing(Opinion::getAddedOn).reversed())
+                .map(this::mapOpinionToDto)
+                .limit(3)
+                .toList();
+    }
+
+    @Override
     public List<OpinionDTO> getAllOpinions() {
 
         return this.opinionRepository.findAll().stream()
+                .sorted((o1, o2) -> Integer.compare(o2.getRating(), o1.getRating()))
                 .map(this::mapOpinionToDto)
                 .toList();
     }
@@ -83,9 +95,10 @@ public class OpinionServiceImpl implements OpinionService {
             user.getOpinions().add(opinion);
 
             this.userService.saveAndFlushUser(user);
+        } else {
+            this.opinionRepository.saveAndFlush(opinion);
         }
 
-        this.opinionRepository.saveAndFlush(opinion);
         return new Result(true, "Успешно добавихте своя коментар!");
     }
 }

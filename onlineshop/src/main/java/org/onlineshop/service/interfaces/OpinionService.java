@@ -10,6 +10,8 @@ public interface OpinionService {
 
     Result addOpinion(AddOpinionDTO addOpinionDTO);
 
+    List<OpinionDTO> getOpinionsForIndexPage();
+
     List<OpinionDTO> getAllOpinions();
 
     List<OpinionDTO> getLoggedUserOpinions();

@@ -3,12 +3,12 @@ main .opinions {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
-    gap: 1.5em;
+    gap: 2em;
     padding-bottom: 1em;
 }
 
 main .opinions .opinion {
-    flex-basis: calc((100% / 3) - 1.5em);
+    flex-basis: calc(100% / 3 - 1.5em);
     display: flex;
     flex-direction: column;
     gap: 0.5em;

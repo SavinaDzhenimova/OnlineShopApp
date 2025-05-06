@@ -268,20 +268,27 @@ main .opinions-section {
 }
 
 main .opinions-section .opinions {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: stretch;
     gap: 2em;
     padding-bottom: 1em;
 }
 
 main .opinions-section .opinions .opinion {
+    flex-basis: calc(100% / 3 - 1.5em);
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     padding: 1em;
     border: 1px solid #ccc;
     border-radius: 1em;
+    box-sizing: border-box;
+}
+
+main .opinions-section .opinions .opinion .main-opinion {
+    flex: 1;
 }
 
 main .opinions-section .opinions .opinion .header-opinion {
@@ -300,6 +307,14 @@ main .opinions-section .opinions .opinion .header-opinion .rating {
 main .opinions-section .opinions .opinion .header-opinion .rating p {
     color: #000;
     padding-right: 0.5em;
+}
+
+main .opinions-section .opinions .opinion .header-opinion .rating .star-filled {
+    color: gold;
+}
+
+main .opinions-section .opinions .opinion .header-opinion .rating .star-empty {
+    color: #ccc;
 }
 
 main .opinions-section .opinions .opinion .footer-opinion .author::before {

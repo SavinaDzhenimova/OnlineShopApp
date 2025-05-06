@@ -2,6 +2,7 @@ package org.onlineshop.web;
 
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
@@ -76,7 +77,7 @@ public class ProductController {
         return modelAndView;
     }
 
-    @GetMapping("/{category}")
+    @GetMapping("/category/{category}")
     public ModelAndView showProductsByCategory(@PathVariable("category") String category) {
 
         ModelAndView modelAndView = new ModelAndView("products");
@@ -90,13 +91,68 @@ public class ProductController {
                     "Все още няма добавени продукти за разглеждане в тази категория!");
         }
 
-        switch (category) {
-            case "women" -> modelAndView.addObject("categoryTitle", "Дамски обувки");
-            case "men" -> modelAndView.addObject("categoryTitle", "Мъжки обувки");
-            case "children" -> modelAndView.addObject("categoryTitle", "Детски обувки");
-            case "sale" -> modelAndView.addObject("categoryTitle", "Разпродажба на обувки");
-            case "new" -> modelAndView.addObject("categoryTitle", "Нови обувки");
+        String categoryTitle = switch (category) {
+            case "women" -> "Дамски обувки";
+            case "men" -> "Мъжки обувки";
+            case "children" -> "Детски обувки";
+            case "sale" -> "Разпродажба на обувки";
+            case "new" -> "Нови обувки";
+            default -> "Спортни обувки";
+        };
+
+        modelAndView.addObject("categoryTitle", categoryTitle);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/brand/{brand}")
+    public ModelAndView showProductsByBrand(@PathVariable("brand") String brand) {
+
+        ModelAndView modelAndView = new ModelAndView("products");
+
+        ProductsListDTO productsByproductsByBrand = this.productService.getProductsByBrand(brand);
+
+        modelAndView.addObject("products", productsByproductsByBrand);
+
+        if (productsByproductsByBrand.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage",
+                    "Все още няма добавени продукти за разглеждане от тази марка!");
         }
+
+        String categoryTitle = switch (brand) {
+            case "nike" -> "Nike обувки";
+            case "adidas" -> "Adidas обувки";
+            case "puma" -> "Puma обувки";
+            case "guess" -> "Guess обувки";
+            case "salomon" -> "Solomon обувки";
+            case "skechers" -> "Skechers обувки";
+            case "reebok" -> "Reebok обувки";
+            case "new-balance" -> "New Balance обувки";
+            case "calvin-klein" -> "Calvin Klein обувки";
+            case "champion" -> "Champion обувки";
+            case "asics" -> "Asics обувки";
+            case "tommy-hilfiger" -> "Tommy Hilfiger обувки";
+            case "timberland" -> "Timberland обувки";
+            case "lacoste" -> "Lacoste обувки";
+            case "converse" -> "Converse обувки";
+            case "the-north-face" -> "The North Face обувки";
+            case "napapijri" -> "Napapijri обувки";
+            case "us-polo-assn" -> "US Polo Assn обувки";
+            case "columbia" -> "Columbia обувки";
+            case "caterpillar" -> "Caterpillar обувки";
+            case "diadora" -> "Diadora обувки";
+            case "fila" -> "FILA обувки";
+            case "kappa" -> "KAPPA обувки";
+            case "crocks" -> "Crocks обувки";
+            case "palladium" -> "Palladium обувки";
+            case "reef" -> "REEF обувки";
+            case "rip-curl" -> "Rip Curl обувки";
+            case "lotto" -> "Lotto обувки";
+            case "under-armor" -> "Under Armor обувки";
+            default -> "Всички обувки";
+        };
+
+        modelAndView.addObject("categoryTitle", categoryTitle);
 
         return modelAndView;
     }

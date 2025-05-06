@@ -1,15 +1,32 @@
 package org.onlineshop.web;
 
+import org.onlineshop.model.exportDTO.OpinionDTO;
+import org.onlineshop.service.interfaces.OpinionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
 
+    private final OpinionService opinionService;
+
+    public HomeController(OpinionService opinionService) {
+        this.opinionService = opinionService;
+    }
+
     @GetMapping("/")
     public ModelAndView index() {
-        return new ModelAndView("index");
+
+        ModelAndView modelAndView = new ModelAndView("index");
+
+        List<OpinionDTO> opinionsForIndexPage = this.opinionService.getOpinionsForIndexPage();
+
+        modelAndView.addObject("opinions", opinionsForIndexPage);
+
+        return modelAndView;
     }
 
     @GetMapping("/about-us")

@@ -24,7 +24,7 @@ public enum BrandName {
     REEBOK,
     REEF,
     RIP_CURL,
-    SOLOMON,
+    SALOMON,
     SKECKERS,
     THE_NORTH_FACE,
     TIMBERLAND,

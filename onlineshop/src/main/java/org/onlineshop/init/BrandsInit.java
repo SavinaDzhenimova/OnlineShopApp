@@ -52,7 +52,7 @@ public class BrandsInit implements CommandLineRunner {
                             case REEBOK -> brandUrl = "/images/brands/brand-reebok-dark.svg";
                             case REEF -> brandUrl = "/images/brands/brand-reef-dark.svg";
                             case RIP_CURL -> brandUrl = "/images/brands/brand-rip-curl-dark.svg";
-                            case SOLOMON -> brandUrl = "/images/brands/brand-solomon-dark.svg";
+                            case SALOMON -> brandUrl = "/images/brands/brand-solomon-dark.svg";
                             case SKECKERS -> brandUrl = "/images/brands/brand-skechers-dark.svg";
                             case THE_NORTH_FACE -> brandUrl = "/images/brands/brand-the-north-face-dark.svg";
                             case TIMBERLAND -> brandUrl = "/images/brands/brand-timberland-dark.svg";
