@@ -13,7 +13,6 @@ main form {
 main form .field {
     display: flex;
     flex-direction: column;
-
 }
 
 main form .field input,

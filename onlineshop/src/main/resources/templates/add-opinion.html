@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <th:block th:replace="~{fragments/commons::head}"></th:block>
+  <link rel="stylesheet" href="/css/add-opinion-styles.css">
+  <title>Смяна на парола</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <form th:action="@{/opinions/add-opinion}"
+              th:method="POST"
+              th:object="${addOpinionDTO}">
+            <h1>Напишете мнение</h1>
+
+            <div class="field">
+                <label th:for="author">Име и фамилия</label>
+                <input type="author" th:field="*{author}" name="author" id="author">
+                <small th:if="${#fields.hasErrors('author')}"
+                       th:errors="*{author}"
+                       class="text-danger">Dish name error message</small>
+            </div>
+
+            <div class="field">
+                <label th:for="email">Имейл (не се показва)</label>
+                <input type="email" th:field="*{email}" name="email" id="email">
+                <small th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"
+                       class="text-danger">Dish name error message</small>
+            </div>
+
+            <div class="field">
+                <label th:for="phoneNumber">Мобилен телефон (не се показва)</label>
+                <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber">
+                <small th:if="${#fields.hasErrors('phoneNumber')}"
+                       th:errors="*{phoneNumber}"
+                       class="text-danger">Dish name error message</small>
+            </div>
+
+            <div class="field">
+                <label th:for="opinion">Вашето мнение</label>
+                <textarea th:field="*{opinion}" th:errorclass="is-invalid"
+                          name="opinion" id="opinion"></textarea>
+                <small th:if="${#fields.hasErrors('opinion')}"
+                       th:errors="*{opinion}"
+                       class="text-danger">Dish name error message</small>
+            </div>
+
+            <div class="field field-rating">
+                <label>Вашата оценка</label>
+                <div class="rating-section">
+                    <div class="rating">
+                        <input type="radio" th:field="*{rating}" id="star5" value="5" required />
+                        <label for="star5">★</label>
+                        <input type="radio" th:field="*{rating}" id="star4" value="4" />
+                        <label for="star4">★</label>
+                        <input type="radio" th:field="*{rating}" id="star3" value="3" />
+                        <label for="star3">★</label>
+                        <input type="radio" th:field="*{rating}" id="star2" value="2" />
+                        <label for="star2">★</label>
+                        <input type="radio" th:field="*{rating}" id="star1" value="1" />
+                        <label for="star1">★</label>
+                    </div>
+
+                    <span id="ratingValue" class="rating-value">0/5</span>
+                </div>
+                <small th:if="${#fields.hasErrors('rating')}"
+                       th:errors="*{rating}"
+                       class="text-danger">Моля, изберете оценка</small>
+            </div>
+
+            <button type="submit">Изпрати мнение</button>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script src="\js\show-stars-rating.js"></script>
+
+</body>
+</html>

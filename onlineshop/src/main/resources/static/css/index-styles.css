@@ -13,7 +13,7 @@ main .site-main-section .choose-shoes {
     flex-wrap: wrap;
 }
 
-main .site-main-section .choose-shoes div {
+main .site-main-section .choose-shoes a {
     padding: 0.5em 1em;
     width: 30%;
     display: flex;
@@ -25,7 +25,11 @@ main .site-main-section .choose-shoes div {
     font-size: 16px;
 }
 
-main .site-main-section .choose-shoes>p {
+main .site-main-section .choose-shoes a:hover {
+    background-color: #ddd;
+}
+
+main .site-main-section .choose-shoes > p {
     width: 100%;
     text-align: center;
     padding-top: 1em;

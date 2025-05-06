@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
-                                "/loyalty-program", "/choose-size",
+                                "/loyalty-program", "/choose-size", "/opinions", "/opinions/**",
                                 "/users/login", "/users/register", "/users/favourites/**",
                                 "/products/all", "/products/product/**", "/products/**",
                                 "/shopping-cart", "/shopping-cart/add-item/**", "/shopping-cart/remove-item/**",

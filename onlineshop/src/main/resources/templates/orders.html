@@ -11,42 +11,42 @@
 
 <body>
 
-<header th:replace="~{fragments/commons::header}"></header>
+    <header th:replace="~{fragments/commons::header}"></header>
 
-<main>
-    <h1 sec:authorize="hasRole('ADMIN')" th:if="${allOrders}">Всички поръчки</h1>
-    <h1 th:unless="${allOrders}">Моите поръчки</h1>
+    <main>
+        <h1 sec:authorize="hasRole('ADMIN')" th:if="${allOrders}">Всички поръчки</h1>
+        <h1 th:unless="${allOrders}">Моите поръчки</h1>
 
-    <p th:if="${warningMessage} and ${#lists.isEmpty(orders)}" th:text="${warningMessage}"></p>
+        <p th:if="${warningMessage} and ${#lists.isEmpty(orders)}" th:text="${warningMessage}"></p>
 
-    <div th:if="${successMessage}" class="alert alert-success" role="alert">
-        <p class="success" th:text="${successMessage}"></p>
-    </div>
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
 
-    <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
-        <p th:text="${failureMessage}"></p>
-    </div>
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
 
-    <div class="orders-list" th:if="${not #lists.isEmpty(orders)}">
-        <section class="order-info" th:each="order : ${orders}">
-            <p th:text="'#' + ${order.getId()}"></p>
-            <p th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></p>
-            <p th:text="${order.getFullName()}"></p>
-            <p class="order-status" th:text="${order.getStatus()}" th:classappend="${order.getStatusClass()}">
-            </p>
-            <p class="price" th:text="${order.getFinalPrice()} + ' лв.'"></p>
-            <a th:href="@{/orders/track/{id}(id=${order.getId()})}">Виж поръчката</a>
-            <form sec:authorize="hasRole('ADMIN')"
-                  th:if="${allOrders}"
-                  th:action="@{/orders/update-status/{id}(id=${order.getId()})}"
-                  th:method="PUT">
-                <button type="submit">Обнови статус</button>
-            </form>
-        </section>
-    </div>
-</main>
+        <div class="orders-list" th:if="${not #lists.isEmpty(orders)}">
+            <section class="order-info" th:each="order : ${orders}">
+                <p th:text="'#' + ${order.getId()}"></p>
+                <p th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></p>
+                <p th:text="${order.getFullName()}"></p>
+                <p class="order-status" th:text="${order.getStatus()}" th:classappend="${order.getStatusClass()}">
+                </p>
+                <p class="price" th:text="${order.getFinalPrice()} + ' лв.'"></p>
+                <a th:href="@{/orders/track/{id}(id=${order.getId()})}">Виж поръчката</a>
+                <form sec:authorize="hasRole('ADMIN')"
+                      th:if="${allOrders}"
+                      th:action="@{/orders/update-status/{id}(id=${order.getId()})}"
+                      th:method="PUT">
+                    <button type="submit">Обнови статус</button>
+                </form>
+            </section>
+        </div>
+    </main>
 
-<footer th:replace="~{fragments/commons::footer}"></footer>
+    <footer th:replace="~{fragments/commons::footer}"></footer>
 
 </body>
 </html>

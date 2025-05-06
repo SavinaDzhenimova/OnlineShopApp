@@ -1,0 +1,49 @@
+main .opinions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+    padding-bottom: 1em;
+}
+
+main .opinions .opinion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+}
+
+main .opinions .opinion .header-opinion {
+    display: flex;
+    justify-content: space-between;
+}
+
+main .opinions .opinion .header-opinion .rating {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    color: orange;
+}
+
+main .opinions .opinion .header-opinion .rating p {
+    color: #000;
+    padding-right: 0.5em;
+}
+
+main .opinions .opinion .footer-opinion .author::before {
+    display: inline;
+    content: '@';
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    padding-right: 0.5em;
+}
+
+main .opinion-links {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}

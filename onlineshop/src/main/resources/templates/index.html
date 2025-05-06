@@ -19,23 +19,23 @@
 
         <section class="site-main-section">
             <section class="choose-shoes">
-                <div>
+                <a th:href="@{/products/men}">
                     <p>Мъжки маратонки</p>
                     <img src="/images/index/men-shoes.png">
                     <p><i class="fa-solid fa-chevron-right"></i></p>
-                </div>
+                </a>
     
-                <div>
+                <a th:href="@{/products/women}">
                     <p>Дамски маратонки</p>
                     <img src="/images/index/women-shoes.png">
                     <p><i class="fa-solid fa-chevron-right"></i></p>
-                </div>
+                </a>
     
-                <div>
+                <a th:href="@{/products/children}">
                     <p>Детски маратонки</p>
                     <img src="/images/index/children-shoes.png">
                     <p><i class="fa-solid fa-chevron-right"></i></p>
-                </div>
+                </a>
 
                 <p>Онлайн магазин за оригинални маратонки Runtastic Shoes! Купи сега с големи намаления!</p>
             </section>
@@ -212,8 +212,8 @@
                 </div>
 
                 <div class="opinion-links">
-                    <a class="write-opinion" th:href="@{/opinion-form}">Напиши мнение</a>
-                    <a href="opinions.html">Виж всички</a>
+                    <a class="write-opinion" th:href="@{/opinions/add-opinion}">Напиши мнение</a>
+                    <a th:href="@{/opinions}">Виж всички</a>
                 </div>
             </section>
 
