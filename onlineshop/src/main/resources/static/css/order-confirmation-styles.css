@@ -40,6 +40,22 @@ main .order-confirmation-form .field select {
     padding: 0.5em;
 }
 
+main .order-confirmation-form .radio-buttons-field .radio-buttons .radio-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+main .order-confirmation-form .radio-buttons-field .radio-buttons .radio-button input[type="radio"] {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    width: 17px;
+    height: 17px;
+    aspect-ratio: 1 / 1;
+    accent-color: green;
+}
+
 main .order-confirmation-form table {
     margin-top: 1em;
     text-align: center;
