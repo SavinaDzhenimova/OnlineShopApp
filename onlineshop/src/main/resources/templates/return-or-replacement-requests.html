@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/return-or-replacement-requests-styles.css">
+    <title>Заявки за замяна/връщане</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1 th:text="${title}">Заявки за замяна/връщане</h1>
+
+        <p th:if="${warningMessage}" th:text="${warningMessage}"></p>
+
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <p class="success" th:text="${successMessage}"></p>
+        </div>
+
+        <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+            <p th:text="${failureMessage}"></p>
+        </div>
+
+        <div class="requests-list" th:if="${not #lists.isEmpty(requests)}">
+            <section class="request-info" th:each="request : ${requests}">
+                <div class="personal-info">
+                    <p th:text="${request.getFullName()}"></p>
+                    <p th:text="${request.getEmail()}"></p>
+                    <p th:text="${request.getPhoneNumber()}"></p>
+                </div>
+                <div class="address-info">
+                    <p><span th:text="${request.getRegion()}"></span>,
+                        <span th:text="${request.getTown()}"></span> <span th:text="${request.getPostalCode()}"></span></p>
+                    <p th:text="${request.getStreet()}"></p>
+                    <p th:text="${request.getAddressType()}"></p>
+                </div>
+                <div class="request-type">
+                    <p th:classappend="${request.getRequestClass()}" th:text="${request.getRequestType()}"></p>
+                </div>
+                <div class="additional-info">
+                    <p>Заявена на: <span th:text="${#temporals.format(request.getCreatedOn(), 'dd-MM-yyyy HH:mm')}"></span></p>
+                    <form th:action="@{/return-or-replacement/delete-request/{id}(id=${request.getId()})}"
+                          th:method="DELETE"
+                          sec:authorize="hasRole('ADMIN')">
+                        <button type="submit">Изтрий заявка</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

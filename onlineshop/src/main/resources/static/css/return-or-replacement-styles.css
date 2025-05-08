@@ -14,14 +14,16 @@ main .form-section form {
     width: 60%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-self: center;
-    border-radius: 0.5em;
+    border-radius: 1em;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     padding: 1em 2em 2em 2em;
     gap: 1.5em;
 }
 
 main .form-section form h2 {
+    margin: 0 auto;
     text-align: center;
 }
 
@@ -33,25 +35,39 @@ main .form-section form h2::after {
     background-color: #000;
 }
 
-main .form-section form .name-and-phone {
+main form fieldset {
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 2em 2em 2em;
+    border: 1px solid #000;
+    border-radius: 1em;
+}
+
+main form fieldset legend {
+    padding: 0 1em;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 main .form-section form .field {
+    width: 48%;
     display: flex;
     flex-direction: column;
 }
 
-main .form-section form .field input {
-    width: 350px;
+main .form-section form .field input,
+main .form-section form .field select {
     padding: 0.5em;
     border: 1px solid #ccc;
     outline: none;
     border-radius: 0.5em;
 }
 
-main .form-section form .field input[name="town"] {
+main .form-section form .radio-buttons {
     width: 100%;
 }
 
@@ -61,10 +77,14 @@ main .form-section form .radio-buttons .radio-button {
     gap: 0.5em;
 }
 
-main .form-section form .radio-buttons .radio-button input[type="radio"] {
-    width: 18px;
-    height: 18px;
+main .form-section form .radio-buttons input[type="radio"] {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    width: 17px;
+    height: 17px;
     aspect-ratio: 1 / 1;
+    accent-color: green;
 }
 
 main .form-section form button {
@@ -78,4 +98,5 @@ main .form-section form button {
     border-radius: 1.5em;
     font-weight: 600;
     font-size: 14px;
+    margin: 0 auto;
 }

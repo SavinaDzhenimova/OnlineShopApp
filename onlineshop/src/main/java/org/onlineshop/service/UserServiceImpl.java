@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
             if (optionalSubscriber.isEmpty()) {
                 Subscriber subscriber = new Subscriber();
                 subscriber.setEmail(userRegisterDTO.getEmail());
-                
+
                 this.subscriberService.saveAndFlush(subscriber);
             }
         }
@@ -448,6 +448,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> getUserByPhoneNumber(String phoneNumber) {
+        return this.userRepository.findByPhoneNumber(phoneNumber);
     }
 
     @Override

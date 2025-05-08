@@ -25,9 +25,9 @@ public class SubscriberController {
         Result result = this.subscriberService.subscribe(email);
 
         if (result.isSuccess()) {
-            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
+            redirectAttributes.addFlashAttribute("success", result.getMessage());
         } else {
-            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+            redirectAttributes.addFlashAttribute("failure", result.getMessage());
         }
 
         String anchor = source.equals("footer") ? "#footer-subscribe" : "#main-subscribe";

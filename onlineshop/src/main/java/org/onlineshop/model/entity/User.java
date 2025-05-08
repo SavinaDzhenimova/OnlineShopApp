@@ -61,11 +61,15 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Opinion> opinions;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ReturnOrReplacementRequest> returnOrReplacementRequests;
+
     public User() {
         this.addresses = new ArrayList<>();
         this.orders = new HashSet<>();
         this.favourites = new HashSet<>();
         this.opinions = new ArrayList<>();
+        this.returnOrReplacementRequests = new ArrayList<>();
     }
 
     public String getFullName() {
@@ -162,5 +166,13 @@ public class User extends BaseEntity {
 
     public void setOpinions(List<Opinion> opinions) {
         this.opinions = opinions;
+    }
+
+    public List<ReturnOrReplacementRequest> getReturnOrReplacementRequests() {
+        return returnOrReplacementRequests;
+    }
+
+    public void setReturnOrReplacementRequests(List<ReturnOrReplacementRequest> returnOrReplacementRequests) {
+        this.returnOrReplacementRequests = returnOrReplacementRequests;
     }
 }

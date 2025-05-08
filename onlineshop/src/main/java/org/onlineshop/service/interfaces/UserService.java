@@ -42,6 +42,8 @@ public interface UserService {
 
     Result addAddress(AddAddressDTO addAddressDTO);
 
+    Optional<User> getUserByPhoneNumber(String phoneNumber);
+
     void saveAndFlushUser(User user);
 
     ProductsListDTO getFavouriteProducts(HttpSession session);

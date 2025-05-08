@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
-                                "/maintenance-tips", "/about-us", "/delivery-and-payment", "/exchange-or-return", "/brands",
+                                "/maintenance-tips", "/about-us", "/delivery-and-payment", "/return-or-replacement", "/brands",
                                 "/loyalty-program", "/choose-size", "/opinions", "/opinions/**", "/subscribe",
                                 "/users/login", "/users/register", "/users/favourites/**",
                                 "/products/all", "/products/product/**", "/products/**",
@@ -34,7 +34,8 @@ public class SecurityConfig {
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product", "/promo-codes/**", "/orders/all",
-                                "/orders/update-status/**").hasRole("ADMIN")
+                                "/orders/update-status/**", "/return-or-replacement/requests",
+                                "/return-or-replacement/delete-request/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

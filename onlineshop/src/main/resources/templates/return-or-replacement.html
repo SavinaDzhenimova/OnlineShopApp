@@ -4,7 +4,7 @@
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
-    <link rel="stylesheet" href="/css/exchange-or-return-styles.css">
+    <link rel="stylesheet" href="/css/return-or-replacement-styles.css">
     <title>Замяна или връщане</title>
 </head>
 
@@ -58,52 +58,132 @@
             <p>При замяна куриерската услуга в посоката към Вас е за Ваша сметка.</p>
         </section>
 
+        <div id="result">
+            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                <p class="success" th:text="${successMessage}"></p>
+            </div>
+
+            <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+                <p th:text="${failureMessage}"></p>
+            </div>
+        </div>
+
         <section class="form-section">
-            <form>
+            <form th:action="@{/return-or-replacement}"
+                  th:method="POST"
+                  th:object="${addReturnOrReplacementRequestDTO}">
                 <h2>Ако желаеш замяна или връщане, моля попълни формата!</h2>
-    
-                <div class="name-and-phone">
+
+                <fieldset>
+                    <legend>Лична информация</legend>
+
                     <div class="field">
-                        <label for="fullName">Име и фамилия</label>
-                        <input type="text" name="fullName" id="fullName">
+                        <label th:for="fullName">Име и фамилия</label>
+                        <input type="text" th:field="*{fullName}" name="fullName" id="fullName">
+                        <small th:if="${#fields.hasErrors('fullName')}"
+                               th:errors="*{fullName}"
+                               class="text-danger">Dish name error message</small>
                     </div>
-        
+
                     <div class="field">
-                        <label for="phoneNumber">Мобилен телефон</label>
-                        <input type="text" name="phoneNumber" id="phoneNumber">
+                        <label th:for="email">Имейл</label>
+                        <input type="email" th:field="*{email}" name="email" id="email">
+                        <small th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"
+                               class="text-danger">Dish name error message</small>
                     </div>
-                </div>
-    
-                <div class="field">
-                    <label for="town">Населено място</label>
-                    <input type="text" name="town" id="town">
-                </div>
+
+                    <div class="field">
+                        <label th:for="phoneNumber">Мобилен телефон</label>
+                        <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber">
+                        <small th:if="${#fields.hasErrors('phoneNumber')}"
+                               th:errors="*{phoneNumber}"
+                               class="text-danger">Dish name error message</small>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Адрес, от който да вземем пратката</legend>
+
+                    <div class="field">
+                        <label th:for="region">Област:</label>
+                        <select th:field="*{region}" id="region" name="region">
+                            <option value="">-- Избери област --</option>
+                            <option th:each="region : ${regions}"
+                                    th:value="${region}"
+                                    th:text="${region.displayName}"></option>
+                        </select>
+                        <small th:if="${#fields.hasErrors('region')}"
+                               th:errors="*{region}"
+                               class="text-danger">Dish name error message</small>
+                    </div>
+
+                    <div class="field">
+                        <label th:for="town">Град</label>
+                        <input type="text" th:field="*{town}" name="town" id="town">
+                        <small th:if="${#fields.hasErrors('town')}"
+                               th:errors="*{town}"
+                               class="text-danger">Dish name error message</small>
+                    </div>
+
+                    <div class="field">
+                        <label th:for="postalCode">Пощенски код</label>
+                        <input type="text" th:field="*{postalCode}" name="postalCode" id="postalCode">
+                        <small th:if="${#fields.hasErrors('postalCode')}"
+                               th:errors="*{postalCode}"
+                               class="text-danger">Dish name error message</small>
+                    </div>
+
+                    <div class="field">
+                        <label th:for="street">Улица</label>
+                        <input type="text" th:field="*{street}" name="street" id="street">
+                        <small th:if="${#fields.hasErrors('street')}"
+                               th:errors="*{street}"
+                               class="text-danger">Dish name error message</small>
+                    </div>
+                </fieldset>
 
                 <div class="radio-buttons">
                     <h3>От къде ще изпратиш пратката към нас?</h3>
 
-                    <div class="radio-button">
-                        <input type="radio" id="exchange-address" name="address" value="От офис на Еконт" />
-                        <label for="exchange">От офис на Еконт</label>
-                    </div>
-                    
-                    <div class="radio-button">
-                        <input type="radio" id="return-address" name="address" value="От твой адрес" />
-                        <label for="return">От твой адрес</label>
+                    <div class="radio-buttons">
+                        <div class="radio-button">
+                            <input type="radio"
+                                   th:field="*{addressType}" th:value="OFFICE"
+                                   id="officeOption" />
+                            <label th:for="officeOption">От офис на Еконт</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio"
+                                   th:field="*{addressType}" th:value="PERSONAL"
+                                   id="personalOption" />
+                            <label th:for="personalOption">От личен адрес</label>
+                        </div>
+                        <small th:if="${#fields.hasErrors('addressType')}"
+                               th:errors="*{addressType}"
+                               class="text-danger"></small>
                     </div>
                 </div>
 
                 <div class="radio-buttons">
                     <h3>Какво желаеш да извършиш - Замяна или Връщане?</h3>
 
-                    <div class="radio-button">
-                        <input type="radio" id="exchange" name="exchange-or-return" value="Замяна" />
-                        <label for="exchange">Замяна</label>
-                    </div>
-                    
-                    <div class="radio-button">
-                        <input type="radio" id="return" name="exchange-or-return" value="Връщане" />
-                        <label for="return">Връщане</label>
+                    <div class="radio-buttons">
+                        <div class="radio-button">
+                            <input type="radio"
+                                   th:field="*{requestType}" th:value="REPLACE"
+                                   id="replaceOption" />
+                            <label th:for="personalOption">Замяна</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio"
+                                   th:field="*{requestType}" th:value="RETURN"
+                                   id="returnOption" />
+                            <label th:for="officeOption">Връщане</label>
+                        </div>
+                        <small th:if="${#fields.hasErrors('requestType')}"
+                               th:errors="*{requestType}"
+                               class="text-danger"></small>
                     </div>
                 </div>
 

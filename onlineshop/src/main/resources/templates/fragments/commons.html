@@ -99,7 +99,7 @@
             <ul class="customer-service">
                 <h3>Клиентски услуги</h3>
 
-                <li><a th:href="@{/exchange-or-return}">Замяна или връщане</a></li>
+                <li><a th:href="@{/return-or-replacement}">Замяна или връщане</a></li>
                 <li><a th:href="@{/about-us}">За нас</a></li>
                 <li><a th:href="@{/contacts}">Контакти</a></li>
                 <li><a th:href="@{/delivery-and-payment}">Доставка и плащане</a></li>
@@ -128,8 +128,8 @@
                     <input type="hidden" name="source" value="footer">
                     <button type="submit">Абонирай се</button>
 
-                    <p class="failure-msg" th:if="${failureMessage}" th:text="${failureMessage}"></p>
-                    <p class="success-msg" th:if="${successMessage}" th:text="${successMessage}"></p>
+                    <p class="failure-msg" th:if="${failure}" th:text="${failure}"></p>
+                    <p class="success-msg" th:if="${success}" th:text="${success}"></p>
                 </form>
             </ul>
         </section>

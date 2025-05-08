@@ -77,12 +77,6 @@ public class HomeController {
         return new ModelAndView("loyalty-program");
     }
 
-    @GetMapping("/exchange-or-return")
-    public ModelAndView exchangeOrReturn() {
-
-        return new ModelAndView("exchange-or-return");
-    }
-
     @GetMapping("/choose-size")
     public ModelAndView chooseSize() {
 
