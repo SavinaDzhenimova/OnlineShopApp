@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <div style="padding: 1em 2em; border-radius: 0.5em; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        <h1 style="text-align: center;">Успешна заявка за <span th:text="${requestType}"></span></h1>
+
+        <div style="font-size: 16px;">
+            <p style="padding-bottom: 0.5em;">Здравейте, <span th:text="${fullName}"></span></p>
+
+          <p style="padding-bottom: 1em;">Получихме заявка за <span th:text="${requestType}"></span> от твоя имейл
+            (<span th:text="${email}">имейл</span>). Заявили сте <span th:text="${requestType}">замяна/връщане</span>
+            на продукт от адрес <span th:text="${address}">адрес</span>.</p>
+
+          <p style="padding-bottom: 1em;">Наш служител ще се свърже с Вас за потвърждение и уточняване на детайлите.</p>
+
+          <p style="margin-top: 1em;">С най-добри пожелания,<br>
+              Екипът на Runtastic Shoes</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -54,6 +54,20 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendMakeRequestEmail(String fullName, String email, String phoneNumber, String address, String requestType) {
+        Map<String, Object> variables = Map.of(
+                "fullName", fullName,
+                "email", email,
+                "phoneNumber", phoneNumber,
+                "address", address,
+                "requestType", requestType
+        );
+
+        String content = generateEmailContent("/email/make-request-email", variables);
+        sendEmail(email, "Заявка за " + requestType, content);
+    }
+
+    @Override
     public void sendSubscribeEmail(String email) {
         Map<String, Object> variables = Map.of(
                 "email", email

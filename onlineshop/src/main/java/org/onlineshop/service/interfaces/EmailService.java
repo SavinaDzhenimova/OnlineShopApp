@@ -12,6 +12,8 @@ public interface EmailService {
 
     void sendUserRegisterEmail(String fullName, String email, String phoneNumber);
 
+    void sendMakeRequestEmail(String fullName, String email, String phoneNumber, String address, String requestType);
+
     void sendSubscribeEmail(String email);
 
     void sendUpdateOrderStatusEmail(Long id, String fullName, String email, String previousStatus, String currentStatus);

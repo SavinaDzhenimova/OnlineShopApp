@@ -5,13 +5,14 @@ import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.ReturnOrReplacementRequest;
 import org.onlineshop.model.entity.User;
 import org.onlineshop.model.enums.RequestType;
-import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.exportDTO.ReturnOrReplacementRequestDTO;
 import org.onlineshop.model.importDTO.AddReturnOrReplacementRequestDTO;
 import org.onlineshop.repository.ReturnOrReplacementRequestRepository;
+import org.onlineshop.service.events.MakeRequestEvent;
 import org.onlineshop.service.interfaces.ReturnOrReplacementRequestService;
 import org.onlineshop.service.interfaces.UserService;
 import org.onlineshop.service.utils.CurrentUserProvider;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,12 +25,15 @@ public class ReturnOrReplacementRequestServiceImpl implements ReturnOrReplacemen
     private final ReturnOrReplacementRequestRepository replacementRequestRepository;
     private final UserService userService;
     private final CurrentUserProvider currentUserProvider;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public ReturnOrReplacementRequestServiceImpl(ReturnOrReplacementRequestRepository replacementRequestRepository,
-                                                 UserService userService, CurrentUserProvider currentUserProvider) {
+                                                 UserService userService, CurrentUserProvider currentUserProvider,
+                                                 ApplicationEventPublisher applicationEventPublisher) {
         this.replacementRequestRepository = replacementRequestRepository;
         this.userService = userService;
         this.currentUserProvider = currentUserProvider;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -105,6 +109,12 @@ public class ReturnOrReplacementRequestServiceImpl implements ReturnOrReplacemen
         } else {
             this.replacementRequestRepository.saveAndFlush(request);
         }
+
+        String address = request.getRegion().getDisplayName() + ", " + request.getTown() + " " + request.getPostalCode() +
+                ", " + request.getStreet() + " (" + request.getAddressType().getDisplayName() + ")";
+
+        this.applicationEventPublisher.publishEvent(new MakeRequestEvent(this, request.getFullName(),
+                request.getEmail(), request.getPhoneNumber(), address, request.getRequestType().getDisplayName()));
 
         return new Result(true, "Успешно създадохте заявка за замяна/връщане. " +
                 "Наш служител ще се свърже с Вас за потвърждение.");
