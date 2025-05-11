@@ -23,9 +23,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/uploads/**", "/", "/contacts", "/faq", "/general-conditions", "/privacy-policy",
+                        .requestMatchers("/uploads/**", "/", "/faq", "/general-conditions", "/privacy-policy",
                                 "/maintenance-tips", "/about-us", "/delivery-and-payment", "/return-or-replacement", "/brands",
                                 "/loyalty-program", "/choose-size", "/opinions", "/opinions/**", "/subscribe",
+                                "/contacts", "/contacts/send-inquiry",
                                 "/users/login", "/users/register", "/users/favourites/**",
                                 "/products/all", "/products/product/**", "/products/**",
                                 "/shopping-cart", "/shopping-cart/add-item/**", "/shopping-cart/remove-item/**",

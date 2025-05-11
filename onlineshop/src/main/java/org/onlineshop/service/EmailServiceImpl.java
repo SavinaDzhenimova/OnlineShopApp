@@ -30,6 +30,19 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendInquiryEmail(String fullName, String email, String phoneNumber, String message) {
+        Map<String, Object> variables = Map.of(
+                "fullName", fullName,
+                "email", email,
+                "phoneNumber", phoneNumber,
+                "message", message
+        );
+
+        String content = generateEmailContent("/email/inquiry-email", variables);
+        sendEmail("runtastic.shoes.contacts@gmail.com", "Ново запитване от " + fullName, content, email);
+    }
+
+    @Override
     public void sendForgotPasswordEmail(String fullName, String email, String token) {
         Map<String, Object> variables = Map.of(
                 "fullName", fullName,
@@ -38,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
         );
 
         String content = generateEmailContent("/email/forgot-password-email", variables);
-        sendEmail(email, "Линк за промяна на парола", content);
+        sendEmail(email, "Линк за промяна на парола", content, this.email);
     }
 
     @Override
@@ -50,7 +63,7 @@ public class EmailServiceImpl implements EmailService {
         );
 
         String content = generateEmailContent("/email/user-register-email", variables);
-        sendEmail(email, "Успешна регистрация в Runtastic Shoes", content);
+        sendEmail(email, "Успешна регистрация в Runtastic Shoes", content, this.email);
     }
 
     @Override
@@ -64,7 +77,7 @@ public class EmailServiceImpl implements EmailService {
         );
 
         String content = generateEmailContent("/email/make-request-email", variables);
-        sendEmail(email, "Заявка за " + requestType, content);
+        sendEmail(email, "Заявка за " + requestType, content, this.email);
     }
 
     @Override
@@ -74,7 +87,7 @@ public class EmailServiceImpl implements EmailService {
         );
 
         String content = generateEmailContent("/email/subscribe-email", variables);
-        sendEmail(email, "Успешен абонамент", content);
+        sendEmail(email, "Успешен абонамент", content, this.email);
     }
 
     @Override
@@ -88,7 +101,7 @@ public class EmailServiceImpl implements EmailService {
         );
 
         String content = generateEmailContent("/email/update-order-status-email", variables);
-        sendEmail(email, "Променен статус на поръчка", content);
+        sendEmail(email, "Променен статус на поръчка", content, this.email);
     }
 
     @Override
@@ -115,17 +128,17 @@ public class EmailServiceImpl implements EmailService {
         variables.put("orderTrackingUrl", orderTrackingUrl);
 
         String content = generateEmailContent("/email/make-order-email", variables);
-        sendEmail(email, "Успешно направена поръчка", content);
+        sendEmail(email, "Успешно направена поръчка", content, this.email);
     }
 
-    private void sendEmail(String sendTo, String subject, String content) {
+    private void sendEmail(String sendTo, String subject, String content, String replyTo) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 
             mimeMessageHelper.setTo(sendTo);
             mimeMessageHelper.setFrom(this.email);
-            mimeMessageHelper.setReplyTo(this.email);
+            mimeMessageHelper.setReplyTo(replyTo);
             mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setText(content, true);
 

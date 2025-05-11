@@ -35,12 +35,6 @@ public class HomeController {
         return new ModelAndView("about-us");
     }
 
-    @GetMapping("/contacts")
-    public ModelAndView contacts() {
-
-        return new ModelAndView("contacts");
-    }
-
     @GetMapping("/faq")
     public ModelAndView faq() {
 

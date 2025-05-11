@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface EmailService {
 
+    void sendInquiryEmail(String fullName, String email, String phoneNumber, String message);
+
     void sendForgotPasswordEmail(String fullName, String email, String token);
 
     void sendUserRegisterEmail(String fullName, String email, String phoneNumber);

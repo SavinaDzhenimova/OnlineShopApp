@@ -41,31 +41,37 @@
 
             <section class="contact-us-section">
                 <h3>Изпрати ни съобщение</h3>
+
+                <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                    <p class="success" th:text="${successMessage}"></p>
+                </div>
                 
-                <form>
+                <form th:action="@{/contacts/send-inquiry}"
+                      th:method="POST"
+                      th:object="${addInquiryDTO}">
                     <div class="field">
-                        <label for="fullName">Име и фамилия</label>
-                        <input type="text" name="fullName" id="fullName" placeholder="Име и фамилия">
+                        <label th:for="fullName">Име и фамилия</label>
+                        <input type="text" th:field="*{fullName}" name="fullName" id="fullName">
                     </div>
 
                     <div class="email-and-phone">
                         <div class="field">
-                            <label for="email">Имейл</label>
-                            <input type="email" name="email" id="email" placeholder="Email">
+                            <label th:for="email">Имейл</label>
+                            <input type="email" th:field="*{email}" name="email" id="email">
                         </div>
 
                         <div class="field">
                             <label for="phoneNumber">Телефон</label>
-                            <input type="text" name="phoneNumber" id="phoneNumber" placeholder="Телефон">
+                            <input type="text" th:field="*{phoneNumber}" name="phoneNumber" id="phoneNumber">
                         </div>
                     </div>
 
                     <div class="field">
-                        <label for="message">Съобщение</label>
-                        <textarea name="message" id="message"></textarea>
+                        <label th:for="message">Съобщение</label>
+                        <textarea th:field="*{message}" name="message" id="message"></textarea>
                     </div>
 
-                    <button>Изпрати</button>
+                    <button type="submit">Изпрати</button>
                 </form>
             </section>
         </div>
