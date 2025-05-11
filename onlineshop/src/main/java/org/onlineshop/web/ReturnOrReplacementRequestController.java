@@ -93,6 +93,20 @@ public class ReturnOrReplacementRequestController {
         return new ModelAndView("redirect:/return-or-replacement#result");
     }
 
+    @PostMapping("/return-or-replacement/complete-request/{id}")
+    public ModelAndView completeRequest(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+
+        Result result = this.replacementRequestService.completeRequest(id);
+
+        if (result.isSuccess()) {
+            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
+        } else {
+            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+        }
+
+        return new ModelAndView("redirect:/return-or-replacement/requests");
+    }
+
     @DeleteMapping("/return-or-replacement/delete-request/{id}")
     public ModelAndView deleteRequest(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 

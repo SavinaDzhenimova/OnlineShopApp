@@ -22,7 +22,7 @@ public class ReturnOrReplacementRequest extends BaseEntity {
     @ValidEmail
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "phone_number")
     @Size(min = 7, max = 15)
     private String phoneNumber;
 
@@ -53,11 +53,18 @@ public class ReturnOrReplacementRequest extends BaseEntity {
     @Column(nullable = false, name = "created_on")
     private LocalDateTime createdOn;
 
+    @Column(name = "completed_on")
+    private LocalDateTime completedOn;
+
+    @Column(nullable = false)
+    private boolean completed;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public ReturnOrReplacementRequest() {
+        this.completed = false;
     }
 
     public String getFullName() {
@@ -138,6 +145,22 @@ public class ReturnOrReplacementRequest extends BaseEntity {
 
     public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getCompletedOn() {
+        return completedOn;
+    }
+
+    public void setCompletedOn(LocalDateTime completedOn) {
+        this.completedOn = completedOn;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public User getUser() {

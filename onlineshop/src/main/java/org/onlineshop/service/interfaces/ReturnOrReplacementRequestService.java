@@ -16,4 +16,6 @@ public interface ReturnOrReplacementRequestService {
 
     List<ReturnOrReplacementRequestDTO> getLoggedUserRequests();
 
+    Result completeRequest(Long id);
+
 }

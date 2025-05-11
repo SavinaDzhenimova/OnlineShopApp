@@ -66,6 +66,8 @@ public class ReturnOrReplacementRequestServiceImpl implements ReturnOrReplacemen
         requestDTO.setAddressType(request.getAddressType().getDisplayName());
         requestDTO.setRequestType(request.getRequestType().getDisplayName());
         requestDTO.setCreatedOn(request.getCreatedOn());
+        requestDTO.setCompleted(request.isCompleted());
+        requestDTO.setCompletedOn(request.getCompletedOn());
 
         String requestClass = (request.getRequestType().equals(RequestType.RETURN)) ? "return" : "replace";
         requestDTO.setRequestClass(requestClass);
@@ -97,6 +99,7 @@ public class ReturnOrReplacementRequestServiceImpl implements ReturnOrReplacemen
         request.setPostalCode(addReturnOrReplacementRequestDTO.getPostalCode());
         request.setAddressType(addReturnOrReplacementRequestDTO.getAddressType());
         request.setRequestType(addReturnOrReplacementRequestDTO.getRequestType());
+        request.setCompleted(false);
 
         Optional<User> optionalUserByEmail = this.userService.getUserByEmail(addReturnOrReplacementRequestDTO.getEmail());
 
@@ -120,18 +123,43 @@ public class ReturnOrReplacementRequestServiceImpl implements ReturnOrReplacemen
                 "Наш служител ще се свърже с Вас за потвърждение.");
     }
 
+    @Override
+    public Result completeRequest(Long id) {
+
+        Optional<ReturnOrReplacementRequest> optionalRequest = this.replacementRequestRepository.findById(id);
+
+        if (optionalRequest.isEmpty()) {
+            return new Result(false, "Заявката, която се опитвате да завършите, не съществува!");
+        }
+
+        ReturnOrReplacementRequest request = optionalRequest.get();
+
+        if (!request.isCompleted()) {
+            request.setCompleted(true);
+            request.setCompletedOn(LocalDateTime.now());
+        } else {
+            return new Result(false, "Тази заявка вече е завършена!");
+        }
+
+        this.replacementRequestRepository.saveAndFlush(request);
+        return new Result(true, "Тази заявка беше успешно завършена!");
+    }
+
     @Transactional
     @Override
     public Result deleteRequest(Long id) {
 
-        this.replacementRequestRepository.deleteById(id);
+        Optional<ReturnOrReplacementRequest> optionalRequestBeforeDeletion = this.replacementRequestRepository.findById(id);
 
-        Optional<ReturnOrReplacementRequest> optionalRequest = this.replacementRequestRepository.findById(id);
-
-        if (optionalRequest.isPresent()) {
-            return new Result(false, "Тази заявка не можа да бъде изтрита!");
+        if (optionalRequestBeforeDeletion.isEmpty()) {
+            return new Result(false, "Заявката, която се опитвате да изтриете, не съществува!");
         }
 
+        if (!optionalRequestBeforeDeletion.get().isCompleted()) {
+            return new Result(false, "Не можете да изтриете заявка, която още не е завършена!");
+        }
+
+        this.replacementRequestRepository.deleteById(id);
         return new Result(true, "Успешно изтрихте тази заявка.");
     }
 }

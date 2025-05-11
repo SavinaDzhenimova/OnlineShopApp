@@ -43,7 +43,14 @@ main .requests-list .request-info .request-type p.replace {
     background-color: #007bff;
 }
 
-main .requests-list .request-info form button[type="submit"] {
+main .requests-list .request-info .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5em;
+}
+
+main .requests-list .request-info .delete-request button[type="submit"],
+main .requests-list .request-info .complete-request button[type="submit"] {
     padding: 0.7em 1em;
     outline: none;
     border: none;
@@ -53,6 +60,14 @@ main .requests-list .request-info form button[type="submit"] {
     color: #fff;
 }
 
-main .requests-list .request-info form button[type="submit"]:hover {
+main .requests-list .request-info .complete-request button[type="submit"] {
+    background-color: #32CD32FF;
+}
+
+main .requests-list .request-info .delete-request button[type="submit"]:hover {
     background-color: #C00;
+}
+
+main .requests-list .request-info .complete-request button[type="submit"]:hover {
+    background-color: #008000FF;
 }

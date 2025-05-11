@@ -43,12 +43,26 @@
                     <p th:classappend="${request.getRequestClass()}" th:text="${request.getRequestType()}"></p>
                 </div>
                 <div class="additional-info">
-                    <p>Заявена на: <span th:text="${#temporals.format(request.getCreatedOn(), 'dd-MM-yyyy HH:mm')}"></span></p>
-                    <form th:action="@{/return-or-replacement/delete-request/{id}(id=${request.getId()})}"
-                          th:method="DELETE"
-                          sec:authorize="hasRole('ADMIN')">
-                        <button type="submit">Изтрий заявка</button>
-                    </form>
+                    <p>Заявена: <span th:text="${#temporals.format(request.getCreatedOn(), 'dd-MM-yyyy HH:mm')}"></span></p>
+                    <p th:if="${request.isCompleted()}">Завършена:
+                        <span th:text="${#temporals.format(request.getCompletedOn(), 'dd-MM-yyyy HH:mm')}"></span>
+                    </p>
+                    <div class="buttons">
+                        <form th:action="@{/return-or-replacement/delete-request/{id}(id=${request.getId()})}"
+                              th:method="DELETE"
+                              sec:authorize="hasRole('ADMIN')"
+                              th:if="${request.isCompleted()}"
+                              class="delete-request">
+                            <button type="submit">Изтрий</button>
+                        </form>
+                        <form th:action="@{/return-or-replacement/complete-request/{id}(id=${request.getId()})}"
+                              th:method="POST"
+                              sec:authorize="hasRole('ADMIN')"
+                              th:if="${!request.isCompleted()}"
+                              class="complete-request">
+                            <button type="submit">Завършена</button>
+                        </form>
+                    </div>
                 </div>
             </section>
         </div>

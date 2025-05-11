@@ -6,9 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/PromoCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/PromoCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/order-confirmation-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/order-confirmation-styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/order-confirmation.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/order-confirmation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/ReturnOrReplacementRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/ReturnOrReplacementRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ReturnOrReplacementRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ReturnOrReplacementRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ReturnOrReplacementRequestServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ReturnOrReplacementRequestServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ReturnOrReplacementRequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ReturnOrReplacementRequestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ReturnOrReplacementRequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ReturnOrReplacementRequestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/return-or-replacement-requests-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/return-or-replacement-requests-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/return-or-replacement-requests.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/return-or-replacement-requests.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

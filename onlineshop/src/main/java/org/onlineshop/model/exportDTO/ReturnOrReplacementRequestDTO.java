@@ -28,6 +28,10 @@ public class ReturnOrReplacementRequestDTO {
 
     private LocalDateTime createdOn;
 
+    private LocalDateTime completedOn;
+
+    private boolean completed;
+
     public ReturnOrReplacementRequestDTO() {
     }
 
@@ -125,5 +129,21 @@ public class ReturnOrReplacementRequestDTO {
 
     public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getCompletedOn() {
+        return completedOn;
+    }
+
+    public void setCompletedOn(LocalDateTime completedOn) {
+        this.completedOn = completedOn;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }
