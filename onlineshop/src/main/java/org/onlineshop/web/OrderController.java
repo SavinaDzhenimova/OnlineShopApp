@@ -125,12 +125,12 @@ public class OrderController {
         return new ModelAndView("order-success");
     }
 
-    @GetMapping("/track/{id}")
-    public ModelAndView trackOrder(@PathVariable("id") Long id) {
+    @GetMapping("/track/{id}/{trackingCode}")
+    public ModelAndView trackOrder(@PathVariable("id") Long id, @PathVariable("trackingCode") String trackingCode) {
 
         ModelAndView modelAndView = new ModelAndView("order-tracking");
 
-        OrderDTO orderDTO = this.orderService.getOrderInfo(id);
+        OrderDTO orderDTO = this.orderService.getOrderInfo(id, trackingCode);
 
         if (orderDTO == null) {
             return new ModelAndView("error/403");

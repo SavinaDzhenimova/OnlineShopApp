@@ -85,6 +85,9 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
+    @Column(nullable = false, unique = true, name = "tracking_code")
+    private String trackingCode;
+
     public Order() {
         this.orderItems = new ArrayList<>();
     }
@@ -231,5 +234,13 @@ public class Order extends BaseEntity {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(String trackingCode) {
+        this.trackingCode = trackingCode;
     }
 }

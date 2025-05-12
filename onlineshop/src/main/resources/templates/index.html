@@ -41,7 +41,7 @@
             </section>
 
             <section class="new-models">
-                <a><img src="/images/index/new-models.jpg" alt="Нови модели"></a>
+                <a th:href="@{/products/category/new}"><img src="/images/index/new-models.jpg" alt="Нови модели"></a>
             </section>
 
             <section class="choose-your-size">
@@ -71,7 +71,7 @@
                           th:method="POST">
                         <input type="email" name="email" id="email" placeholder="Остави имейл...">
                         <input type="hidden" name="source" value="main">
-                        <button>Изпрати</button>
+                        <button type="submit">Изпрати</button>
                     </form>
                     <p class="promo-code-msg">На посочения имейл ще изпратим промо код</p>
                     <p class="failure-msg" th:if="${failureMessage}" th:text="${failureMessage}"></p>

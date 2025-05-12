@@ -41,6 +41,8 @@ public class OrderDTO {
 
     private BigDecimal vipStatusDiscount;
 
+    private String trackingCode;
+
     public OrderDTO() {
         this.orderItems = new ArrayList<>();
     }
@@ -179,5 +181,13 @@ public class OrderDTO {
 
     public void setOrderItems(List<OrderItemDTO> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(String trackingCode) {
+        this.trackingCode = trackingCode;
     }
 }

@@ -19,7 +19,7 @@ public interface OrderService {
 
     Result makeOrder(AddOrderDTO addOrderDTO, HttpSession httpSession);
 
-    OrderDTO getOrderInfo(Long id);
+    OrderDTO getOrderInfo(Long id, String trackingCode);
 
     OrderDTO mapOrderToDto(Order order);
 

@@ -18,12 +18,15 @@ import org.onlineshop.service.events.UpdateOrderStatusEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -131,14 +134,16 @@ public class OrderServiceImpl implements OrderService {
         addOrderDTO.setFinalPrice(createdOrder.getFinalPrice());
 
         User loggedUser = this.currentUserProvider.getLoggedUser();
-        DiscountCard discountCard = loggedUser.getDiscountCard();
 
-        if (loggedUser != null && discountCard != null) {
-            BigDecimal discountValue = createdOrder.getTotalPrice().multiply(discountCard.getDiscountPercent())
-                    .divide(BigDecimal.valueOf(100));
+        if (loggedUser != null) {
+            DiscountCard discountCard = loggedUser.getDiscountCard();
 
-            addOrderDTO.setVipStatusDiscount(discountValue);
-            addOrderDTO.setFinalPrice(addOrderDTO.getFinalPrice().subtract(discountValue));
+            if (discountCard != null) {
+                BigDecimal discountValue = createdOrder.getTotalPrice().multiply(discountCard.getDiscountPercent())
+                        .divide(BigDecimal.valueOf(100));
+                addOrderDTO.setVipStatusDiscount(discountValue);
+                addOrderDTO.setFinalPrice(addOrderDTO.getFinalPrice().subtract(discountValue));
+            }
         }
 
         return Optional.of(addOrderDTO);
@@ -166,6 +171,7 @@ public class OrderServiceImpl implements OrderService {
         order.setFinalPrice(addOrderDTO.getFinalPrice() != null ? addOrderDTO.getFinalPrice() : addOrderDTO.getTotalPrice());
         order.setOrderedOn(LocalDateTime.now());
         order.setStatus(OrderStatus.PENDING);
+        order.setTrackingCode(UUID.randomUUID().toString());
 
         Optional<PromoCode> optionalPromoCode = this.promoCodeService.getByCode(addOrderDTO.getPromoCode());
         User loggedUser = this.currentUserProvider.getLoggedUser();
@@ -225,7 +231,7 @@ public class OrderServiceImpl implements OrderService {
 
         this.orderRepository.saveAndFlush(order);
 
-        String orderTrackingUrl = "/orders/track/" + order.getId();
+        String orderTrackingUrl = "/orders/track/" + order.getId() + "/" + order.getTrackingCode();
         String promoCodeName = order.getPromoCode() != null ? order.getPromoCode().getCode() : "";
         BigDecimal discountPercent = order.getPromoCode() != null ? order.getPromoCode().getDiscountValue() : BigDecimal.ZERO;
         String discountCardName = order.getUser() != null && order.getUser().getDiscountCard() != null
@@ -320,23 +326,34 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO getOrderInfo(Long id) {
+    public OrderDTO getOrderInfo(Long id, String trackingCode) {
+        Optional<Order> optionalOrderById = this.orderRepository.findById(id);
+        Optional<Order> optionalOrderByTrackingCode = this.orderRepository.findByTrackingCode(trackingCode);
+
+        if (optionalOrderById.isEmpty() || optionalOrderByTrackingCode.isEmpty()) {
+            throw new NoSuchElementException("Поръчката не съществува!");
+        }
+
+        if (!optionalOrderById.get().getId().equals(optionalOrderByTrackingCode.get().getId())) {
+            throw new NoSuchElementException("Поръчката не съществува!");
+        }
+
+        Order order = optionalOrderById.get();
         User loggedUser = this.currentUserProvider.getLoggedUser();
 
-        Optional<Order> optionalOrder = this.orderRepository.findById(id);
-
-        if (optionalOrder.isEmpty()) {
-            return null;
+        if (loggedUser != null && loggedUser.getRole().getRoleName().equals(RoleName.ADMIN)) {
+            return this.mapOrderToDto(order);
         }
 
-        Order order = optionalOrder.get();
-
-        if (order.getUser() != null && !loggedUser.getRole().getRoleName().equals(RoleName.ADMIN) &&
-                !order.getUser().getEmail().equals(loggedUser.getEmail())) {
-            return null;
+        if (loggedUser != null && order.getUser() != null && order.getUser().getEmail().equals(loggedUser.getEmail())) {
+            return this.mapOrderToDto(order);
         }
 
-        return this.mapOrderToDto(order);
+        if (loggedUser == null && order.getUser() == null && order.getTrackingCode().equals(trackingCode)) {
+            return this.mapOrderToDto(order);
+        }
+
+        throw new AccessDeniedException("Нямате достъп до тази поръчка.");
     }
 
     @Override
@@ -347,6 +364,7 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setFullName(order.getFullName());
         orderDTO.setEmail(order.getEmail());
         orderDTO.setPhoneNumber(order.getPhoneNumber());
+        orderDTO.setTrackingCode(order.getTrackingCode());
 
         String deliveryAddress = this.mapAddressToString(order.getRegion(), order.getTown(), order.getPostalCode(),
                 order.getStreet(), order.getAddressType());

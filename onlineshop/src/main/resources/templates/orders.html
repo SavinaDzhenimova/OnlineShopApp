@@ -35,7 +35,8 @@
                 <p class="order-status" th:text="${order.getStatus()}" th:classappend="${order.getStatusClass()}">
                 </p>
                 <p class="price" th:text="${order.getFinalPrice()} + ' лв.'"></p>
-                <a th:href="@{/orders/track/{id}(id=${order.getId()})}">Виж поръчката</a>
+                <a th:href="@{/orders/track/{id}/{trackingCode}(id=${order.getId()}, trackingCode=${order.getTrackingCode()})}"
+                >Виж поръчката</a>
                 <form sec:authorize="hasRole('ADMIN')"
                       th:if="${allOrders}"
                       th:action="@{/orders/update-status/{id}(id=${order.getId()})}"

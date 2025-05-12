@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 "/products/all", "/products/product/**", "/products/**",
                                 "/shopping-cart", "/shopping-cart/add-item/**", "/shopping-cart/remove-item/**",
                                 "/orders/create-order", "/orders/confirmation", "/orders/success", "/orders/track/**",
+                                "/orders/make-order",
                                 "/promo-codes/apply-promo").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
