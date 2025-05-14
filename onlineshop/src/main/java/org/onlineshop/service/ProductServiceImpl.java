@@ -228,6 +228,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductsListDTO getProductsByShoeSize(int size) {
+        
+        List<ProductDTO> productDTOList = this.productRepository
+                .findAllBySizeWithStock(size).stream()
+                .map(this::mapProductToDTO)
+                .toList();
+
+        return new ProductsListDTO(productDTOList);
+    }
+
+    @Override
     public Optional<Product> getById(Long id) {
         return this.productRepository.findById(id);
     }

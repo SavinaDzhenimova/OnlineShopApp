@@ -50,7 +50,7 @@
 
                     <input type="range" min="19" max="48" name="size-range" id="size-range">
 
-                    <a href="#">Виж всички модели с размер </a>
+                    <a id="selected-size-link">Виж всички модели с размер <span id="selected-size">33</span></a>
                 </div>
 
                 <div class="image-container">
@@ -228,6 +228,18 @@
     </main>
 
     <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script>
+        const range = document.getElementById("size-range");
+        const selectedSizeSpan = document.getElementById('selected-size');
+        const selectedSizeLink = document.getElementById('selected-size-link');
+
+        range.addEventListener("input", function () {
+            const size = parseInt(range.value, 10);
+            selectedSizeSpan.textContent = size;
+            selectedSizeLink.href = `/products/size/${size}`;
+        });
+    </script>
 
 </body>
 </html>

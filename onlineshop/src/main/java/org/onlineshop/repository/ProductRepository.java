@@ -18,4 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN p.brand b WHERE b.brandName = :brandName")
     List<Product> findAllByBrandName(@Param("brandName") BrandName brandName);
+
+    @Query("SELECT DISTINCT p FROM Product p JOIN p.quantitySize qs WHERE qs.size.size = :size AND qs.quantity > 0")
+    List<Product> findAllBySizeWithStock(int size);
 }

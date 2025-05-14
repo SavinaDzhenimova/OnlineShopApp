@@ -20,8 +20,9 @@ public interface ProductService {
 
     ProductsListDTO getProductsByCategory(String category);
 
+    ProductsListDTO getProductsByShoeSize(int size);
+
     Optional<Product> getById(Long id);
 
     ProductsListDTO getProductsByBrand(String brand);
-
 }

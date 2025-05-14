@@ -141,7 +141,7 @@ public class OpinionServiceImpl implements OpinionService {
                 if (opinion.getUser() != null) {
                     opinion.getUser().getOpinions().remove(opinion);
                 }
-                
+
                 this.opinionRepository.deleteById(opinion.getId());
                 return new Result(true, "Успешно изтрихте това мнение!");
             }

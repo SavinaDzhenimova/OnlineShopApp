@@ -100,7 +100,7 @@ public class ProductController {
             default -> "Спортни обувки";
         };
 
-        modelAndView.addObject("categoryTitle", categoryTitle);
+        modelAndView.addObject("title", categoryTitle);
 
         return modelAndView;
     }
@@ -119,7 +119,7 @@ public class ProductController {
                     "Все още няма добавени продукти за разглеждане от тази марка!");
         }
 
-        String categoryTitle = switch (brand) {
+        String brandTitle = switch (brand) {
             case "nike" -> "Nike обувки";
             case "adidas" -> "Adidas обувки";
             case "puma" -> "Puma обувки";
@@ -152,7 +152,26 @@ public class ProductController {
             default -> "Всички обувки";
         };
 
-        modelAndView.addObject("categoryTitle", categoryTitle);
+        modelAndView.addObject("title", brandTitle);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/size/{size}")
+    public ModelAndView showProductsBySize(@PathVariable("size") int size) {
+
+        ModelAndView modelAndView = new ModelAndView("products");
+
+        ProductsListDTO productsByproductsByShoeSize = this.productService.getProductsByShoeSize(size);
+
+        modelAndView.addObject("products", productsByproductsByShoeSize);
+
+        if (productsByproductsByShoeSize.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage",
+                    "Все още няма добавени продукти за разглеждане с този размер!");
+        }
+
+        modelAndView.addObject("title", "Спортни обувки №" + size);
 
         return modelAndView;
     }
