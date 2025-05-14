@@ -33,6 +33,7 @@ public class OpinionController {
 
         modelAndView.addObject("opinions", opinionDTOList);
         modelAndView.addObject("title", "Мнения от клиентите ни");
+        modelAndView.addObject("isUserPage", false);
 
         if (opinionDTOList.isEmpty()) {
             modelAndView.addObject("warningMessage", "Все още няма добавени коментари за разглеждане!");
@@ -50,6 +51,7 @@ public class OpinionController {
 
         modelAndView.addObject("opinions", loggedUserOpinions);
         modelAndView.addObject("title", "Моите мнения");
+        modelAndView.addObject("isUserPage", true);
 
         if (loggedUserOpinions.isEmpty()) {
             modelAndView.addObject("warningMessage", "Все още нямате добавени коментари за разглеждане!");
@@ -92,7 +94,9 @@ public class OpinionController {
     }
 
     @DeleteMapping("/opinions/delete-opinion/{id}")
-    public ModelAndView deleteOpinion(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public ModelAndView deleteOpinion(@PathVariable("id") Long id,
+                                      @RequestParam(name = "source", required = false) String source,
+                                      RedirectAttributes redirectAttributes) {
 
         Result result = this.opinionService.deleteOpinion(id);
 
@@ -100,6 +104,10 @@ public class OpinionController {
             redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
         } else {
             redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+        }
+
+        if (source != null && source.equals("userPage")) {
+            return new ModelAndView("redirect:/users/my-opinions");
         }
 
         return new ModelAndView("redirect:/opinions");

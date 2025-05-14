@@ -50,6 +50,7 @@
                           th:method="DELETE"
                           sec:authorize="isAuthenticated()"
                           th:if="${opinion.isCanDelete()}">
+                        <input th:if="${isUserPage}" type="hidden" name="source" value="userPage">
                         <button type="submit">Изтрий</button>
                     </form>
                 </div>
