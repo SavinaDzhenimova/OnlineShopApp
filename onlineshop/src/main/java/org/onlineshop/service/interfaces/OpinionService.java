@@ -16,4 +16,5 @@ public interface OpinionService {
 
     List<OpinionDTO> getLoggedUserOpinions();
 
+    Result deleteOpinion(Long id);
 }

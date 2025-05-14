@@ -132,12 +132,8 @@ public class OrderController {
 
         OrderDTO orderDTO = this.orderService.getOrderInfo(id, trackingCode);
 
-        if (orderDTO == null) {
-            return new ModelAndView("error/403");
-        } else {
-            modelAndView.addObject("order", orderDTO);
-            modelAndView.addObject("orderItems", orderDTO.getOrderItems());
-        }
+        modelAndView.addObject("order", orderDTO);
+        modelAndView.addObject("orderItems", orderDTO.getOrderItems());
 
         return modelAndView;
     }

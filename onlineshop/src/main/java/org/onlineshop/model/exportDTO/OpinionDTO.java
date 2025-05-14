@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class OpinionDTO {
 
+    private Long id;
+
     private String author;
 
     private String opinion;
@@ -12,7 +14,18 @@ public class OpinionDTO {
 
     private LocalDate addedOn;
 
+    private boolean canDelete;
+
     public OpinionDTO() {
+        this.canDelete = false;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAuthor() {
@@ -45,5 +58,13 @@ public class OpinionDTO {
 
     public void setAddedOn(LocalDate addedOn) {
         this.addedOn = addedOn;
+    }
+
+    public boolean isCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(boolean canDelete) {
+        this.canDelete = canDelete;
     }
 }

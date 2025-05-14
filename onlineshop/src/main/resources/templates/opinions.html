@@ -46,6 +46,12 @@
 
                 <div class="footer-opinion">
                     <p class="author" th:text="${opinion.getAuthor()}">Илияна Кръстева</p>
+                    <form th:action="@{/opinions/delete-opinion/{id}(id=${opinion.getId()})}"
+                          th:method="DELETE"
+                          sec:authorize="isAuthenticated()"
+                          th:if="${opinion.isCanDelete()}">
+                        <button type="submit">Изтрий</button>
+                    </form>
                 </div>
             </div>
         </div>

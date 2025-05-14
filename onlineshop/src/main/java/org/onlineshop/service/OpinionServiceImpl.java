@@ -1,8 +1,10 @@
 package org.onlineshop.service;
 
+import jakarta.transaction.Transactional;
 import org.onlineshop.model.entity.Opinion;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.User;
+import org.onlineshop.model.enums.RoleName;
 import org.onlineshop.model.exportDTO.OpinionDTO;
 import org.onlineshop.model.importDTO.AddOpinionDTO;
 import org.onlineshop.repository.OpinionRepository;
@@ -60,12 +62,23 @@ public class OpinionServiceImpl implements OpinionService {
     }
 
     private OpinionDTO mapOpinionToDto(Opinion opinion) {
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
         OpinionDTO opinionDTO = new OpinionDTO();
 
+        opinionDTO.setId(opinion.getId());
         opinionDTO.setAuthor(opinion.getAuthor());
         opinionDTO.setOpinion(opinion.getOpinion());
         opinionDTO.setRating(opinion.getRating());
         opinionDTO.setAddedOn(opinion.getAddedOn());
+
+        if (loggedUser != null && opinion.getUser() != null
+                && (opinion.getUser().getId().equals(loggedUser.getId())
+                || loggedUser.getRole().getRoleName().equals(RoleName.ADMIN))) {
+            opinionDTO.setCanDelete(true);
+        }
+
+        opinionDTO.setCanDelete(false);
 
         return opinionDTO;
     }
@@ -100,5 +113,30 @@ public class OpinionServiceImpl implements OpinionService {
         }
 
         return new Result(true, "Успешно добавихте своя коментар!");
+    }
+
+    @Transactional
+    @Override
+    public Result deleteOpinion(Long id) {
+
+        Optional<Opinion> optionalOpinion = this.opinionRepository.findById(id);
+
+        if (optionalOpinion.isEmpty()) {
+            return new Result(false, "Мнението, което се опитвате да изтриете, не съществува!");
+        }
+
+        Opinion opinion = optionalOpinion.get();
+        User loggedUser = this.currentUserProvider.getLoggedUser();
+
+        if (opinion.getUser() != null && loggedUser != null
+                && (loggedUser.getRole().getRoleName().equals(RoleName.ADMIN)
+                ||  opinion.getUser().getId().equals(loggedUser.getId()))) {
+
+            loggedUser.getOpinions().remove(opinion);
+            this.opinionRepository.deleteById(opinion.getId());
+            return new Result(true, "Успешно изтрихте това мнение!");
+        }
+
+        return new Result(false, "Нямате права да изтриете това мнение!");
     }
 }

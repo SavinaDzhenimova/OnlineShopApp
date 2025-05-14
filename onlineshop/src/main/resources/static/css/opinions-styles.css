@@ -52,6 +52,21 @@ main .opinions .opinion .header-opinion .rating .star-empty {
     color: #ccc;
 }
 
+main .opinions .opinion .footer-opinion {
+    display: flex;
+    justify-content: space-between;
+}
+
+main .opinions .opinion .footer-opinion form button[type="submit"] {
+    outline: none;
+    border: none;
+    background-color: #FF0000FF;
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    font-weight: 600;
+}
+
 main .opinions .opinion .footer-opinion .author::before {
     display: inline;
     content: '@';
@@ -88,3 +103,4 @@ main .opinion-links #write-opinion {
 main .opinion-links a:hover {
     border-color: #000;
 }
+

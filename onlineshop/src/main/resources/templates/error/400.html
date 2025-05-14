@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <th:block th:replace="~{fragments/commons::head}"></th:block>
+  <link rel="stylesheet" href="/css/error-styles.css">
+  <title>Грешка 400</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Грешка 400!</h1>
+
+        <div class="error-info">
+            <p class="error-description">Поради лош синтаксис заявката не може да бъде разбрана от сървъра!</p>
+            <p>Съжаляваме! Моля върнете се към <a th:href="@{/}">началната страница</a>...</p>
+        </div>
+
+        <div class="error-image">
+            <img th:src="@{/images/error/400-error.png}"/>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script src="\js\show-menu-profile.js"></script>
+
+</body>
+</html>
