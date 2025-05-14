@@ -77,6 +77,7 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
         cartItemDTO.setProductId(product.getId());
 
         Set<QuantitySizeDTO> quantitySizes = new TreeSet<>(product.getQuantitySize().stream()
+                .filter(quantitySize -> quantitySize.getQuantity() > 0)
                 .map(quantitySize -> {
                     QuantitySizeDTO quantitySizeDTO = new QuantitySizeDTO();
                     quantitySizeDTO.setSize(quantitySize.getSize().getSize());

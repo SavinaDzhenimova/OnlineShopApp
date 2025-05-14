@@ -13,119 +13,131 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <div class="image-container">
-            <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
-            <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
-                  th:method="POST">
-                <input type="hidden" name="productId" value="${product.getId()}" />
-                <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
-            </form>
-            <img th:each="imageUrl : ${product.getImageUrls()}" th:src="${imageUrl}" th:alt="${product.getName()}">
+        <div class="messages">
+            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                <p class="success" th:text="${successMessage}"></p>
+            </div>
+
+            <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+                <p th:text="${failureMessage}"></p>
+            </div>
         </div>
 
-        <div class="content-container">
-            <div class="product-header">
-                <div class="product-title">
-                    <h2 th:text="${product.getName()}"></h2>
-
-                    <div class="product-type">
-                        <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
-                        <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
-                        <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
-                    </div>
-                </div>
-
-                <div class="brand-image">
-                    <img th:src="${product.getBrandUrl()}" th:alt="${product.getBrand()}">
-                </div>
+        <div class="main-content">
+            <div class="image-container">
+                <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
+                <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
+                      th:method="POST">
+                    <input type="hidden" name="productId" value="${product.getId()}" />
+                    <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
+                </form>
+                <img th:each="imageUrl : ${product.getImageUrls()}" th:src="${imageUrl}" th:alt="${product.getName()}">
             </div>
 
-            <div class="price">
-                <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
-            </div>
+            <div class="content-container">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2 th:text="${product.getName()}"></h2>
 
-            <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
-
-            <div class="color">
-                <span th:text="'Цвят: ' + ${product.getColor()}"></span>
-            </div>
-
-            <form th:action="@{/shopping-cart/add-item/{id}(id=${product.getId()})}"
-                  th:method="POST"
-                  th:object="${addCartItemDTO}"
-                  class="add-cart-item">
-
-                <div class="size-selector">
-                    <select th:field="*{size}" id="size" name="sizes[0].size.id" required>
-                        <option value="" selected>-- Избери размер --</option>
-                        <option th:each="size : ${product.getSizes()}"
-                                th:value="${size.size}"
-                                th:data-quantity="${size.quantity}"
-                                th:text="'№ ' + ${size.size}">
-                        </option>
-                    </select>
-                </div>
-
-                <div class="quantity-input">
-                    <label for="quantity">Избери количество:</label>
-                    <select th:field="*{quantity}" id="quantity" name="sizes[0].quantity" required disabled>
-                        <option value="">-- Избери първо размер --</option>
-                    </select>
-                </div>
-
-                <button type="submit"><i class="fa-solid fa-cart-arrow-down"></i> Добави в количката</button>
-            </form>
-
-            <div class="more-info">
-                <div class="purchase">
-                    <div>
-                        <i class="fa-solid fa-circle"></i>
-                        <p>Поръчай днес и ще получиш утре</p>
+                        <div class="product-type">
+                            <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
+                            <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
+                            <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
+                        </div>
                     </div>
-                    <p>
-                        <i class="fa-solid fa-calendar-day"></i>
-                        <span id="tomorrow-info"></span>
-                    </p>
-                </div>
 
-                <div class="delivery-info">
-                    <div class="delivery-info-section">
-                        <i class="fa-solid fa-eye"></i>
-                        <p>Тест и преглед преди плащане</p>
-                    </div>
-                    <div class="delivery-info-section">
-                        <i class="fa-solid fa-truck"></i>
-                        <p>Безплатна доставка над 100 лв.</p>
-                    </div>
-                    <div class="delivery-info-section">
-                        <i class="fa-solid fa-medal"></i>
-                        <p>Само оригинални стоки</p>
-                    </div>
-                    <div class="delivery-info-section">
-                        <i class="fa-solid fa-right-left"></i>
-                        <p>30 дни безплатно връщане</p>
-                    </div>
-                    <div class="delivery-info-section">
-                        <i class="fa-regular fa-circle-check"></i>
-                        <p>Всички стоки са налични</p>
-                    </div>
-                    <div class="delivery-info-section">
-                        <i class="fa-solid fa-phone-volume"></i>
-                        <p>0895 12 16 16</p>
+                    <div class="brand-image">
+                        <img th:src="${product.getBrandUrl()}" th:alt="${product.getBrand()}">
                     </div>
                 </div>
-            </div>
 
-            <div class="description">
-                <h3>Информация за продукта</h3>
+                <div class="price">
+                    <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+                </div>
 
-                <p th:text="${product.getDescription()}"></p>
-            </div>
+                <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
 
-            <div class="useful-info">
-                <a th:href="@{/faq}">Често задавани въпроси <i class="fa-solid fa-chevron-right"></i></a>
-                <a th:href="@{/delivery-and-payment}">Доставка и плащане <i class="fa-solid fa-chevron-right"></i></a>
-                <a th:href="@{/contacts}">Контакти <i class="fa-solid fa-chevron-right"></i></a>
+                <div class="color">
+                    <span th:text="'Цвят: ' + ${product.getColor()}"></span>
+                </div>
+
+                <form th:action="@{/shopping-cart/add-item/{id}(id=${product.getId()})}"
+                      th:method="POST"
+                      th:object="${addCartItemDTO}"
+                      class="add-cart-item">
+
+                    <div class="size-selector">
+                        <select th:field="*{size}" id="size" name="sizes[0].size.id" required>
+                            <option value="" selected>-- Избери размер --</option>
+                            <option th:each="size : ${product.getSizes()}"
+                                    th:value="${size.size}"
+                                    th:data-quantity="${size.quantity}"
+                                    th:text="'№ ' + ${size.size}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="quantity-input">
+                        <label for="quantity">Избери количество:</label>
+                        <select th:field="*{quantity}" id="quantity" name="sizes[0].quantity" required disabled>
+                            <option value="">-- Избери първо размер --</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"><i class="fa-solid fa-cart-arrow-down"></i> Добави в количката</button>
+                </form>
+
+                <div class="more-info">
+                    <div class="purchase">
+                        <div>
+                            <i class="fa-solid fa-circle"></i>
+                            <p>Поръчай днес и ще получиш утре</p>
+                        </div>
+                        <p>
+                            <i class="fa-solid fa-calendar-day"></i>
+                            <span id="tomorrow-info"></span>
+                        </p>
+                    </div>
+
+                    <div class="delivery-info">
+                        <div class="delivery-info-section">
+                            <i class="fa-solid fa-eye"></i>
+                            <p>Тест и преглед преди плащане</p>
+                        </div>
+                        <div class="delivery-info-section">
+                            <i class="fa-solid fa-truck"></i>
+                            <p>Безплатна доставка над 100 лв.</p>
+                        </div>
+                        <div class="delivery-info-section">
+                            <i class="fa-solid fa-medal"></i>
+                            <p>Само оригинални стоки</p>
+                        </div>
+                        <div class="delivery-info-section">
+                            <i class="fa-solid fa-right-left"></i>
+                            <p>30 дни безплатно връщане</p>
+                        </div>
+                        <div class="delivery-info-section">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <p>Всички стоки са налични</p>
+                        </div>
+                        <div class="delivery-info-section">
+                            <i class="fa-solid fa-phone-volume"></i>
+                            <p>0895 12 16 16</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <h3>Информация за продукта</h3>
+
+                    <p th:text="${product.getDescription()}"></p>
+                </div>
+
+                <div class="useful-info">
+                    <a th:href="@{/faq}">Често задавани въпроси <i class="fa-solid fa-chevron-right"></i></a>
+                    <a th:href="@{/delivery-and-payment}">Доставка и плащане <i class="fa-solid fa-chevron-right"></i></a>
+                    <a th:href="@{/contacts}">Контакти <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
             </div>
         </div>
     </main>

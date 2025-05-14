@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -121,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optionalProduct = this.productRepository.findById(id);
 
         if (optionalProduct.isEmpty()) {
-            return null;
+            throw new NoSuchElementException("Този продукт не съществува!");
         }
 
         Product product = optionalProduct.get();
@@ -147,7 +148,10 @@ public class ProductServiceImpl implements ProductService {
         Set<String> categories = new LinkedHashSet<>(this.categoryService.mapCategoriesToString(product.getCategories()));
         productDTO.setCategories(categories);
 
-        Set<QuantitySizeDTO> sizes = new TreeSet<>(this.mapQuantitySizeToDTO(product.getQuantitySize()));
+        Set<QuantitySize> filteredQuantitySizes = product.getQuantitySize().stream()
+                .filter(quantitySize -> quantitySize.getQuantity() > 0)
+                .collect(Collectors.toSet());
+        Set<QuantitySizeDTO> sizes = new TreeSet<>(this.mapQuantitySizeToDTO(filteredQuantitySizes));
         productDTO.setSizes(sizes);
 
         return productDTO;

@@ -2,7 +2,6 @@ package org.onlineshop.web;
 
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
-import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
@@ -68,7 +67,7 @@ public class ProductController {
         ProductsListDTO allProducts = this.productService.getAllProducts();
 
         modelAndView.addObject("products", allProducts);
-        modelAndView.addObject("categoryTitle", "Спортни обувки");
+        modelAndView.addObject("title", "Спортни обувки");
 
         if (allProducts.getProducts().isEmpty()) {
             modelAndView.addObject("warningMessage", "Все още няма добавени продукти за разглеждане!");
@@ -96,7 +95,7 @@ public class ProductController {
             case "men" -> "Мъжки обувки";
             case "children" -> "Детски обувки";
             case "sale" -> "Разпродажба на обувки";
-            case "new" -> "Нови обувки";
+            case "new" -> "Нови модели обувки";
             default -> "Спортни обувки";
         };
 
@@ -187,13 +186,6 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("product-details");
 
         ProductDTO productDTO = this.productService.getProductInfo(id);
-
-        if (productDTO == null) {
-            redirectAttributes.addFlashAttribute("failureMessage",
-                    "Продуктът, който се опитвате да достъпите, не съществува!");
-
-            return new ModelAndView("redirect:/products/all");
-        }
 
         modelAndView.addObject("product", productDTO);
 

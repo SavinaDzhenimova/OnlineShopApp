@@ -79,6 +79,8 @@ public class ShoppingCartController {
             redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
         } else {
             redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+
+            return new ModelAndView("redirect:/products/product/" + productId);
         }
 
         return new ModelAndView("redirect:/shopping-cart");

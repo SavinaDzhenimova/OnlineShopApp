@@ -65,6 +65,7 @@ public class ShoppingCartServiceGuestImpl implements ShoppingCartServiceGuest {
         cartItemDTO.setProductId(product.getId());
 
         Set<QuantitySizeDTO> quantitySizes = new TreeSet<>(product.getQuantitySize().stream()
+                .filter(quantitySize -> quantitySize.getQuantity() > 0)
                 .map(quantitySize -> {
                     QuantitySizeDTO quantitySizeDTO = new QuantitySizeDTO();
                     quantitySizeDTO.setSize(quantitySize.getSize().getSize());
@@ -83,7 +84,7 @@ public class ShoppingCartServiceGuestImpl implements ShoppingCartServiceGuest {
         Optional<Product> optionalProduct = this.productService.getById(addCartItemDTO.getProductId());
 
         if (optionalProduct.isEmpty()) {
-            return new Result(false, "Продуктът, който се опитвате да добавите в количката, не съществува!");
+            throw new NoSuchElementException("Продуктът, който се опитвате да добавите в количката, не съществува!");
         }
 
         Product product = optionalProduct.get();
@@ -107,6 +108,10 @@ public class ShoppingCartServiceGuestImpl implements ShoppingCartServiceGuest {
 
         if (matchingSize.isEmpty()) {
             return new Result(false, "Избраният размер не е наличен за този продукт!");
+        }
+
+        if (addCartItemDTO.getQuantity() == null || addCartItemDTO.getQuantity() <= 0) {
+            return new Result(false, "Моля изберете желано количество!");
         }
 
         int availableQuantity = matchingSize.get().getQuantity();
