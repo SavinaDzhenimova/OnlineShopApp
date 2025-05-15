@@ -12,9 +12,9 @@ import org.onlineshop.service.interfaces.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -163,6 +163,24 @@ public class ProductServiceImpl implements ProductService {
         List<Product> allProducts = this.productRepository.findAll();
 
         List<ProductDTO> productDTOS = allProducts.stream().map(this::mapProductToDTO).toList();
+
+        return new ProductsListDTO(productDTOS);
+    }
+
+    @Override
+    public ProductsListDTO getFilteredProducts(List<Integer> sizes, List<BrandName> brands, List<String> colors,
+                                               BigDecimal minPrice, BigDecimal maxPrice) {
+
+        List<ProductDTO> productDTOS = productRepository.findAll().stream()
+                .filter(product -> sizes == null || product.getQuantitySize().stream()
+                        .anyMatch(quantitySize ->
+                                sizes.contains(quantitySize.getSize().getSize()) && quantitySize.getQuantity() > 0))
+                .filter(product -> brands == null || brands.contains(product.getBrand().getBrandName()))
+                .filter(product -> colors == null || colors.contains(product.getColor().getDescription()))
+                .filter(product -> minPrice == null || product.getPrice().compareTo(minPrice) >= 0)
+                .filter(product -> maxPrice == null || product.getPrice().compareTo(maxPrice) <= 0)
+                .map(this::mapProductToDTO)
+                .toList();
 
         return new ProductsListDTO(productDTOS);
     }

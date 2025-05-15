@@ -1,15 +1,147 @@
+main .main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+main .main-content .filter-form {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+main .main-content .filter-form > div {
+    position: relative;
+    margin-bottom: 1em;
+}
+
+main .main-content .filter-form > div::after {
+    display: block;
+    content: '';
+    background-color: #ccc;
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    bottom: -1em;
+    left: 0;
+}
+
+main .main-content .filter-form div h3 {
+    margin-bottom: 0.5em;
+}
+
+main .main-content .filter-form .size-buttons,
+main .main-content .filter-form .brand-buttons,
+main .main-content .filter-form .color-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+}
+
+main .main-content .filter-form .size-buttons .size-option input[type="checkbox"],
+main .main-content .filter-form .brand-buttons .brand-option input[type="checkbox"],
+main .main-content .filter-form .color-buttons .color-option input[type="checkbox"]{
+    display: none;
+}
+
+main .main-content .filter-form .size-buttons .size-option label {
+    display: inline-block;
+    padding: 0 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+main .main-content .filter-form .size-buttons .size-option input[type="checkbox"]:checked + label,
+main .main-content .filter-form .color-buttons .color-option input[type="checkbox"]:checked + label {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+main .main-content .filter-form .brand-buttons .brand-option label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    cursor: pointer;
+    padding: 0.3em;
+    transition: border-color 0.2s ease;
+}
+
+main .main-content .filter-form .brand-buttons .brand-option img {
+    width: 70px;
+    height: auto;
+    object-fit: contain;
+}
+
+main .main-content .filter-form .brand-buttons .brand-option input[type="checkbox"]:checked + label {
+    border-color: #000;
+    background-color: #f0f0f0;
+}
+
+main .main-content .filter-form .price-filter input[type="number"] {
+    width: 70px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 0 0.5em;
+}
+
+main .main-content .filter-form .color-buttons .color-option label {
+    padding: 0.4em 0.8em;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 14px;
+}
+
+main .main-content .filter-form button[type="submit"],
+main .main-content .filter-form .clear-filters-btn {
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.7em;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    border-radius: 1.5em;
+}
+
+main .main-content .filter-form .clear-filters-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    font-size: 13px;
+    text-align: center;
+}
+
+main .main-content .filter-form .clear-filters-btn:hover {
+    border-color: #000;
+}
+
 main .products-list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: stretch;
-    gap: 1.5em;
+    gap: 0.5em;
 }
 
 .product-card {
+    display: flex;
+    flex-direction: column;
     background: #fff;
     width: 280px;
-    border-radius: 10px;
-    padding: 15px;
+    height: fit-content;
+    border-radius: 0.5em;
+    padding: 1em;
     position: relative;
 }
 

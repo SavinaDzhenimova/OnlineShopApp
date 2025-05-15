@@ -2,6 +2,7 @@ package org.onlineshop.web;
 
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
+import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
@@ -13,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -60,17 +64,37 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ModelAndView showAllProducts() {
+    public ModelAndView showFilteredOrAllProducts(@RequestParam(required = false) List<Integer> sizes,
+                                                  @RequestParam(required = false) List<BrandName> brands,
+                                                  @RequestParam(required = false) List<String> colors,
+                                                  @RequestParam(required = false) BigDecimal minPrice,
+                                                  @RequestParam(required = false) BigDecimal maxPrice) {
 
         ModelAndView modelAndView = new ModelAndView("products");
+        ProductsListDTO products;
+        String warningMessage = "";
 
-        ProductsListDTO allProducts = this.productService.getAllProducts();
+        boolean hasFilters = (sizes != null && !sizes.isEmpty()) ||
+                (brands != null && !brands.isEmpty()) ||
+                (colors != null && !colors.isEmpty()) ||
+                minPrice != null || maxPrice != null;
 
-        modelAndView.addObject("products", allProducts);
+        if (hasFilters) {
+            products = productService.getFilteredProducts(sizes, brands, colors, minPrice, maxPrice);
+
+            if (products.getProducts().isEmpty()) {
+                warningMessage = "Няма намерени продукти по избраните критерии!";
+            }
+        } else {
+            products = productService.getAllProducts();
+            warningMessage = "Все още няма добавени продукти за разглеждане!";
+        }
+
+        modelAndView.addObject("products", products);
         modelAndView.addObject("title", "Спортни обувки");
 
-        if (allProducts.getProducts().isEmpty()) {
-            modelAndView.addObject("warningMessage", "Все още няма добавени продукти за разглеждане!");
+        if (products.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage", warningMessage);
         }
 
         return modelAndView;
