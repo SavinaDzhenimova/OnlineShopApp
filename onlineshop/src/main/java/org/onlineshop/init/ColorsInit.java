@@ -48,6 +48,7 @@ public class ColorsInit implements CommandLineRunner {
                             case SILVER -> description = "Сребрист";
                             case CAMOUFLAGE -> description = "Камуфлаж";
                             case LEOPARD -> description = "Леопардов";
+                            case MULTICOLOR -> description = "Многоцветен";
                         }
 
                         color.setDescription(description);

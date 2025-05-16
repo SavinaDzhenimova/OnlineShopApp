@@ -20,4 +20,5 @@ public enum ColorName {
     SILVER,
     CAMOUFLAGE,
     LEOPARD,
+    MULTICOLOR,
 }

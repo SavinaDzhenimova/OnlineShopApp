@@ -1,11 +1,12 @@
 main .main-content {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: 1em;
 }
 
 main .main-content .filter-form {
-    width: 250px;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -128,9 +129,9 @@ main .main-content .filter-form .clear-filters-btn:hover {
 }
 
 main .products-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 0.5em;
 }
 
@@ -138,8 +139,7 @@ main .products-list {
     display: flex;
     flex-direction: column;
     background: #fff;
-    width: 280px;
-    height: fit-content;
+    width: 250px;
     border-radius: 0.5em;
     padding: 1em;
     position: relative;
@@ -187,6 +187,7 @@ main .products-list {
 
 .product-image img {
     width: 100%;
+    object-fit: cover;
     border-radius: 10px;
 }
 
@@ -231,28 +232,17 @@ main .products-list {
     margin-top: 0.5em;
 }
 
-.sizes span {
+.sizes-table {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sizes-table span {
     border: 1px solid #ccc;
-    padding: 0.3em;
+    padding: 0 0.4em;
 }
 
 .sizes-title {
     font-size: 14px;
     margin-bottom: 5px;
-}
-
-.size-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-}
-
-.size {
-    border: 1px solid #ccc;
-    padding: 6px;
-    text-align: center;
-    font-size: 13px;
-    border-radius: 4px;
-    background: #f9f9f9;
-    cursor: pointer;
 }
