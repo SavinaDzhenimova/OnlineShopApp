@@ -18,6 +18,8 @@ public class ProductDTO {
 
     private BigDecimal price;
 
+    private BigDecimal oldPrice;
+
     private BrandName brand;
 
     private String brandUrl;
@@ -67,6 +69,14 @@ public class ProductDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(BigDecimal oldPrice) {
+        this.oldPrice = oldPrice;
     }
 
     public BrandName getBrand() {

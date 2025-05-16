@@ -207,14 +207,14 @@ main .products-list {
 }
 
 .price .current {
-    color: red;
+    color: #C00;
     font-weight: bold;
 }
 
 .price .old {
     text-decoration: line-through;
     color: #999;
-    margin-left: 10px;
+    margin-left: 0.3em;
 }
 
 .free-shipping {

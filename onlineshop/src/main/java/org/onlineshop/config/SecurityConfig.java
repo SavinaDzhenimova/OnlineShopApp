@@ -29,16 +29,17 @@ public class SecurityConfig {
                                 "/contacts", "/contacts/send-inquiry",
                                 "/users/login", "/users/register", "/users/favourites/**",
                                 "/products/all", "/products/product/**", "/products/category/**", "/products/brand/**",
-                                "/products/size/**",
+                                "/products/size/**", "/products/new", "/products/on-sale",
                                 "/shopping-cart", "/shopping-cart/add-item/**", "/shopping-cart/remove-item/**",
                                 "/orders/create-order", "/orders/confirmation", "/orders/success", "/orders/track/**",
                                 "/orders/make-order",
                                 "/promo-codes/apply-promo").permitAll()
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
-                        .requestMatchers("/products/add-product", "/promo-codes/**", "/orders/all",
-                                "/orders/update-status/**", "/return-or-replacement/requests",
-                                "/return-or-replacement/delete-request/**").hasRole("ADMIN")
+                        .requestMatchers("/products/add-product", "/products/add-discount",
+                                "/promo-codes/**",
+                                "/orders/all", "/orders/update-status/**",
+                                "/return-or-replacement/requests", "/return-or-replacement/delete-request/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

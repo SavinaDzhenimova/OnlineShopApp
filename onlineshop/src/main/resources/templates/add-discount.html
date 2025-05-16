@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/add-discount-styles.css">
+    <title>Добави намаление</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <form th:action="@{/products/add-discount}"
+              th:method="POST"
+              th:object="${addDiscountDTO}">
+
+            <h2>Добави намаление</h2>
+
+            <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+                <p th:text="${failureMessage}"></p>
+            </div>
+
+            <div class="field">
+                <label>Ценови диапазон</label>
+                <p>от<input type="number" name="minPrice" id="minPrice">лв.</br>
+                  до<input type="number" name="maxPrice" id="maxPrice">лв.</p>
+            </div>
+
+            <div class="field">
+                <label th:for="discountPercent">Стойност на отстъпката (в %)</label>
+                <input type="number" name="discountPercent" id="discountPercent">
+            </div>
+
+            <div class="field">
+                <label th:for="validFrom">Валиден от</label>
+                <input type="date" name="validFrom" id="validFrom">
+            </div>
+
+            <div class="field">
+                <label th:for="validTo">Валиден до</label>
+                <input type="date" name="validTo" id="validTo">
+            </div>
+
+            <button type="submit">Добави намаление</button>
+            <a th:href="@{/users/profile}">Обратно към профил</a>
+        </form>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

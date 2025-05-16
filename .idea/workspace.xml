@@ -5,14 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/scheduler/CronScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/scheduler/CronScheduler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/fragments/commons.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/product-details-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/products-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/products-styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1747393590853_1746539473847_kecove-nike-court-borough-low-recraft-dv5456-104-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1747393590877_1746539473885_kecove-nike-court-borough-low-recraft-dv5456-104-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1747393590895_1746539473899_kecove-nike-court-borough-low-recraft-dv5456-104-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1747393590921_1746539473914_kecove-nike-court-borough-low-recraft-dv5456-104-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1747393590936_1746539473925_kecove-nike-court-borough-low-recraft-dv5456-104-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/products/1747393590959_1746539473931_kecove-nike-court-borough-low-recraft-dv5456-104-6.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +35,8 @@
         <option value="Enum" />
         <option value="JavaScript File" />
         <option value="Interface" />
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
         <option value="Class" />
       </list>
     </option>

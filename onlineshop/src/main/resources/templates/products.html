@@ -105,6 +105,9 @@
                         </div>
                         <div class="price">
                             <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+                            <span class="old"
+                                  th:if="${product.getOldPrice() != null}"
+                                  th:text="${product.getOldPrice()} + ' лв.'">129.99 лв.</span>
                         </div>
                         <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
                         <div class="color">
