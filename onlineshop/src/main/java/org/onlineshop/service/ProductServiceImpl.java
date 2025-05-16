@@ -53,7 +53,6 @@ public class ProductServiceImpl implements ProductService {
             return new Result(false, "Цветът, който искате да добавите на този продукт, не съществува!");
         }
 
-
         Optional<Category> optionalCategory = categoryService.getCategoryById(addProductDTO.getCategoryId());
         if (optionalCategory.isEmpty()) {
             return new Result(false, "Категорията, която искате да добавите на този продукт, не съществува!");
@@ -249,6 +248,26 @@ public class ProductServiceImpl implements ProductService {
         
         List<ProductDTO> productDTOList = this.productRepository
                 .findAllBySizeWithStock(size).stream()
+                .map(this::mapProductToDTO)
+                .toList();
+
+        return new ProductsListDTO(productDTOList);
+    }
+
+    @Override
+    public ProductsListDTO getNewProducts() {
+
+        List<ProductDTO> productDTOList = this.productRepository.findAllByIsNewTrue().stream()
+                .map(this::mapProductToDTO)
+                .toList();
+
+        return new ProductsListDTO(productDTOList);
+    }
+
+    @Override
+    public ProductsListDTO getProductsOnSale() {
+
+        List<ProductDTO> productDTOList = this.productRepository.findAllByIsOnSaleTrue().stream()
                 .map(this::mapProductToDTO)
                 .toList();
 

@@ -197,6 +197,44 @@ public class ProductController {
         return modelAndView;
     }
 
+    @GetMapping("/new")
+    public ModelAndView showNewProducts() {
+
+        ModelAndView modelAndView = new ModelAndView("products");
+
+        ProductsListDTO newProducts = this.productService.getNewProducts();
+
+        modelAndView.addObject("products", newProducts);
+
+        if (newProducts.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage",
+                    "Все още няма добавени продукти за разглеждане в тази категория!");
+        }
+
+        modelAndView.addObject("title", "Нови модели спортни обувки");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/on-sale")
+    public ModelAndView showProductsOnSale() {
+
+        ModelAndView modelAndView = new ModelAndView("products");
+
+        ProductsListDTO productsOnSale = this.productService.getProductsOnSale();
+
+        modelAndView.addObject("products", productsOnSale);
+
+        if (productsOnSale.getProducts().isEmpty()) {
+            modelAndView.addObject("warningMessage",
+                    "Все още няма добавени продукти за разглеждане в тази категория!");
+        }
+
+        modelAndView.addObject("title", "Разпродажба на спортни обувки");
+
+        return modelAndView;
+    }
+
     @GetMapping("/product/{id}")
     public ModelAndView showProductInfo(@PathVariable("id") Long id, Model model,
                                         RedirectAttributes redirectAttributes) {

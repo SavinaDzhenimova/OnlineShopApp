@@ -14,7 +14,11 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    List<Product> findAllByIsNewTrue();
+
     List<Product> findAllByIsNewTrueAndAddedOnBefore(LocalDate date);
+
+    List<Product> findAllByIsOnSaleTrue();
 
     @Query("SELECT p FROM Product p JOIN p.category c WHERE c.categoryName = :categoryName")
     List<Product> findAllByCategoryName(@Param("categoryName") CategoryName categoryName);

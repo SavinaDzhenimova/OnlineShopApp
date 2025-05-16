@@ -31,6 +31,6 @@ public class CronScheduler {
             product.setNew(false);
         }
 
-        this.productRepository.saveAll(products);
+        this.productRepository.saveAllAndFlush(products);
     }
 }

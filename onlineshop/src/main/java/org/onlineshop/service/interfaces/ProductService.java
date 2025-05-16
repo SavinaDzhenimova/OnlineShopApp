@@ -25,10 +25,14 @@ public interface ProductService {
 
     ProductsListDTO getProductsByShoeSize(int size);
 
+    ProductsListDTO getProductsOnSale();
+
     Optional<Product> getById(Long id);
 
     ProductsListDTO getProductsByBrand(String brand);
 
     ProductsListDTO getFilteredProducts(List<Integer> sizes, List<BrandName> brands, List<String> colors,
                                         BigDecimal minPrice, BigDecimal maxPrice);
+
+    ProductsListDTO getNewProducts();
 }

@@ -26,6 +26,10 @@ public class Product extends BaseEntity {
     @Positive
     private BigDecimal price;
 
+    @Column(name = "old_price")
+    @Positive
+    private BigDecimal oldPrice;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
@@ -98,6 +102,14 @@ public class Product extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(BigDecimal oldPrice) {
+        this.oldPrice = oldPrice;
     }
 
     public Color getColor() {
