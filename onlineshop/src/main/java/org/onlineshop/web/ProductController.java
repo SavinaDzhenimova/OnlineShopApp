@@ -118,8 +118,6 @@ public class ProductController {
             case "women" -> "Дамски обувки";
             case "men" -> "Мъжки обувки";
             case "children" -> "Детски обувки";
-            case "sale" -> "Разпродажба на обувки";
-            case "new" -> "Нови модели обувки";
             default -> "Спортни обувки";
         };
 

@@ -36,19 +36,24 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<QuantitySize> quantitySize;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
-    private Set<Category> categories;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Image> images;
 
+    @Column(nullable = false, name = "is_new")
+    private boolean isNew;
+
+    @Column(nullable = false, name = "is_on_sale")
+    private boolean isOnSale;
+
     public Product() {
         this.quantitySize = new HashSet<>();
-        this.categories = new HashSet<>();
         this.images = new ArrayList<>();
+        this.isNew = true;
+        this.isOnSale = false;
     }
 
     public String getName() {
@@ -67,12 +72,12 @@ public class Product extends BaseEntity {
         this.description = description;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Brand getBrand() {
@@ -113,5 +118,21 @@ public class Product extends BaseEntity {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public boolean isOnSale() {
+        return isOnSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        isOnSale = onSale;
     }
 }

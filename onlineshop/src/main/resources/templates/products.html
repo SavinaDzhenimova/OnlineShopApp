@@ -75,10 +75,10 @@
                     <div class="color-buttons">
                         <div th:each="color : ${colors}" class="color-option">
                             <input type="checkbox" name="colors"
-                                   th:value="${color.description}"
-                                   th:id="${'color_' + color.description}"
-                                   th:checked="${param.colors != null and #lists.contains(param.colors, color.description)}">
-                            <label th:for="${'color_' + color.description}" th:text="${color.description}">Черен</label>
+                                   th:value="${color.colorName}"
+                                   th:id="${'color_' + color.colorName}"
+                                   th:checked="${param.colors != null and #lists.contains(param.colors, color.colorName)}">
+                            <label th:for="${'color_' + color.colorName}" th:text="${color.colorName.displayName}">Черен</label>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
             <div class="products-list">
                 <div class="product-card" th:each="product : ${products.getProducts()}">
                     <a th:href="@{/products/product/{id}(id=${product.getId()})}">
-                        <div class="new-badge" th:if="${product.getCategories().contains('Ново')}">НОВО</div>
+                        <div class="new-badge" th:if="${product.isNew()}">НОВО</div>
                         <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
                               th:method="POST">
                             <input type="hidden" name="productId" value="${product.id}" />
@@ -101,9 +101,7 @@
                         </div>
                         <div class="product-title" th:text="${product.getName()}">Nike Flex Experience RN 12</div>
                         <div class="product-type">
-                            <span th:if="${product.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
-                            <span th:if="${product.categories.contains('Дамски обувки')}">Дамски обувки</span>
-                            <span th:if="${product.categories.contains('Детски обувки')}">Детски обувки</span>
+                            <span th:text="${product.getCategory()}">Мъжки обувки</span>
                         </div>
                         <div class="price">
                             <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>

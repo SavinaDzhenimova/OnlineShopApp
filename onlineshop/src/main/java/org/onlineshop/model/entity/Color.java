@@ -11,9 +11,6 @@ public class Color extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ColorName colorName;
 
-    @Column(nullable = false)
-    private String description;
-
     public Color() {
     }
 
@@ -23,13 +20,5 @@ public class Color extends BaseEntity {
 
     public void setColorName(ColorName colorName) {
         this.colorName = colorName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

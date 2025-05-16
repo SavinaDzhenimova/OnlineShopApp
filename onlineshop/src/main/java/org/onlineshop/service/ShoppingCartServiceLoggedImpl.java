@@ -9,7 +9,6 @@ import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.QuantitySizeDTO;
 import org.onlineshop.repository.ShoppingCartRepository;
 import org.onlineshop.service.interfaces.CartItemService;
-import org.onlineshop.service.interfaces.CategoryService;
 import org.onlineshop.service.interfaces.ProductService;
 import org.onlineshop.service.interfaces.ShoppingCartServiceLogged;
 import org.springframework.stereotype.Service;
@@ -23,14 +22,12 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
 
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemService cartItemService;
-    private final CategoryService categoryService;
     private final ProductService productService;
 
     public ShoppingCartServiceLoggedImpl(ShoppingCartRepository shoppingCartRepository, CartItemService cartItemService,
-                                         CategoryService categoryService, ProductService productService) {
+                                         ProductService productService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.cartItemService = cartItemService;
-        this.categoryService = categoryService;
         this.productService = productService;
     }
 
@@ -69,7 +66,7 @@ public class ShoppingCartServiceLoggedImpl implements ShoppingCartServiceLogged 
 
         cartItemDTO.setName(product.getName());
         cartItemDTO.setImageUrl(product.getImages().get(0).getImageUrl());
-        cartItemDTO.setCategories(this.categoryService.mapCategoriesToString(product.getCategories()));
+        cartItemDTO.setCategory(product.getCategory().getCategoryName().getDisplayName());
         cartItemDTO.setSelectedQuantity(cartItem.getQuantity());
         cartItemDTO.setSelectedSize(cartItem.getSize());
         cartItemDTO.setUnitPrice(product.getPrice());

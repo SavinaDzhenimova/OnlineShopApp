@@ -57,7 +57,7 @@ public class ShoppingCartServiceGuestImpl implements ShoppingCartServiceGuest {
 
         cartItemDTO.setName(product.getName());
         cartItemDTO.setImageUrl(product.getImages().get(0).getImageUrl());
-        cartItemDTO.setCategories(this.categoryService.mapCategoriesToString(product.getCategories()));
+        cartItemDTO.setCategory(product.getCategory().getCategoryName().getDisplayName());
         cartItemDTO.setSelectedQuantity(cartItem.getQuantity());
         cartItemDTO.setSelectedSize(cartItem.getSize());
         cartItemDTO.setUnitPrice(product.getPrice());

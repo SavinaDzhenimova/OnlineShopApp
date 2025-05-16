@@ -44,7 +44,7 @@ public class GlobalController {
         return this.colorService.getAllColors();
     }
 
-    @ModelAttribute("categoryIds")
+    @ModelAttribute("categories")
     public List<Category> getCategories() {
         return this.categoryService.getAllCategories();
     }

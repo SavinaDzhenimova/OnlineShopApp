@@ -10,7 +10,7 @@ public class OrderItemDTO {
 
     private String imageUrl;
 
-    private Set<String> categories;
+    private String category;
 
     private Integer selectedQuantity;
 
@@ -37,12 +37,12 @@ public class OrderItemDTO {
         this.imageUrl = imageUrl;
     }
 
-    public Set<String> getCategories() {
-        return categories;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<String> categories) {
-        this.categories = categories;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Integer getSelectedQuantity() {

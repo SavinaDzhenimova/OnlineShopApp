@@ -41,9 +41,7 @@
                     <h2 th:text="${cartItem.getName()}"></h2>
 
                     <div class="product-type">
-                        <span th:if="${cartItem.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
-                        <span th:if="${cartItem.categories.contains('Дамски обувки')}">Дамски обувки</span>
-                        <span th:if="${cartItem.categories.contains('Детски обувки')}">Детски обувки</span>
+                        <span th:text="${cartItem.getCategory()}">Мъжки обувки</span>
                     </div>
                 </div>
 

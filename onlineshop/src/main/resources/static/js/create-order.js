@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const orderItem = {
                 name: item.querySelector('.product-title h2').textContent,
                 imageUrl: item.querySelector('img').src,
-                category: getCategory(item),
+                category: item.querySelector('.product-type span')?.textContent || '',
                 selectedQuantity: item.querySelector('.quantity-selector').value,
                 selectedSize: item.querySelector('.size-selector select').value,
                 unitPrice: parseFloat(item.querySelector('input[id^="unit-price-"]').value),
@@ -17,14 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         return orderItems;
-    }
-
-    function getCategory(item) {
-        const categoryText = item.querySelector('.product-type span')?.textContent || '';
-        if (categoryText.includes('Мъжки')) return 'Мъжки обувки';
-        if (categoryText.includes('Дамски')) return 'Дамски обувки';
-        if (categoryText.includes('Детски')) return 'Детски обувки';
-        return '';
     }
 
     document.querySelector('#orderForm').addEventListener('submit', function (event) {

@@ -45,11 +45,7 @@
                         <img th:src="${orderItem.getImageUrl()}" th:alt="${orderItem.getName()}"/>
                     </td>
                     <td th:text="${orderItem.getName()}"></td>
-                    <td>
-                        <span th:if="${orderItem.getCategories().contains('Мъжки обувки')}">Мъжки обувки</span>
-                        <span th:if="${orderItem.getCategories().contains('Дамски обувки')}">Дамски обувки</span>
-                        <span th:if="${orderItem.getCategories().contains('Детски обувки')}">Детски обувки</span>
-                    </td>
+                    <td th:text="${orderItem.getCategory()}">Мъжки обувки</td>
                     <td th:text="'№ ' + ${orderItem.getSelectedSize()}"></td>
                     <td th:text="${orderItem.getSelectedQuantity()} + ' бр.'"></td>
                     <td th:text="${orderItem.getUnitPrice()} + ' лв.'"></td>

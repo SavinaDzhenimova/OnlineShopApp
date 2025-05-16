@@ -43,26 +43,19 @@ public class ProductServiceImpl implements ProductService {
     public Result addProduct(AddProductDTO addProductDTO) {
 
         Optional<Brand> optionalBrand = this.brandService.getBrandById(addProductDTO.getBrandId());
-
         if (optionalBrand.isEmpty()) {
             return new Result(false, "Марката, която искате да добавите на този продукт, не съществува!");
         }
 
         Optional<Color> optionalColor = this.colorService.findColorById(addProductDTO.getColorId());
-
         if (optionalColor.isEmpty()) {
             return new Result(false, "Цветът, който искате да добавите на този продукт, не съществува!");
         }
 
-        Set<Category> categories = new HashSet<>();
-        for (Long categoryId : addProductDTO.getCategories()) {
-            Optional<Category> optionalCategory = categoryService.getCategoryById(categoryId);
 
-            if (optionalCategory.isEmpty()) {
-                return new Result(false,
-                        "Категорията, която искате да добавите на този продукт, не съществува!");
-            }
-            categories.add(optionalCategory.get());
+        Optional<Category> optionalCategory = categoryService.getCategoryById(addProductDTO.getCategoryId());
+        if (optionalCategory.isEmpty()) {
+            return new Result(false, "Категорията, която искате да добавите на този продукт, не съществува!");
         }
 
         Product product = new Product();
@@ -72,7 +65,9 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(addProductDTO.getPrice());
         product.setBrand(optionalBrand.get());
         product.setColor(optionalColor.get());
-        product.setCategories(categories);
+        product.setCategory(optionalCategory.get());
+        product.setNew(true);
+        product.setOnSale(false);
 
         this.productRepository.saveAndFlush(product);
 
@@ -140,13 +135,13 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setPrice(product.getPrice());
         productDTO.setBrand(product.getBrand().getBrandName());
         productDTO.setBrandUrl(product.getBrand().getBrandUrl());
-        productDTO.setColor(product.getColor().getDescription());
+        productDTO.setColor(product.getColor().getColorName().getDisplayName());
+        productDTO.setCategory(product.getCategory().getCategoryName().getDisplayName());
+        productDTO.setNew(product.isNew());
+        productDTO.setOnSale(product.isOnSale());
 
         List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
         productDTO.setImageUrls(imageUrls);
-
-        Set<String> categories = new LinkedHashSet<>(this.categoryService.mapCategoriesToString(product.getCategories()));
-        productDTO.setCategories(categories);
 
         Set<QuantitySize> filteredQuantitySizes = product.getQuantitySize().stream()
                 .filter(quantitySize -> quantitySize.getQuantity() > 0)
@@ -176,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
                         .anyMatch(quantitySize ->
                                 sizes.contains(quantitySize.getSize().getSize()) && quantitySize.getQuantity() > 0))
                 .filter(product -> brands == null || brands.contains(product.getBrand().getBrandName()))
-                .filter(product -> colors == null || colors.contains(product.getColor().getDescription()))
+                .filter(product -> colors == null || colors.contains(product.getColor().getColorName().getDisplayName()))
                 .filter(product -> minPrice == null || product.getPrice().compareTo(minPrice) >= 0)
                 .filter(product -> maxPrice == null || product.getPrice().compareTo(maxPrice) <= 0)
                 .map(this::mapProductToDTO)
@@ -192,8 +187,6 @@ public class ProductServiceImpl implements ProductService {
             case "men" -> CategoryName.MEN;
             case "women" -> CategoryName.WOMEN;
             case "children" -> CategoryName.CHILDREN;
-            case "new" -> CategoryName.NEW;
-            case "sale" -> CategoryName.SALE;
             default -> throw new IllegalArgumentException("Невалидна категория: " + category);
         };
 
@@ -213,7 +206,7 @@ public class ProductServiceImpl implements ProductService {
             case "adidas" -> BrandName.ADIDAS;
             case "puma" -> BrandName.PUMA;
             case "guess" -> BrandName.GUESS;
-            case "skechers" -> BrandName.SKECKERS;
+            case "skechers" -> BrandName.SKECHERS;
             case "salomon" -> BrandName.SALOMON;
             case "reebok" -> BrandName.REEBOK;
             case "new-balance" -> BrandName.NEW_BALANCE;

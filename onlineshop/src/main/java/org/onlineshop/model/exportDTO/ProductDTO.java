@@ -25,9 +25,13 @@ public class ProductDTO {
 
     private Set<QuantitySizeDTO> sizes;
 
-    private Set<String> categories;
+    private String category;
 
     private List<String> imageUrls;
+
+    private boolean isNew;
+
+    private boolean isOnSale;
 
     public ProductDTO() {
     }
@@ -96,12 +100,12 @@ public class ProductDTO {
         this.sizes = sizes;
     }
 
-    public Set<String> getCategories() {
-        return categories;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<String> categories) {
-        this.categories = categories;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<String> getImageUrls() {
@@ -110,5 +114,21 @@ public class ProductDTO {
 
     public void setImageUrls(List<String> imageUrls) {
         this.imageUrls = imageUrls;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public boolean isOnSale() {
+        return isOnSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        isOnSale = onSale;
     }
 }

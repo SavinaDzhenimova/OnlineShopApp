@@ -58,7 +58,7 @@
                     <option value="">-- Изберете марка --</option>
                     <option th:each="brand : ${brands}"
                             th:value="${brand.id}"
-                            th:text="${brand.brandName}">
+                            th:text="${brand.brandName.displayName}">
                     </option>
                 </select>
             </div>
@@ -69,21 +69,20 @@
                     <option value="">-- Изберете цвят --</option>
                     <option th:each="color : ${colors}"
                             th:value="${color.id}"
-                            th:text="${color.description}">
+                            th:text="${color.colorName.displayName}">
                     </option>
                 </select>
             </div>
 
             <div class="field">
-                <label th:for="categories">Категории</label>
-                <div class="categories">
-                    <label th:each="cat : ${categoryIds}">
-                        <input type="checkbox"
-                               th:value="${cat.id}"
-                               th:field="*{categories}" />
-                        <span th:text="${cat.categoryName}">Category Name</span>
-                    </label>
-                </div>
+                <label th:for="categoryId">Категория</label>
+                <select th:field="*{categoryId}" name="categoryId" id="categoryId">
+                    <option value="">-- Изберете категория --</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.categoryName.displayName}">
+                    </option>
+                </select>
             </div>
 
             <div class="field">

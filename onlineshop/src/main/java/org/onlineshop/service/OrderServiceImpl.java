@@ -392,8 +392,7 @@ public class OrderServiceImpl implements OrderService {
 
                     orderItemDTO.setName(orderItem.getProduct().getName());
                     orderItemDTO.setImageUrl(orderItem.getProduct().getImages().get(0).getImageUrl());
-                    orderItemDTO.setCategories(
-                            this.categoryService.mapCategoriesToString(orderItem.getProduct().getCategories()));
+                    orderItemDTO.setCategory(orderItem.getProduct().getCategory().getCategoryName().getDisplayName());
                     orderItemDTO.setSelectedSize(orderItem.getSize().getSize());
                     orderItemDTO.setSelectedQuantity(orderItem.getQuantity());
                     orderItemDTO.setUnitPrice(orderItem.getPrice());

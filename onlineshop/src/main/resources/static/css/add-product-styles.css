@@ -39,25 +39,6 @@ main form .field select {
     padding: 0.5em;
 }
 
-main form .field .categories {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-main form .field .categories label {
-    display: flex;
-    align-items: center;
-    gap: 0.3em;
-}
-
-main form .field .categories label input[type="checkbox"] {
-    width: 17px;
-    height: 17px;
-    aspect-ratio: 1 / 1;
-    accent-color: green;
-}
-
 main form .field input[type="file"] {
     border: none;
     padding: 0.5em 0;

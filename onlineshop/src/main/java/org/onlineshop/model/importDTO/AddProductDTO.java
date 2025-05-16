@@ -5,9 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AddProductDTO {
 
@@ -29,8 +27,8 @@ public class AddProductDTO {
     @NotNull(message = "Изберете цвят!")
     private Long colorId;
 
-    @NotEmpty(message = "Изберете поне една категория!")
-    private Set<Long> categories;
+    @NotNull(message = "Изберете категория!")
+    private Long categoryId;
 
     @NotEmpty(message = "Добавете поне един размер със съответното му количество!")
     private List<QuantitySizeDTO> sizes;
@@ -39,7 +37,6 @@ public class AddProductDTO {
     private List<MultipartFile> images;
 
     public AddProductDTO() {
-        this.categories = new HashSet<>();
         this.sizes = new ArrayList<>();
         this.images = new ArrayList<>();
     }
@@ -84,12 +81,12 @@ public class AddProductDTO {
         this.colorId = colorId;
     }
 
-    public Set<Long> getCategories() {
-        return categories;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategories(Set<Long> categories) {
-        this.categories = categories;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public List<QuantitySizeDTO> getSizes() {

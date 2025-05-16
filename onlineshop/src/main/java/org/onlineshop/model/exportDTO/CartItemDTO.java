@@ -14,7 +14,7 @@ public class CartItemDTO {
 
     private String name;
 
-    private Set<String> categories;
+    private String category;
 
     private Set<QuantitySizeDTO> quantitySizes;
 
@@ -58,12 +58,12 @@ public class CartItemDTO {
         this.name = name;
     }
 
-    public Set<String> getCategories() {
-        return categories;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<String> categories) {
-        this.categories = categories;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Integer getSelectedQuantity() {
