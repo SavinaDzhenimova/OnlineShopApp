@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,9 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Image> images;
+
+    @Column(nullable = false, name = "added_on")
+    private LocalDate addedOn;
 
     @Column(nullable = false, name = "is_new")
     private boolean isNew;
@@ -118,6 +122,14 @@ public class Product extends BaseEntity {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public LocalDate getAddedOn() {
+        return addedOn;
+    }
+
+    public void setAddedOn(LocalDate addedOn) {
+        this.addedOn = addedOn;
     }
 
     public boolean isNew() {

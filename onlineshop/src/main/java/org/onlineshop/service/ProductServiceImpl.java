@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
         product.setBrand(optionalBrand.get());
         product.setColor(optionalColor.get());
         product.setCategory(optionalCategory.get());
+        product.setAddedOn(LocalDate.now());
         product.setNew(true);
         product.setOnSale(false);
 

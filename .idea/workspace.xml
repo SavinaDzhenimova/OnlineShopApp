@@ -6,66 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c4b21c52-b3e6-4097-a8d5-04d808bbc444" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/BrandsInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/BrandsInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/CategoriesInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/CategoriesInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/ColorsInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/init/ColorsInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Color.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/BrandName.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/BrandName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/CategoryName.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/CategoryName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/ColorName.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/enums/ColorName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/CartItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/CartItemDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/OrderItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/OrderItemDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/exportDTO/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/model/importDTO/AddProductDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/repository/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/OrderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceGuestImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceGuestImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceLoggedImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/ShoppingCartServiceLoggedImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/service/interfaces/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/GlobalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/GlobalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/java/org/onlineshop/web/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/add-product-styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/css/add-product-styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/static/js/create-order.js" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/static/js/create-order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/add-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/add-product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/order-tracking.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/order-tracking.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/product-details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/products.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/shopping-cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlineshop/src/main/resources/templates/shopping-cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539473847_kecove-nike-court-borough-low-recraft-dv5456-104-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539473885_kecove-nike-court-borough-low-recraft-dv5456-104-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539473899_kecove-nike-court-borough-low-recraft-dv5456-104-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539473914_kecove-nike-court-borough-low-recraft-dv5456-104-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539473925_kecove-nike-court-borough-low-recraft-dv5456-104-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539473931_kecove-nike-court-borough-low-recraft-dv5456-104-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539632325_kecove-adidas-barreda-ji2307-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539632339_kecove-adidas-barreda-ji2307-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539632348_kecove-adidas-barreda-ji2307-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539632370_kecove-adidas-barreda-ji2307-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539632375_kecove-adidas-barreda-ji2307-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1746539632393_kecove-adidas-barreda-ji2307-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382260657_kecove-adidas-vl-court-30-id6313-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382260675_kecove-adidas-vl-court-30-id6313-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382260685_kecove-adidas-vl-court-30-id6313-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382260703_kecove-adidas-vl-court-30-id6313-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382260718_kecove-adidas-vl-court-30-id6313-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382260734_kecove-adidas-vl-court-30-id6313-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382483202_maratonki-nike-run-defy-hm9594-003-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382483220_maratonki-nike-run-defy-hm9594-003-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382483239_maratonki-nike-run-defy-hm9594-003-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382483262_maratonki-nike-run-defy-hm9594-003-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382483285_maratonki-nike-run-defy-hm9594-003-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747382483310_maratonki-nike-run-defy-hm9594-003-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747383380953_maratonki-skechers-microspec-advance-303575l-ltpl-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747383380979_maratonki-skechers-microspec-advance-303575l-ltpl-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747383380997_maratonki-skechers-microspec-advance-303575l-ltpl-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747383381008_maratonki-skechers-microspec-advance-303575l-ltpl-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747383381025_maratonki-skechers-microspec-advance-303575l-ltpl-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/products/1747383381046_maratonki-skechers-microspec-advance-303575l-ltpl-6.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,8 +25,8 @@
         <option value="JavaScript File" />
         <option value="Interface" />
         <option value="CSS File" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
