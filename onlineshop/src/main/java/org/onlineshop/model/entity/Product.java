@@ -57,6 +57,9 @@ public class Product extends BaseEntity {
     @Column(nullable = false, name = "is_on_sale")
     private boolean isOnSale;
 
+    @Column(name = "sale_percent")
+    private Integer salePercent;
+
     public Product() {
         this.quantitySize = new HashSet<>();
         this.images = new ArrayList<>();
@@ -158,5 +161,13 @@ public class Product extends BaseEntity {
 
     public void setOnSale(boolean onSale) {
         isOnSale = onSale;
+    }
+
+    public Integer getSalePercent() {
+        return salePercent;
+    }
+
+    public void setSalePercent(Integer salePercent) {
+        this.salePercent = salePercent;
     }
 }

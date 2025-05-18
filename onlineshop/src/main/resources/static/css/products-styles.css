@@ -149,16 +149,28 @@ main .products-list {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.new-badge {
+.badge-container {
     position: absolute;
     top: 15px;
     left: 10px;
-    background: green;
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: nowrap;
+}
+
+.new-badge,
+.sale-badge {
+    background-color: green;
     color: #fff;
     font-size: 12px;
     padding: 0 0.5em;
     border-radius: 1em;
     font-weight: bold;
+    white-space: nowrap;
+}
+
+.sale-badge {
+    background-color: #C00;
 }
 
 .wishlist {

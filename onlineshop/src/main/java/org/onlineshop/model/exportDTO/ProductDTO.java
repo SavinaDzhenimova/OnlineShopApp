@@ -36,6 +36,8 @@ public class ProductDTO {
 
     private boolean isOnSale;
 
+    private Integer salePercent;
+
     public ProductDTO() {
     }
 
@@ -141,5 +143,13 @@ public class ProductDTO {
 
     public void setOnSale(boolean onSale) {
         isOnSale = onSale;
+    }
+
+    public Integer getSalePercent() {
+        return salePercent;
+    }
+
+    public void setSalePercent(Integer salePercent) {
+        this.salePercent = salePercent;
     }
 }

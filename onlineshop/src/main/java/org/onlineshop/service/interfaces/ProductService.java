@@ -35,4 +35,8 @@ public interface ProductService {
                                         BigDecimal minPrice, BigDecimal maxPrice);
 
     ProductsListDTO getNewProducts();
+
+    List<Product> getAll();
+
+    void saveAndFlush(Product product);
 }

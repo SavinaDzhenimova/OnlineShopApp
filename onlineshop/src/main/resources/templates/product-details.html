@@ -25,7 +25,11 @@
 
         <div class="main-content">
             <div class="image-container">
-                <div class="new-badge" th:if="${product.isNew()}">НОВО</div>
+                <div class="badge-container">
+                    <div class="new-badge" th:if="${product.isNew()}">НОВО</div>
+                    <div class="sale-badge" th:if="${product.isOnSale()}"
+                         th:text="'-' + ${product.getSalePercent()} + '%'">-12%</div>
+                </div>
                 <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
                       th:method="POST">
                     <input type="hidden" name="productId" value="${product.getId()}" />

@@ -2,6 +2,7 @@ package org.onlineshop.service.scheduler;
 
 import org.onlineshop.model.entity.Product;
 import org.onlineshop.repository.ProductRepository;
+import org.onlineshop.service.interfaces.DiscountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,9 +17,11 @@ public class CronScheduler {
     private final Logger LOGGER = LoggerFactory.getLogger(CronScheduler.class);
 
     private final ProductRepository productRepository;
+    private final DiscountService discountService;
 
-    public CronScheduler(ProductRepository productRepository) {
+    public CronScheduler(ProductRepository productRepository, DiscountService discountService) {
         this.productRepository = productRepository;
+        this.discountService = discountService;
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
@@ -32,5 +35,12 @@ public class CronScheduler {
         }
 
         this.productRepository.saveAllAndFlush(products);
+    }
+
+    @Scheduled(cron = "0 0 13 * * *")
+    public void scheduledDiscountCheck() {
+        this.discountService.applyDiscounts();
+
+        this.LOGGER.info("Отстъпките са приложени успешно!");
     }
 }

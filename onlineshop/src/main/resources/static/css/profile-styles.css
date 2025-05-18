@@ -1,7 +1,7 @@
 main .profile-menu,
 main .admin-menu {
     display: flex;
-    gap: 2em;
+    gap: 1em;
     position: relative;
 }
 

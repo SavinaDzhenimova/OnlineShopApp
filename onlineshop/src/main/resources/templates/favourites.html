@@ -36,7 +36,11 @@
             <a class="product-card"
                th:each="favourite : ${favourites.getProducts()}"
                th:href="@{/products/product/{id}(id=${favourite.getId()})}">
-                <div class="new-badge" th:if="${favourite.getCategories().contains('Ново')}">НОВО</div>
+                <div class="badge-container">
+                    <div class="new-badge" th:if="${favourite.isNew()}">НОВО</div>
+                    <div class="sale-badge" th:if="${favourite.isOnSale()}"
+                         th:text="'-' + ${favourite.getSalePercent()} + '%'">-12%</div>
+                </div>
                 <form th:action="@{/users/favourites/remove-favourite/{id}(id=${favourite.getId()})}"
                       th:method="DELETE">
                     <input type="hidden" name="productId" value="${favourite.id}" />
@@ -47,12 +51,13 @@
                 </div>
                 <div class="product-title" th:text="${favourite.getName()}">Nike Flex Experience RN 12</div>
                 <div class="product-type">
-                    <span th:if="${favourite.categories.contains('Мъжки обувки')}">Мъжки обувки</span>
-                    <span th:if="${favourite.categories.contains('Дамски обувки')}">Дамски обувки</span>
-                    <span th:if="${favourite.categories.contains('Детски обувки')}">Детски обувки</span>
+                    <span th:text="${favourite.getCategory()}">Мъжки обувки</span>
                 </div>
                 <div class="price">
                     <span class="current" th:text="${favourite.getPrice()} + ' лв.'">129.99 лв.</span>
+                    <span class="old"
+                          th:if="${favourite.getOldPrice() != null}"
+                          th:text="${favourite.getOldPrice()} + ' лв.'">129.99 лв.</span>
                 </div>
                 <div class="free-shipping" th:if="${favourite.getPrice() > 100}">Безплатна доставка</div>
                 <div class="color">

@@ -141,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setCategory(product.getCategory().getCategoryName().getDisplayName());
         productDTO.setNew(product.isNew());
         productDTO.setOnSale(product.isOnSale());
+        productDTO.setSalePercent(product.getSalePercent());
 
         List<String> imageUrls = this.mapImageToImageUrl(product.getImages());
         productDTO.setImageUrls(imageUrls);
@@ -278,6 +279,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> getById(Long id) {
         return this.productRepository.findById(id);
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return this.productRepository.findAll();
+    }
+
+    @Override
+    public void saveAndFlush(Product product) {
+        this.productRepository.saveAndFlush(product);
     }
 
     private List<String> mapImageToImageUrl(List<Image> images) {

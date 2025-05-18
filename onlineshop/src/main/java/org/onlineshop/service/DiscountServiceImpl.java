@@ -5,11 +5,13 @@ import org.onlineshop.model.entity.Product;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.importDTO.AddDiscountDTO;
 import org.onlineshop.repository.DiscountRepository;
-import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.DiscountService;
+import org.onlineshop.service.interfaces.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -17,11 +19,11 @@ import java.util.Optional;
 public class DiscountServiceImpl implements DiscountService {
 
     private final DiscountRepository discountRepository;
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public DiscountServiceImpl(DiscountRepository discountRepository, ProductRepository productRepository) {
+    public DiscountServiceImpl(DiscountRepository discountRepository, ProductService productService) {
         this.discountRepository = discountRepository;
-        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     public void makeOnSale(Long id, BigDecimal discountPercent) {
 
-        Optional<Product> optionalProduct = this.productRepository.findById(id);
+        Optional<Product> optionalProduct = this.productService.getById(id);
 
         if (optionalProduct.isEmpty()) {
             throw new NoSuchElementException("Този продукт не съществува!");
@@ -56,6 +58,48 @@ public class DiscountServiceImpl implements DiscountService {
                 .multiply(discountPercent.divide(BigDecimal.valueOf(100))));
         product.setPrice(newPrice);
 
-        this.productRepository.saveAndFlush(product);
+        this.productService.saveAndFlush(product);
+    }
+
+    @Override
+    public void applyDiscounts() {
+        LocalDate today = LocalDate.now();
+
+        List<Discount> activeDiscounts = this.discountRepository
+                .findAllByValidFromLessThanEqualAndValidToGreaterThanEqual(today, today);
+        List<Product> products = this.productService.getAll();
+
+        for (Product product : products) {
+
+            if (product.isOnSale()) {
+                product.setPrice(product.getOldPrice());
+                product.setOldPrice(null);
+                product.setOnSale(false);
+                product.setSalePercent(null);
+
+                this.productService.saveAndFlush(product);
+            }
+
+            for (Discount discount : activeDiscounts) {
+                if (product.getPrice().compareTo(discount.getMinPrice()) >= 0 &&
+                        product.getPrice().compareTo(discount.getMaxPrice()) <= 0) {
+
+                    if (!product.isOnSale()) {
+                        product.setOldPrice(product.getPrice());
+
+                        BigDecimal newPrice = product.getPrice().multiply(
+                                BigDecimal.ONE.subtract(discount.getDiscountPercent().divide(BigDecimal.valueOf(100))));
+
+                        product.setPrice(newPrice);
+                        product.setOnSale(true);
+                        product.setSalePercent(discount.getDiscountPercent().intValue());
+
+                        this.productService.saveAndFlush(product);
+                    }
+
+                    break;
+                }
+            }
+        }
     }
 }
