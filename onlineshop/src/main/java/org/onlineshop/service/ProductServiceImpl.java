@@ -275,27 +275,6 @@ public class ProductServiceImpl implements ProductService {
         return new ProductsListDTO(productDTOList);
     }
 
-    public Result makeOnSale(Long id, BigDecimal discountPercent) {
-
-        Optional<Product> optionalProduct = this.productRepository.findById(id);
-
-        if (optionalProduct.isEmpty()) {
-            throw new NoSuchElementException("Този продукт не съществува!");
-        }
-
-        Product product = optionalProduct.get();
-
-        product.setOnSale(true);
-        product.setOldPrice(product.getPrice());
-
-        BigDecimal newPrice = product.getPrice().subtract(product.getPrice()
-                .multiply(discountPercent.divide(BigDecimal.valueOf(100))));
-        product.setPrice(newPrice);
-
-        this.productRepository.saveAndFlush(product);
-        return new Result(true, "Цената на продукта беше успешно намалена с " + discountPercent + "!");
-    }
-
     @Override
     public Optional<Product> getById(Long id) {
         return this.productRepository.findById(id);

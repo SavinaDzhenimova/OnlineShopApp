@@ -13,11 +13,15 @@
     <header th:replace="~{fragments/commons::header}"></header>
 
     <main>
-        <form th:action="@{/products/add-discount}"
+        <form th:action="@{/discounts/add-discount}"
               th:method="POST"
               th:object="${addDiscountDTO}">
 
             <h2>Добави намаление</h2>
+
+            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                <p class="success" th:text="${successMessage}"></p>
+            </div>
 
             <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
                 <p th:text="${failureMessage}"></p>
@@ -25,23 +29,38 @@
 
             <div class="field">
                 <label>Ценови диапазон</label>
-                <p>от<input type="number" name="minPrice" id="minPrice">лв.</br>
-                  до<input type="number" name="maxPrice" id="maxPrice">лв.</p>
+                <p>от<input type="number" th:field="*{minPrice}" name="minPrice" id="minPrice">лв.</p>
+                    <small th:if="${#fields.hasErrors('minPrice')}"
+                           th:errors="*{minPrice}"
+                           class="text-danger"></small></p>
+                <p>до<input type="number" th:field="*{maxPrice}" name="maxPrice" id="maxPrice">лв.</p>
+                <small th:if="${#fields.hasErrors('maxPrice')}"
+                       th:errors="*{maxPrice}"
+                       class="text-danger"></small>
             </div>
 
             <div class="field">
                 <label th:for="discountPercent">Стойност на отстъпката (в %)</label>
-                <input type="number" name="discountPercent" id="discountPercent">
+                <input type="number" th:field="*{discountPercent}" name="discountPercent" id="discountPercent">
+                <small th:if="${#fields.hasErrors('discountPercent')}"
+                       th:errors="*{discountPercent}"
+                       class="text-danger"></small>
             </div>
 
             <div class="field">
                 <label th:for="validFrom">Валиден от</label>
-                <input type="date" name="validFrom" id="validFrom">
+                <input type="date" th:field="*{validFrom}" name="validFrom" id="validFrom">
+                <small th:if="${#fields.hasErrors('validFrom')}"
+                       th:errors="*{validFrom}"
+                       class="text-danger"></small>
             </div>
 
             <div class="field">
                 <label th:for="validTo">Валиден до</label>
-                <input type="date" name="validTo" id="validTo">
+                <input type="date" th:field="*{validTo}" name="validTo" id="validTo">
+                <small th:if="${#fields.hasErrors('validTo')}"
+                       th:errors="*{validTo}"
+                       class="text-danger"></small>
             </div>
 
             <button type="submit">Добави намаление</button>

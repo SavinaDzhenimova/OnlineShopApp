@@ -8,7 +8,6 @@ import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddDiscountDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
-import org.onlineshop.model.importDTO.AddPromoCodeDTO;
 import org.onlineshop.service.interfaces.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -252,15 +251,5 @@ public class ProductController {
         modelAndView.addObject("product", productDTO);
 
         return modelAndView;
-    }
-
-    @GetMapping("/add-discount")
-    public ModelAndView showAddSale(Model model) {
-
-        if (!model.containsAttribute("addDiscountDTO")) {
-            model.addAttribute("addDiscountDTO", new AddDiscountDTO());
-        }
-
-        return new ModelAndView("add-discount");
     }
 }
