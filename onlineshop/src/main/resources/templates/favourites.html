@@ -37,9 +37,9 @@
                th:each="favourite : ${favourites.getContent()}"
                th:href="@{/products/product/{id}(id=${favourite.getId()})}">
                 <div class="badge-container">
-                    <div class="new-badge" th:if="${favourite.isNew()}">НОВО</div>
                     <div class="sale-badge" th:if="${favourite.isOnSale()}"
                          th:text="'-' + ${favourite.getSalePercent()} + '%'">-12%</div>
+                    <div class="new-badge" th:if="${favourite.isNew()}">НОВО</div>
                 </div>
                 <form th:action="@{/users/favourites/remove-favourite/{id}(id=${favourite.getId()})}"
                       th:method="DELETE">
