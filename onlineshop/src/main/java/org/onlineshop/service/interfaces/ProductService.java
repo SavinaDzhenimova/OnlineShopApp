@@ -4,8 +4,9 @@ import org.onlineshop.model.entity.Product;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
-import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,24 +18,24 @@ public interface ProductService {
 
     ProductDTO mapProductToDTO(Product product);
 
-    ProductsListDTO getAllProducts();
-
     ProductDTO getProductInfo(Long id);
 
-    ProductsListDTO getProductsByCategory(String category);
+    Page<ProductDTO> getAllProducts(Pageable pageable);
 
-    ProductsListDTO getProductsByShoeSize(int size);
+    Page<ProductDTO> getFilteredProducts(List<Integer> sizes, List<BrandName> brands, List<String> colors,
+                                         BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
-    ProductsListDTO getProductsOnSale();
+    Page<ProductDTO> getProductsByCategory(String category, Pageable pageable);
+
+    Page<ProductDTO> getProductsByBrand(String brand, Pageable pageable);
+
+    Page<ProductDTO> getProductsByShoeSize(int size, Pageable pageable);
+
+    Page<ProductDTO> getNewProducts(Pageable pageable);
+
+    Page<ProductDTO> getProductsOnSale(Pageable pageable);
 
     Optional<Product> getById(Long id);
-
-    ProductsListDTO getProductsByBrand(String brand);
-
-    ProductsListDTO getFilteredProducts(List<Integer> sizes, List<BrandName> brands, List<String> colors,
-                                        BigDecimal minPrice, BigDecimal maxPrice);
-
-    ProductsListDTO getNewProducts();
 
     List<Product> getAll();
 

@@ -47,9 +47,6 @@ main .products-list {
 
 .new-badge,
 .sale-badge {
-    position: absolute;
-    top: 15px;
-    left: 10px;
     background-color: green;
     color: #fff;
     font-size: 12px;
@@ -108,7 +105,7 @@ main .products-list {
 }
 
 .price .current {
-    color: red;
+    color: #C00;
     font-weight: bold;
 }
 
@@ -157,4 +154,34 @@ main .products-list {
     border-radius: 4px;
     background: #f9f9f9;
     cursor: pointer;
+}
+
+.pagination ul,
+.pagination ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.pagination .pageNumber,
+.pagination .active {
+    border: 1px solid #ccc;
+    padding: 0 0.8em;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+}
+
+.pagination .active {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+.pagination .hasPrevious,
+.pagination .hasNext {
+    background-color: #000;
+    color: #fff;
+    border-radius: 1.5em;
+    padding: 0 0.8em;
 }

@@ -4,11 +4,12 @@ import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
-import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
-import org.onlineshop.model.importDTO.AddDiscountDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.service.interfaces.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,35 +67,47 @@ public class ProductController {
 
     @GetMapping("/all")
     public ModelAndView showFilteredOrAllProducts(@RequestParam(required = false) List<Integer> sizes,
-                                                  @RequestParam(required = false) List<BrandName> brands,
-                                                  @RequestParam(required = false) List<String> colors,
+                                                  @RequestParam(required = false) List<BrandName> selectedBrands,
+                                                  @RequestParam(required = false) List<String> selectedColors,
                                                   @RequestParam(required = false) BigDecimal minPrice,
-                                                  @RequestParam(required = false) BigDecimal maxPrice) {
+                                                  @RequestParam(required = false) BigDecimal maxPrice,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("products");
-        ProductsListDTO products;
+
+        Page<ProductDTO> pagedProducts;
         String warningMessage = "";
 
         boolean hasFilters = (sizes != null && !sizes.isEmpty()) ||
-                (brands != null && !brands.isEmpty()) ||
-                (colors != null && !colors.isEmpty()) ||
+                (selectedBrands != null && !selectedBrands.isEmpty()) ||
+                (selectedColors != null && !selectedColors.isEmpty()) ||
                 minPrice != null || maxPrice != null;
 
-        if (hasFilters) {
-            products = productService.getFilteredProducts(sizes, brands, colors, minPrice, maxPrice);
+        Pageable pageable = PageRequest.of(page, size);
 
-            if (products.getProducts().isEmpty()) {
+        if (hasFilters) {
+            pagedProducts = productService.getFilteredProducts(sizes, selectedBrands, selectedColors, minPrice, maxPrice, pageable);
+            if (pagedProducts.isEmpty()) {
                 warningMessage = "Няма намерени продукти по избраните критерии!";
             }
         } else {
-            products = productService.getAllProducts();
-            warningMessage = "Все още няма добавени продукти за разглеждане!";
+            pagedProducts = productService.getAllProducts(pageable);
+            if (pagedProducts.isEmpty()) {
+                warningMessage = "Все още няма добавени продукти за разглеждане!";
+            }
         }
 
-        modelAndView.addObject("products", products);
+        modelAndView.addObject("sizes", sizes);
+        modelAndView.addObject("selectedBrands", selectedBrands);
+        modelAndView.addObject("selectedColors", selectedColors);
+        modelAndView.addObject("minPrice", minPrice);
+        modelAndView.addObject("maxPrice", maxPrice);
+
+        modelAndView.addObject("products", pagedProducts);
         modelAndView.addObject("title", "Спортни обувки");
 
-        if (products.getProducts().isEmpty()) {
+        if (pagedProducts.isEmpty()) {
             modelAndView.addObject("warningMessage", warningMessage);
         }
 
@@ -102,15 +115,19 @@ public class ProductController {
     }
 
     @GetMapping("/category/{category}")
-    public ModelAndView showProductsByCategory(@PathVariable("category") String category) {
+    public ModelAndView showProductsByCategory(@PathVariable("category") String category,
+                                               @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("products");
 
-        ProductsListDTO productsByCategory = this.productService.getProductsByCategory(category);
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProductDTO> productsByCategory = this.productService.getProductsByCategory(category, pageable);
 
         modelAndView.addObject("products", productsByCategory);
 
-        if (productsByCategory.getProducts().isEmpty()) {
+        if (productsByCategory.isEmpty()) {
             modelAndView.addObject("warningMessage",
                     "Все още няма добавени продукти за разглеждане в тази категория!");
         }
@@ -128,15 +145,19 @@ public class ProductController {
     }
 
     @GetMapping("/brand/{brand}")
-    public ModelAndView showProductsByBrand(@PathVariable("brand") String brand) {
+    public ModelAndView showProductsByBrand(@PathVariable("brand") String brand,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("products");
 
-        ProductsListDTO productsByproductsByBrand = this.productService.getProductsByBrand(brand);
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProductDTO> productsByproductsByBrand = this.productService.getProductsByBrand(brand, pageable);
 
         modelAndView.addObject("products", productsByproductsByBrand);
 
-        if (productsByproductsByBrand.getProducts().isEmpty()) {
+        if (productsByproductsByBrand.isEmpty()) {
             modelAndView.addObject("warningMessage",
                     "Все още няма добавени продукти за разглеждане от тази марка!");
         }
@@ -180,34 +201,41 @@ public class ProductController {
     }
 
     @GetMapping("/size/{size}")
-    public ModelAndView showProductsBySize(@PathVariable("size") int size) {
+    public ModelAndView showProductsBySize(@PathVariable("size") int shoeSize,
+                                           @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("products");
 
-        ProductsListDTO productsByproductsByShoeSize = this.productService.getProductsByShoeSize(size);
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProductDTO> productsByproductsByShoeSize = this.productService.getProductsByShoeSize(shoeSize, pageable);
 
         modelAndView.addObject("products", productsByproductsByShoeSize);
 
-        if (productsByproductsByShoeSize.getProducts().isEmpty()) {
+        if (productsByproductsByShoeSize.isEmpty()) {
             modelAndView.addObject("warningMessage",
                     "Все още няма добавени продукти за разглеждане с този размер!");
         }
 
-        modelAndView.addObject("title", "Спортни обувки №" + size);
+        modelAndView.addObject("title", "Спортни обувки №" + shoeSize);
 
         return modelAndView;
     }
 
     @GetMapping("/new")
-    public ModelAndView showNewProducts() {
+    public ModelAndView showNewProducts(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("products");
 
-        ProductsListDTO newProducts = this.productService.getNewProducts();
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProductDTO> newProducts = this.productService.getNewProducts(pageable);
 
         modelAndView.addObject("products", newProducts);
 
-        if (newProducts.getProducts().isEmpty()) {
+        if (newProducts.isEmpty()) {
             modelAndView.addObject("warningMessage",
                     "Все още няма добавени продукти за разглеждане в тази категория!");
         }
@@ -218,15 +246,18 @@ public class ProductController {
     }
 
     @GetMapping("/on-sale")
-    public ModelAndView showProductsOnSale() {
+    public ModelAndView showProductsOnSale(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("products");
 
-        ProductsListDTO productsOnSale = this.productService.getProductsOnSale();
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProductDTO> productsOnSale = this.productService.getProductsOnSale(pageable);
 
         modelAndView.addObject("products", productsOnSale);
 
-        if (productsOnSale.getProducts().isEmpty()) {
+        if (productsOnSale.isEmpty()) {
             modelAndView.addObject("warningMessage",
                     "Все още няма добавени продукти за разглеждане в тази категория!");
         }
@@ -237,8 +268,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ModelAndView showProductInfo(@PathVariable("id") Long id, Model model,
-                                        RedirectAttributes redirectAttributes) {
+    public ModelAndView showProductInfo(@PathVariable("id") Long id, Model model) {
 
         if (!model.containsAttribute("addCartItemDTO")) {
             model.addAttribute("addCartItemDTO", new AddCartItemDTO());

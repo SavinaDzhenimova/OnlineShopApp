@@ -49,10 +49,11 @@
 
                     <div class="brand-buttons">
                         <div th:each="brand : ${brands}" class="brand-option">
-                            <input type="checkbox" name="brands"
+                            <input type="checkbox" name="selectedBrands"
                                    th:value="${brand.brandName}"
                                    th:id="${'brand_' + brand.brandName}"
-                                   th:checked="${param.brands != null and #lists.contains(param.brands, brand.brandName.toString())}">
+                                   th:checked="${param.selectedBrands != null
+                                   and #lists.contains(param.selectedBrands, brand.brandName.toString())}">
                             <label th:for="${'brand_' + brand.brandName}">
                                 <img th:src="@{${brand.brandUrl}}" th:alt="${brand.brandName}" />
                             </label>
@@ -74,10 +75,11 @@
 
                     <div class="color-buttons">
                         <div th:each="color : ${colors}" class="color-option">
-                            <input type="checkbox" name="colors"
+                            <input type="checkbox" name="selectedColors"
                                    th:value="${color.colorName}"
                                    th:id="${'color_' + color.colorName}"
-                                   th:checked="${param.colors != null and #lists.contains(param.colors, color.colorName)}">
+                                   th:checked="${param.selectedColors != null
+                                   and #lists.contains(param.selectedColors, color.colorName)}">
                             <label th:for="${'color_' + color.colorName}" th:text="${color.colorName.displayName}">Черен</label>
                         </div>
                     </div>
@@ -88,7 +90,7 @@
             </form>
 
             <div class="products-list">
-                <div class="product-card" th:each="product : ${products.getProducts()}">
+                <div class="product-card" th:each="product : ${products.getContent()}">
                     <a th:href="@{/products/product/{id}(id=${product.getId()})}">
                         <div class="badge-container">
                             <div class="new-badge" th:if="${product.isNew()}">НОВО</div>
@@ -126,6 +128,41 @@
                     </a>
                 </div>
             </div>
+        </div>
+
+        <div class="pagination">
+            <ul>
+                <li th:if="${products.hasPrevious()}" class="hasPrevious">
+                    <a th:href="@{/products/all(size=${products.size}, page=${products.number - 1},
+                             sizes=${sizes},
+                             brands=${selectedBrands},
+                             colors=${selectedColors},
+                             minPrice=${minPrice},
+                             maxPrice=${maxPrice})}">&lt; Предишна</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                    th:if="${products.totalPages > 1}"
+                    th:classappend="${i} == ${products.number} ? 'active' : 'pageNumber'">
+                    <a th:href="@{/products/all(size=${products.size}, page=${i},
+                             sizes=${sizes},
+                             brands=${selectedBrands},
+                             colors=${selectedColors},
+                             minPrice=${minPrice},
+                             maxPrice=${maxPrice})}">
+                        <span th:text="${i + 1}">1</span>
+                    </a>
+                </li>
+
+                <li th:if="${products.hasNext()}" class="hasNext">
+                    <a th:href="@{/products/all(size=${products.size}, page=${products.number + 1},
+                             sizes=${sizes},
+                             brands=${selectedBrands},
+                             colors=${selectedColors},
+                             minPrice=${minPrice},
+                             maxPrice=${maxPrice})}">Следваща &gt;</a>
+                </li>
+            </ul>
         </div>
     </main>
 

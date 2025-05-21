@@ -4,18 +4,18 @@ import jakarta.servlet.http.HttpSession;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.entity.ShoppingCart;
 import org.onlineshop.model.entity.User;
-import org.onlineshop.model.exportDTO.AddressDTO;
-import org.onlineshop.model.exportDTO.OrderDTO;
-import org.onlineshop.model.exportDTO.ProductsListDTO;
-import org.onlineshop.model.exportDTO.VipStatusDTO;
+import org.onlineshop.model.exportDTO.*;
 import org.onlineshop.model.importDTO.AddAddressDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.model.user.UserRegisterDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
+
     void updateUserInfo(UserDTO userDTO);
 
     Result resetPassword(String password, String confirmPassword, String token);
@@ -42,14 +42,11 @@ public interface UserService {
 
     Result addAddress(AddAddressDTO addAddressDTO);
 
-    Optional<User> getUserByPhoneNumber(String phoneNumber);
-
     void saveAndFlushUser(User user);
 
-    ProductsListDTO getFavouriteProducts(HttpSession session);
+    Page<ProductDTO> getFavouriteProducts(HttpSession session, Pageable pageable);
 
     Result addProductToFavourites(Long id, HttpSession session);
 
     Result removeProductFromFavourites(Long id, HttpSession session);
-
 }

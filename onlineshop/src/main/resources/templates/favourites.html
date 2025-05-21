@@ -26,15 +26,15 @@
             <p th:text="${failureMessage}"></p>
         </div>
 
-        <div th:if="${favourites.products.empty}" class="empty-favourites-message">
+        <div th:if="${favourites.empty}" class="empty-favourites-message">
             <p>Все още нямаш добавени продукти в списъка ти с любими.
                 Можеш да разгледаш най-новото в Runtastic Shoes и да направиш своя избор.</p>
             <a th:href="@{/products/all}" class="view-products-btn">Виж нашите предложения</a>
         </div>
 
-        <div class="products-list" th:if="${not favourites.products.empty}">
+        <div class="products-list" th:if="${not favourites.empty}">
             <a class="product-card"
-               th:each="favourite : ${favourites.getProducts()}"
+               th:each="favourite : ${favourites.getContent()}"
                th:href="@{/products/product/{id}(id=${favourite.getId()})}">
                 <div class="badge-container">
                     <div class="new-badge" th:if="${favourite.isNew()}">НОВО</div>
@@ -70,6 +70,26 @@
                     </div>
                 </div>
             </a>
+        </div>
+
+        <div class="pagination">
+            <ul>
+                <li th:if="${favourites.hasPrevious()}" class="hasPrevious">
+                    <a th:href="@{/users/favourites(size=${favourites.size}, page=${favourites.number - 1})}">&lt; Предишна</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(0, favourites.totalPages - 1)}"
+                    th:if="${favourites.totalPages > 1}"
+                    th:classappend="${i} == ${favourites.number} ? 'active' : 'pageNumber'">
+                    <a th:href="@{/users/favourites(size=${favourites.size}, page=${i})}">
+                        <span th:text="${i + 1}">1</span>
+                    </a>
+                </li>
+
+                <li th:if="${favourites.hasNext()}" class="hasNext">
+                    <a th:href="@{/users/favourites(size=${products.size}, page=${favourites.number + 1})}">Следваща &gt;</a>
+                </li>
+            </ul>
         </div>
     </main>
 

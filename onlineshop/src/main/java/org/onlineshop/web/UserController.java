@@ -4,10 +4,13 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.exportDTO.OrderDTO;
-import org.onlineshop.model.exportDTO.ProductsListDTO;
+import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.exportDTO.VipStatusDTO;
 import org.onlineshop.model.user.UserDTO;
 import org.onlineshop.service.interfaces.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,11 +82,15 @@ public class UserController {
     }
 
     @GetMapping("/favourites")
-    public ModelAndView showFavourites(HttpSession session) {
+    public ModelAndView showFavourites(HttpSession session,
+                                       @RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "12") int size) {
 
         ModelAndView modelAndView = new ModelAndView("favourites");
 
-        ProductsListDTO favouriteProducts = this.userService.getFavouriteProducts(session);
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProductDTO> favouriteProducts = this.userService.getFavouriteProducts(session, pageable);
 
         modelAndView.addObject("favourites", favouriteProducts);
 

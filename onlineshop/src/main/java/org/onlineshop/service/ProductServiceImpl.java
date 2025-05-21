@@ -1,14 +1,18 @@
 package org.onlineshop.service;
 
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import org.onlineshop.model.entity.*;
 import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.enums.CategoryName;
 import org.onlineshop.model.exportDTO.ProductDTO;
-import org.onlineshop.model.exportDTO.ProductsListDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.model.importDTO.QuantitySizeDTO;
 import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -156,35 +160,54 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductsListDTO getAllProducts() {
-
-        List<Product> allProducts = this.productRepository.findAll();
-
-        List<ProductDTO> productDTOS = allProducts.stream().map(this::mapProductToDTO).toList();
-
-        return new ProductsListDTO(productDTOS);
+    public Page<ProductDTO> getAllProducts(Pageable pageable) {
+        return this.productRepository.findAll(pageable).map(this::mapProductToDTO);
     }
 
     @Override
-    public ProductsListDTO getFilteredProducts(List<Integer> sizes, List<BrandName> brands, List<String> colors,
-                                               BigDecimal minPrice, BigDecimal maxPrice) {
+    public Page<ProductDTO> getFilteredProducts(List<Integer> sizes, List<BrandName> selectedBrands,
+                                                List<String> selectedColors, BigDecimal minPrice, BigDecimal maxPrice,
+                                                Pageable pageable) {
 
-        List<ProductDTO> productDTOS = productRepository.findAll().stream()
-                .filter(product -> sizes == null || product.getQuantitySize().stream()
-                        .anyMatch(quantitySize ->
-                                sizes.contains(quantitySize.getSize().getSize()) && quantitySize.getQuantity() > 0))
-                .filter(product -> brands == null || brands.contains(product.getBrand().getBrandName()))
-                .filter(product -> colors == null || colors.contains(product.getColor().getColorName().getDisplayName()))
-                .filter(product -> minPrice == null || product.getPrice().compareTo(minPrice) >= 0)
-                .filter(product -> maxPrice == null || product.getPrice().compareTo(maxPrice) <= 0)
-                .map(this::mapProductToDTO)
-                .toList();
+        Specification<Product> spec = Specification.where(null);
 
-        return new ProductsListDTO(productDTOS);
+        if (selectedBrands != null && !selectedBrands.isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    root.get("brand").get("brandName").in(selectedBrands));
+        }
+
+        if (selectedColors != null && !selectedColors.isEmpty()) {
+            spec = spec.and((root, query, cb) ->
+                    root.get("color").get("colorName").in(selectedColors));
+        }
+
+        if (minPrice != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.greaterThanOrEqualTo(root.get("price"), minPrice));
+        }
+
+        if (maxPrice != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.lessThanOrEqualTo(root.get("price"), maxPrice));
+        }
+
+        if (sizes != null && !sizes.isEmpty()) {
+            spec = spec.and((root, query, cb) -> {
+                Join<?, ?> sizesJoin = root.join("quantitySize", JoinType.INNER);
+                return cb.and(
+                        sizesJoin.get("size").get("size").in(sizes),
+                        cb.greaterThan(sizesJoin.get("quantity"), 0)
+                );
+            });
+        }
+
+        Page<Product> result = this.productRepository.findAll(spec, pageable);
+
+        return result.map(this::mapProductToDTO);
     }
 
     @Override
-    public ProductsListDTO getProductsByCategory(String category) {
+    public Page<ProductDTO> getProductsByCategory(String category, Pageable pageable) {
 
         CategoryName categoryName = switch (category) {
             case "men" -> CategoryName.MEN;
@@ -193,16 +216,12 @@ public class ProductServiceImpl implements ProductService {
             default -> throw new IllegalArgumentException("Невалидна категория: " + category);
         };
 
-        List<ProductDTO> productDTOList = this.productRepository
-                .findAllByCategoryName(categoryName).stream()
-                .map(this::mapProductToDTO)
-                .toList();
-
-        return new ProductsListDTO(productDTOList);
+        return this.productRepository.findAllByCategoryName(categoryName, pageable)
+                .map(this::mapProductToDTO);
     }
 
     @Override
-    public ProductsListDTO getProductsByBrand(String brand) {
+    public Page<ProductDTO> getProductsByBrand(String brand, Pageable pageable) {
 
         BrandName brandName = switch (brand) {
             case "nike" -> BrandName.NIKE;
@@ -237,43 +256,28 @@ public class ProductServiceImpl implements ProductService {
             default -> throw new IllegalArgumentException("Невалидна марка: " + brand);
         };
 
-        List<ProductDTO> productDTOList = this.productRepository
-                .findAllByBrandName(brandName).stream()
-                .map(this::mapProductToDTO)
-                .toList();
-
-        return new ProductsListDTO(productDTOList);
+        return this.productRepository.findAllByBrandName(brandName, pageable)
+                .map(this::mapProductToDTO);
     }
 
     @Override
-    public ProductsListDTO getProductsByShoeSize(int size) {
-        
-        List<ProductDTO> productDTOList = this.productRepository
-                .findAllBySizeWithStock(size).stream()
-                .map(this::mapProductToDTO)
-                .toList();
+    public Page<ProductDTO> getProductsByShoeSize(int size, Pageable pageable) {
 
-        return new ProductsListDTO(productDTOList);
+        return this.productRepository.findAllBySizeWithStock(size, pageable)
+                .map(this::mapProductToDTO);
     }
 
     @Override
-    public ProductsListDTO getNewProducts() {
+    public Page<ProductDTO> getNewProducts(Pageable pageable) {
 
-        List<ProductDTO> productDTOList = this.productRepository.findAllByIsNewTrue().stream()
-                .map(this::mapProductToDTO)
-                .toList();
-
-        return new ProductsListDTO(productDTOList);
+        return this.productRepository.findAllByIsNewTrue(pageable)
+                .map(this::mapProductToDTO);
     }
 
     @Override
-    public ProductsListDTO getProductsOnSale() {
-
-        List<ProductDTO> productDTOList = this.productRepository.findAllByIsOnSaleTrue().stream()
-                .map(this::mapProductToDTO)
-                .toList();
-
-        return new ProductsListDTO(productDTOList);
+    public Page<ProductDTO> getProductsOnSale(Pageable pageable) {
+        return this.productRepository.findAllByIsOnSaleTrue(pageable)
+                .map(this::mapProductToDTO);
     }
 
     @Override

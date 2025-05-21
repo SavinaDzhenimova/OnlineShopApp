@@ -14,6 +14,9 @@ import org.onlineshop.service.events.UserRegisterEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -356,30 +359,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ProductsListDTO getFavouriteProducts(HttpSession session) {
+    public Page<ProductDTO> getFavouriteProducts(HttpSession session, Pageable pageable) {
         User loggedUser = this.currentUserProvider.getLoggedUser();
 
-        List<ProductDTO> productDTOS;
+        List<Product> favouriteProducts;
 
         if (loggedUser != null) {
-            productDTOS = loggedUser.getFavourites().stream()
-                    .map(this.productService::mapProductToDTO)
-                    .toList();
+            favouriteProducts = new ArrayList<>(loggedUser.getFavourites());
         } else {
             List<Long> favouriteIds = (List<Long>) session.getAttribute("guestFavourites");
-
             if (favouriteIds == null) {
                 favouriteIds = new ArrayList<>();
             }
 
-            productDTOS = favouriteIds.stream()
+            favouriteProducts = favouriteIds.stream()
                     .map(id -> this.productService.getById(id).orElse(null))
                     .filter(Objects::nonNull)
-                    .map(this.productService::mapProductToDTO)
                     .toList();
         }
 
-        return new ProductsListDTO(productDTOS);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), favouriteProducts.size());
+
+        List<ProductDTO> content = favouriteProducts.subList(start, end).stream()
+                .map(this.productService::mapProductToDTO)
+                .toList();
+
+        return new PageImpl<>(content, pageable, favouriteProducts.size());
     }
 
     @Override
@@ -448,11 +454,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
-    }
-
-    @Override
-    public Optional<User> getUserByPhoneNumber(String phoneNumber) {
-        return this.userRepository.findByPhoneNumber(phoneNumber);
     }
 
     @Override
