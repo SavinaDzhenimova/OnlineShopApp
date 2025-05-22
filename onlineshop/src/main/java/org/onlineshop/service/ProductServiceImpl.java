@@ -45,6 +45,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDTO> getNewProductsForIndexPage() {
+        return this.productRepository.findAllByIsNewTrue().stream()
+                .map(this::mapProductToDTO)
+                .limit(5)
+                .toList();
+    }
+
+    @Override
+    public List<ProductDTO> getProductsOnSaleForIndexPage() {
+        return this.productRepository.findAllByIsOnSaleTrue().stream()
+                .map(this::mapProductToDTO)
+                .limit(5)
+                .toList();
+    }
+
+    @Override
     public Result addProduct(AddProductDTO addProductDTO) {
 
         Optional<Brand> optionalBrand = this.brandService.getBrandById(addProductDTO.getBrandId());

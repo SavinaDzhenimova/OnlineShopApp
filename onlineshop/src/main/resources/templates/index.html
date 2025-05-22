@@ -41,6 +41,39 @@
             </section>
 
             <section class="new-models">
+                <div class="products-list">
+                    <h2>Нови предложения</h2>
+
+                    <div class="product-card" th:each="product : ${newProducts}">
+                        <a th:href="@{/products/product/{id}(id=${product.getId()})}">
+                            <div class="badge-container">
+                                <div class="sale-badge" th:if="${product.isOnSale()}"
+                                     th:text="'-' + ${product.getSalePercent()} + '%'">-12%</div>
+                                <div class="new-badge" th:if="${product.isNew()}">НОВО</div>
+                            </div>
+                            <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
+                                  th:method="POST">
+                                <input type="hidden" name="productId" value="${product.id}" />
+                                <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
+                            </form>
+                            <div class="product-image">
+                                <img th:src="@{${product.imageUrls[0]}}" th:alt="${product.name}">
+                            </div>
+                            <div class="product-title" th:text="${product.getName()}">Nike Flex Experience RN 12</div>
+                            <div class="product-type">
+                                <span th:text="${product.getCategory()}">Мъжки обувки</span>
+                            </div>
+                            <div class="price">
+                                <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+                                <span class="old"
+                                      th:if="${product.getOldPrice() != null}"
+                                      th:text="${product.getOldPrice()} + ' лв.'">129.99 лв.</span>
+                            </div>
+                            <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
+                        </a>
+                    </div>
+                </div>
+
                 <a th:href="@{/products/new}"><img src="/images/index/new-models.jpg" alt="Нови модели"></a>
             </section>
 
@@ -55,6 +88,41 @@
 
                 <div class="image-container">
                     <img src="/images/index/choose-size.jpg">
+                </div>
+            </section>
+
+            <section class="shoes-on-sale">
+                <h2>Разпродажба</h2>
+
+                <div class="products-list">
+                    <div class="product-card" th:each="product : ${productsOnSale}">
+                        <a th:href="@{/products/product/{id}(id=${product.getId()})}">
+                            <div class="badge-container">
+                                <div class="sale-badge" th:if="${product.isOnSale()}"
+                                     th:text="'-' + ${product.getSalePercent()} + '%'">-12%</div>
+                                <div class="new-badge" th:if="${product.isNew()}">НОВО</div>
+                            </div>
+                            <form th:action="@{/users/favourites/add-favourite/{id}(id=${product.getId()})}"
+                                  th:method="POST">
+                                <input type="hidden" name="productId" value="${product.id}" />
+                                <button type="submit" class="wishlist"><i class="fa-regular fa-heart"></i></button>
+                            </form>
+                            <div class="product-image">
+                                <img th:src="@{${product.imageUrls[0]}}" th:alt="${product.name}">
+                            </div>
+                            <div class="product-title" th:text="${product.getName()}">Nike Flex Experience RN 12</div>
+                            <div class="product-type">
+                                <span th:text="${product.getCategory()}">Мъжки обувки</span>
+                            </div>
+                            <div class="price">
+                                <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+                                <span class="old"
+                                      th:if="${product.getOldPrice() != null}"
+                                      th:text="${product.getOldPrice()} + ' лв.'">129.99 лв.</span>
+                            </div>
+                            <div class="free-shipping" th:if="${product.getPrice() > 100}">Безплатна доставка</div>
+                        </a>
+                    </div>
                 </div>
             </section>
 

@@ -1,7 +1,9 @@
 package org.onlineshop.web;
 
 import org.onlineshop.model.exportDTO.OpinionDTO;
+import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.service.interfaces.OpinionService;
+import org.onlineshop.service.interfaces.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,9 +14,11 @@ import java.util.List;
 public class HomeController {
 
     private final OpinionService opinionService;
+    private final ProductService productService;
 
-    public HomeController(OpinionService opinionService) {
+    public HomeController(OpinionService opinionService, ProductService productService) {
         this.opinionService = opinionService;
+        this.productService = productService;
     }
 
     @GetMapping("/")
@@ -23,8 +27,12 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("index");
 
         List<OpinionDTO> opinionsForIndexPage = this.opinionService.getOpinionsForIndexPage();
+        List<ProductDTO> productsForIndexPage = this.productService.getNewProductsForIndexPage();
+        List<ProductDTO> productsOnSaleForIndexPage = this.productService.getProductsOnSaleForIndexPage();
 
         modelAndView.addObject("opinions", opinionsForIndexPage);
+        modelAndView.addObject("newProducts", productsForIndexPage);
+        modelAndView.addObject("productsOnSale", productsOnSaleForIndexPage);
 
         return modelAndView;
     }

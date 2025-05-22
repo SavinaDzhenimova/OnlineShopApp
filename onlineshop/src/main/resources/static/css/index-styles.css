@@ -32,6 +32,135 @@ main .site-main-section .choose-shoes > p {
     opacity: 0.6;
 }
 
+.products-list{
+    margin: 2em 4em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.products-list h2 {
+    width: 100%;
+    padding-bottom: 0.5em;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    width: 250px;
+    border-radius: 0.5em;
+    padding: 1em;
+    position: relative;
+}
+
+.product-card:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.badge-container {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: nowrap;
+}
+
+.new-badge,
+.sale-badge {
+    background-color: green;
+    color: #fff;
+    font-size: 12px;
+    padding: 0 0.5em;
+    border-radius: 1em;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.sale-badge {
+    background-color: #C00;
+}
+
+.wishlist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    aspect-ratio: 1 / 1;
+    padding: 0.3em;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.wishlist:hover {
+    background-color: #eee;
+}
+
+.product-image img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.product-type {
+    color: #666;
+    font-size: 14px;
+}
+
+.price {
+    font-size: 18px;
+}
+
+.price .current {
+    color: #C00;
+    font-weight: bold;
+}
+
+.price .old {
+    text-decoration: line-through;
+    color: #999;
+    margin-left: 0.3em;
+}
+
+.free-shipping {
+    background: green;
+    color: white;
+    padding: 0 0.7em;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 0.5em;
+}
+
+.shoes-on-sale {
+    margin: 2em 4em;
+}
+
+.shoes-on-sale h2 {
+    padding-bottom: 0.5em;
+}
+
+.shoes-on-sale .products-list {
+    margin: 0;
+}
+
 main .site-main-section .new-models img {
     width: 100%;
     object-fit: contain;

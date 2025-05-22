@@ -40,4 +40,8 @@ public interface ProductService {
     List<Product> getAll();
 
     void saveAndFlush(Product product);
+
+    List<ProductDTO> getNewProductsForIndexPage();
+
+    List<ProductDTO> getProductsOnSaleForIndexPage();
 }

@@ -17,11 +17,15 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
+    List<Product> findAllByIsNewTrue();
+
     Page<Product> findAllByIsNewTrue(Pageable pageable);
 
     List<Product> findAllByIsNewTrueAndAddedOnBefore(LocalDate date);
 
     Page<Product> findAllByIsOnSaleTrue(Pageable pageable);
+
+    List<Product> findAllByIsOnSaleTrue();
 
     @Query("SELECT p FROM Product p JOIN p.category c WHERE c.categoryName = :categoryName")
     Page<Product> findAllByCategoryName(@Param("categoryName") CategoryName categoryName, Pageable pageable);
