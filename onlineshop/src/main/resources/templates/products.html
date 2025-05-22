@@ -126,6 +126,9 @@
                             </div>
                         </div>
                     </a>
+                    <div sec:authorize="hasRole('ADMIN')" class="update-product-btn">
+                        <a th:href="@{/products/update-product/{id}(id=${product.getId()})}">Ново зареждане</a>
+                    </div>
                 </div>
             </div>
         </div>

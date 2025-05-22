@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 
 <head>
     <th:block th:replace="~{fragments/commons::head}"></th:block>
@@ -142,6 +143,10 @@
                     <a th:href="@{/faq}">Често задавани въпроси <i class="fa-solid fa-chevron-right"></i></a>
                     <a th:href="@{/delivery-and-payment}">Доставка и плащане <i class="fa-solid fa-chevron-right"></i></a>
                     <a th:href="@{/contacts}">Контакти <i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+
+                <div sec:authorize="hasRole('ADMIN')" class="update-product-btn">
+                    <a th:href="@{/products/update-product/{id}(id=${product.getId()})}">Ново зареждане</a>
                 </div>
             </div>
         </div>

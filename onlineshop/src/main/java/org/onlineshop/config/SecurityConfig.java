@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/forgot-password", "/users/reset-password/**").anonymous()
                         .requestMatchers("/users/profile").authenticated()
                         .requestMatchers("/products/add-product", "/products/add-discount",
+                                "/products/update-product/**",
                                 "/promo-codes/**",
                                 "/orders/all", "/orders/update-status/**",
                                 "/return-or-replacement/requests", "/return-or-replacement/delete-request/**").hasRole("ADMIN")

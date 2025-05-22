@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/commons::head}"></th:block>
+    <link rel="stylesheet" href="/css/update-product-styles.css">
+    <title>Редактирай продукт</title>
+</head>
+
+<body>
+
+    <header th:replace="~{fragments/commons::header}"></header>
+
+    <main>
+        <h1>Ново зареждане</h1>
+
+        <div class="messages">
+            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                <p class="success" th:text="${successMessage}"></p>
+            </div>
+
+            <div th:if="${failureMessage}" class="alert alert-failure" role="alert">
+                <p th:text="${failureMessage}"></p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="product-info">
+                <div class="image-container">
+                    <img th:src="${product.getImageUrls().get(0)}" alt="${product.getName()}">
+                </div>
+
+                <div class="product-container">
+                    <h2 th:text="${product.getName()}"></h2>
+
+                    <div class="product-type">
+                        <span th:text="${product.getCategory()}">Мъжки обувки</span>
+                    </div>
+                    <div class="price">
+                        <span class="current" th:text="${product.getPrice()} + ' лв.'">129.99 лв.</span>
+                        <span class="old"
+                              th:if="${product.getOldPrice() != null}"
+                              th:text="${product.getOldPrice()} + ' лв.'">129.99 лв.</span>
+                    </div>
+                    <div class="color">
+                        <span th:text="'Цвят: ' + ${product.getColor()}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sizes">
+                <table class="sizes-table">
+                    <tr>
+                        <th>Размери</th>
+                        <th>Наличност</th>
+                    </tr>
+                    <tr th:each="size : ${product.getSizes()}">
+                        <td th:text="'№' + ${size.size}"></td>
+                        <td th:text="${size.quantity} + ' бр.'"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <form th:action="@{/products/update-product/{id}(id=${product.getId()})}"
+                  th:method="POST"
+                  th:object="${updateProductDTO}">
+
+                <div class="field field-sizes">
+                    <h2>Размери и наличности</h2>
+
+                    <div id="sizes-container">
+                        <div class="size-entry">
+                            <div class="size">
+                                <label>Размер:</label>
+                                <select name="sizes[0].size">
+                                    <option th:each="s : ${shoeSizes}" th:value="${s.size}" th:text="'№ ' + ${s.size}"></option>
+                                </select>
+                            </div>
+
+                            <div class="quantity">
+                                <label>Количество:</label>
+                                <input type="number" name="sizes[0].quantity" min="0" />
+                            </div>
+<!--                        <button type="button" class="remove-btn" onclick="removeSizeRow(this)">✖</button>-->
+                        </div>
+                    </div>
+
+                    <button class="add-btn" type="button" onclick="addSizeRow()">+ Добави още размери и количества</button>
+                </div>
+
+                <button type="submit">Добави количества</button>
+            </form>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/commons::footer}"></footer>
+
+    <script src="\js\add-size-quantity-field.js"></script>
+
+</body>
+</html>

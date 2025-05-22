@@ -5,6 +5,7 @@ import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
+import org.onlineshop.model.importDTO.UpdateProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -44,4 +45,6 @@ public interface ProductService {
     List<ProductDTO> getNewProductsForIndexPage();
 
     List<ProductDTO> getProductsOnSaleForIndexPage();
+
+    Result updateProductQuantityAndSizes(Long id, UpdateProductDTO updateProductDTO);
 }

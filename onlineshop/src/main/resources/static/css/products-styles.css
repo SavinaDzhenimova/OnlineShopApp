@@ -259,6 +259,16 @@ main .products-list {
     margin-bottom: 5px;
 }
 
+.update-product-btn a {
+    display: block;
+    background-color: #000;
+    color: #fff;
+    width: 60%;
+    text-align: center;
+    margin-top: 0.5em;
+    border-radius: 1em;
+}
+
 .pagination ul,
 .pagination ul li {
     display: flex;

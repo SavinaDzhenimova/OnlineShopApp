@@ -6,6 +6,7 @@ import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.importDTO.AddCartItemDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
+import org.onlineshop.model.importDTO.UpdateProductDTO;
 import org.onlineshop.service.interfaces.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -281,5 +282,44 @@ public class ProductController {
         modelAndView.addObject("product", productDTO);
 
         return modelAndView;
+    }
+
+    @GetMapping("/update-product/{id}")
+    public ModelAndView showUpdateProduct(@PathVariable("id") Long id, Model model) {
+        ModelAndView modelAndView = new ModelAndView("update-product");
+
+        ProductDTO productDTO = this.productService.getProductInfo(id);
+
+        modelAndView.addObject("product", productDTO);
+
+        if (!model.containsAttribute("updateProductDTO")) {
+            model.addAttribute("updateProductDTO", new UpdateProductDTO());
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/update-product/{id}")
+    public ModelAndView updateProduct(@PathVariable("id") Long id,
+                                      @Valid @ModelAttribute("updateProductDTO") UpdateProductDTO updateProductDTO,
+                                      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("updateProductDTO", updateProductDTO)
+                    .addFlashAttribute("org.springframework.validation.BindingResult.updateProductDTO",
+                            bindingResult);
+
+            return new ModelAndView("update-product");
+        }
+
+        Result result = this.productService.updateProductQuantityAndSizes(id, updateProductDTO);
+
+        if (result.isSuccess()) {
+            redirectAttributes.addFlashAttribute("successMessage", result.getMessage());
+        } else {
+            redirectAttributes.addFlashAttribute("failureMessage", result.getMessage());
+        }
+
+        return new ModelAndView("redirect:/products/update-product/" + id);
     }
 }

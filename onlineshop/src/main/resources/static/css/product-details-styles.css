@@ -245,3 +245,13 @@ main .useful-info a {
     justify-content: space-between;
     align-items: center;
 }
+
+main .update-product-btn a {
+    background-color: #000;
+    color: #fff;
+    padding: 0.5em 1.5em;
+    border-radius: 1.5em;
+    margin-top: 2em;
+    position: absolute;
+    font-weight: 600;
+}

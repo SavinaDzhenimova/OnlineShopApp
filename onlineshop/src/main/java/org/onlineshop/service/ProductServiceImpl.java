@@ -8,6 +8,7 @@ import org.onlineshop.model.enums.CategoryName;
 import org.onlineshop.model.exportDTO.ProductDTO;
 import org.onlineshop.model.importDTO.AddProductDTO;
 import org.onlineshop.model.importDTO.QuantitySizeDTO;
+import org.onlineshop.model.importDTO.UpdateProductDTO;
 import org.onlineshop.repository.ProductRepository;
 import org.onlineshop.service.interfaces.*;
 import org.springframework.data.domain.Page;
@@ -130,6 +131,47 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository.saveAndFlush(product);
 
         return new Result(true, "Успешно добавихте продукт " + addProductDTO.getName());
+    }
+
+    @Override
+    public Result updateProductQuantityAndSizes(Long id, UpdateProductDTO updateProductDTO) {
+
+        Optional<Product> optionalProduct = this.productRepository.findById(id);
+
+        if (optionalProduct.isEmpty()) {
+            throw new NoSuchElementException("Този продукт не съществува!");
+        }
+
+        Product product = optionalProduct.get();
+        Set<QuantitySize> productQuantitySizes = product.getQuantitySize();
+
+        for (QuantitySizeDTO quantitySizeToAdd : updateProductDTO.getSizes()) {
+            boolean found  = false;
+
+            for (QuantitySize existingQuantitySize : productQuantitySizes) {
+
+                if (existingQuantitySize.getSize().getSize().equals(quantitySizeToAdd.getSize())) {
+                    existingQuantitySize.setQuantity(existingQuantitySize.getQuantity() + quantitySizeToAdd.getQuantity());
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                QuantitySize quantitySize = new QuantitySize();
+
+                Optional<ShoeSize> optionalSize = this.shoeSizeService.getBySize(quantitySizeToAdd.getSize());
+
+                quantitySize.setSize(optionalSize.get());
+                quantitySize.setQuantity(quantitySizeToAdd.getQuantity());
+                quantitySize.setProduct(product);
+
+                product.getQuantitySize().add(quantitySize);
+            }
+        }
+
+        this.productRepository.saveAndFlush(product);
+        return new Result(true, "Успешно актуализирахте размерите и количествата за този продукт!");
     }
 
     @Override
