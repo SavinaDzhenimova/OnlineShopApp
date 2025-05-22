@@ -67,8 +67,8 @@ public class DiscountCardServiceImpl implements DiscountCardService {
             discountCardDTO.setDiscountCardName(discountCard.getDiscountCardName().getDisplayName());
             discountCardDTO.setDiscountPercent(discountCard.getDiscountPercent());
 
-            BigDecimal discountValue = orderTotalPrice.multiply(discountCard.getDiscountPercent())
-                    .divide(BigDecimal.valueOf(100));
+            BigDecimal discountValue = orderTotalPrice.multiply(discountCard.getDiscountPercent()
+                    .divide(BigDecimal.valueOf(100)));
             discountCardDTO.setDiscountValue(discountValue);
 
             return discountCardDTO;

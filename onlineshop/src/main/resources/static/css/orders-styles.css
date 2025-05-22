@@ -71,3 +71,33 @@ main .orders-list .order-info a {
 main .orders-list .order-info a:hover {
     text-decoration: none;
 }
+
+main .pagination ul,
+main .pagination ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+main .pagination .pageNumber,
+main .pagination .active {
+    border: 1px solid #ccc;
+    padding: 0 0.8em;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+}
+
+main .pagination .active {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+main .pagination .hasPrevious,
+main .pagination .hasNext {
+    background-color: #000;
+    color: #fff;
+    border-radius: 1.5em;
+    padding: 0 0.8em;
+}

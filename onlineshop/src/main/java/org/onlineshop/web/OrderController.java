@@ -12,6 +12,9 @@ import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.service.interfaces.DiscountCardService;
 import org.onlineshop.service.interfaces.OrderService;
 import org.onlineshop.service.utils.CurrentUserProvider;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -139,18 +142,22 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    public ModelAndView showAllOrders() {
+    public ModelAndView showAllOrders(@RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "10") int size) {
 
         ModelAndView modelAndView = new ModelAndView("orders");
 
-        List<OrderDTO> orders = this.orderService.getAllOrders();
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<OrderDTO> orders = this.orderService.getAllOrders(pageable);
 
         if (orders.isEmpty()) {
             modelAndView.addObject("warningMessage", "Няма поръчки за преглеждане.");
         } else {
             modelAndView.addObject("orders", orders);
-            modelAndView.addObject("allOrders", true);
         }
+
+        modelAndView.addObject("allOrders", true);
 
         return modelAndView;
     }

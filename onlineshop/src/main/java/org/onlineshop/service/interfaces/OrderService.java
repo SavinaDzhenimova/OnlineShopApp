@@ -7,6 +7,8 @@ import org.onlineshop.model.exportDTO.OrderDTO;
 import org.onlineshop.model.exportDTO.OrderRequestDTO;
 import org.onlineshop.model.importDTO.AddOrderDTO;
 import org.onlineshop.model.importDTO.OrderItemRequestDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,7 @@ public interface OrderService {
 
     Optional<Order> getById(Long id);
 
-    List<OrderDTO> getAllOrders();
+    Page<OrderDTO> getAllOrders(Pageable pageable);
 
     Result updateOrderStatus(Long id);
 }

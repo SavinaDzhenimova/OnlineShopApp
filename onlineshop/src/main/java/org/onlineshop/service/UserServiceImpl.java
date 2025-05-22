@@ -277,12 +277,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<OrderDTO> getLoggedUserOrders() {
-        User loggedUser = this.currentUserProvider.getLoggedUser();
-
-        return loggedUser.getOrders().stream()
+    public Page<OrderDTO> getLoggedUserOrders(Pageable pageable) {
+        List<OrderDTO> sortedOrders = this.currentUserProvider.getLoggedUser().getOrders()
+                .stream()
+                .sorted(Comparator.comparing(Order::getOrderedOn).reversed())
                 .map(this.orderService::mapOrderToDto)
                 .toList();
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), sortedOrders.size());
+
+        List<OrderDTO> paginated = sortedOrders.subList(start, end);
+
+        return new PageImpl<>(paginated, pageable,  sortedOrders.size());
     }
 
     @Override

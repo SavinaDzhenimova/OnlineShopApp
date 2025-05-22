@@ -17,7 +17,7 @@
         <h1 sec:authorize="hasRole('ADMIN')" th:if="${allOrders}">Всички поръчки</h1>
         <h1 th:unless="${allOrders}">Моите поръчки</h1>
 
-        <p th:if="${warningMessage} and ${#lists.isEmpty(orders)}" th:text="${warningMessage}"></p>
+        <p th:if="${warningMessage} and ${orders.empty}" th:text="${warningMessage}"></p>
 
         <div th:if="${successMessage}" class="alert alert-success" role="alert">
             <p class="success" th:text="${successMessage}"></p>
@@ -27,8 +27,8 @@
             <p th:text="${failureMessage}"></p>
         </div>
 
-        <div class="orders-list" th:if="${not #lists.isEmpty(orders)}">
-            <section class="order-info" th:each="order : ${orders}">
+        <div class="orders-list" th:if="${not orders.empty}">
+            <section class="order-info" th:each="order : ${orders.getContent()}">
                 <p th:text="'#' + ${order.getId()}"></p>
                 <p th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></p>
                 <p th:text="${order.getFullName()}"></p>
@@ -44,6 +44,37 @@
                     <button type="submit">Обнови статус</button>
                 </form>
             </section>
+        </div>
+
+        <div class="pagination">
+            <ul>
+                <li th:if="${orders.hasPrevious()}" class="hasPrevious">
+                    <a th:if="${allOrders}"
+                       th:href="@{/orders/all(size=${orders.size}, page=${orders.number - 1})}">&lt; Предишна</a>
+                    <a th:unless="${allOrders}"
+                       th:href="@{/users/my-orders(size=${orders.size}, page=${orders.number - 1})}">&lt; Предишна</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(0, orders.totalPages - 1)}"
+                    th:if="${orders.totalPages > 1}"
+                    th:classappend="${i} == ${orders.number} ? 'active' : 'pageNumber'">
+                    <a th:if="${allOrders}"
+                       th:href="@{/orders/all(size=${orders.size}, page=${i})}">
+                        <span th:text="${i + 1}">1</span>
+                    </a>
+                    <a th:unless="${allOrders}"
+                       th:href="@{/users/my-orders(size=${orders.size}, page=${i})}">
+                        <span th:text="${i + 1}">1</span>
+                    </a>
+                </li>
+
+                <li th:if="${orders.hasNext()}" class="hasNext">
+                    <a th:if="${allOrders}"
+                       th:href="@{/orders/all(size=${orders.size}, page=${orders.number + 1})}">Следваща &gt;</a>
+                    <a th:unless="${allOrders}"
+                       th:href="@{/users/my-orders(size=${orders.size}, page=${orders.number + 1})}">Следваща &gt;</a>
+                </li>
+            </ul>
         </div>
     </main>
 

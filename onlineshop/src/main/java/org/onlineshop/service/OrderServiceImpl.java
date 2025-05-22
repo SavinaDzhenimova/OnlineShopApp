@@ -18,6 +18,8 @@ import org.onlineshop.service.events.UpdateOrderStatusEvent;
 import org.onlineshop.service.interfaces.*;
 import org.onlineshop.service.utils.CurrentUserProvider;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +63,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getAllOrders() {
-        List<Order> orders = this.orderRepository.findAll();
-
-        return orders.stream()
-                .map(this::mapOrderToDto)
-                .toList();
+    public Page<OrderDTO> getAllOrders(Pageable pageable) {
+        return this.orderRepository.findAllOrderedByOrderedOnDesc(pageable)
+                .map(this::mapOrderToDto);
     }
 
     @Override
@@ -131,7 +130,8 @@ public class OrderServiceImpl implements OrderService {
         addOrderDTO.setPromoCode(createdOrder.getPromoCode());
         addOrderDTO.setDiscountPercent(createdOrder.getDiscountPercent());
         addOrderDTO.setDiscount(createdOrder.getDiscount());
-        addOrderDTO.setFinalPrice(createdOrder.getFinalPrice());
+        addOrderDTO.setFinalPrice((createdOrder.getFinalPrice().equals(BigDecimal.ZERO))
+                ? createdOrder.getTotalPrice() : createdOrder.getFinalPrice());
 
         User loggedUser = this.currentUserProvider.getLoggedUser();
 
@@ -139,8 +139,8 @@ public class OrderServiceImpl implements OrderService {
             DiscountCard discountCard = loggedUser.getDiscountCard();
 
             if (discountCard != null) {
-                BigDecimal discountValue = createdOrder.getTotalPrice().multiply(discountCard.getDiscountPercent())
-                        .divide(BigDecimal.valueOf(100));
+                BigDecimal discountValue = createdOrder.getTotalPrice()
+                        .multiply(discountCard.getDiscountPercent().divide(BigDecimal.valueOf(100)));
                 addOrderDTO.setVipStatusDiscount(discountValue);
                 addOrderDTO.setFinalPrice(addOrderDTO.getFinalPrice().subtract(discountValue));
             }

@@ -87,7 +87,7 @@
                 </li>
 
                 <li th:if="${favourites.hasNext()}" class="hasNext">
-                    <a th:href="@{/users/favourites(size=${products.size}, page=${favourites.number + 1})}">Следваща &gt;</a>
+                    <a th:href="@{/users/favourites(size=${favourites.size}, page=${favourites.number + 1})}">Следваща &gt;</a>
                 </li>
             </ul>
         </div>

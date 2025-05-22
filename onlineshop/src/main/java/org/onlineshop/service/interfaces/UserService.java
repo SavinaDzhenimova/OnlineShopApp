@@ -26,8 +26,6 @@ public interface UserService {
 
     UserDTO getLoggedUserInfoForProfilePage();
 
-    List<OrderDTO> getLoggedUserOrders();
-
     Optional<User> getUserByEmail(String email);
 
     Result registerUser(UserRegisterDTO userRegisterDTO);
@@ -35,6 +33,8 @@ public interface UserService {
     VipStatusDTO calculateVipStatus();
 
     ShoppingCart getLoggedUserShoppingCart(HttpSession session);
+
+    Page<OrderDTO> getLoggedUserOrders(Pageable pageable);
 
     List<AddressDTO> getLoggedUserAddresses();
 

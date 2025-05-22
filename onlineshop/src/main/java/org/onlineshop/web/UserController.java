@@ -67,16 +67,22 @@ public class UserController {
     }
 
     @GetMapping("/my-orders")
-    public ModelAndView showMyOrders() {
-        List<OrderDTO> loggedUserOrders = this.userService.getLoggedUserOrders();
+    public ModelAndView showMyOrders(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "4") int size) {
 
         ModelAndView modelAndView = new ModelAndView("orders");
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<OrderDTO> loggedUserOrders = this.userService.getLoggedUserOrders(pageable);
 
         if (loggedUserOrders.isEmpty()) {
             modelAndView.addObject("warningMessage", "Все още нямате направени поръчки.");
         } else {
             modelAndView.addObject("orders", loggedUserOrders);
         }
+
+        modelAndView.addObject("allOrders", false);
 
         return modelAndView;
     }
