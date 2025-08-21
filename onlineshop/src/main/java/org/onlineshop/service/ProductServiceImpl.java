@@ -218,6 +218,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<ProductDTO> searchProducts(String query, Pageable pageable) {
+        return this.productRepository
+                .findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, pageable)
+                .map(this::mapProductToDTO);
+    }
+
+    @Override
     public Page<ProductDTO> getAllProducts(Pageable pageable) {
         return this.productRepository.findAll(pageable).map(this::mapProductToDTO);
     }

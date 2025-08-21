@@ -27,6 +27,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     List<Product> findAllByIsOnSaleTrue();
 
+    Page<Product> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+            String name, String description, Pageable pageable);
+
     @Query("SELECT p FROM Product p JOIN p.category c WHERE c.categoryName = :categoryName")
     Page<Product> findAllByCategoryName(@Param("categoryName") CategoryName categoryName, Pageable pageable);
 
