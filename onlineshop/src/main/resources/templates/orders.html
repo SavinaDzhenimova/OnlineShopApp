@@ -17,7 +17,7 @@
         <h1 sec:authorize="hasRole('ADMIN')" th:if="${allOrders}">Всички поръчки</h1>
         <h1 th:unless="${allOrders}">Моите поръчки</h1>
 
-        <p th:if="${warningMessage} and ${orders.empty}" th:text="${warningMessage}"></p>
+        <p th:if="${warningMessage}" th:text="${warningMessage}"></p>
 
         <div th:if="${successMessage}" class="alert alert-success" role="alert">
             <p class="success" th:text="${successMessage}"></p>
@@ -27,7 +27,7 @@
             <p th:text="${failureMessage}"></p>
         </div>
 
-        <div class="orders-list" th:if="${not orders.empty}">
+        <div class="orders-list" th:if="${orders != null}">
             <section class="order-info" th:each="order : ${orders.getContent()}">
                 <p th:text="'#' + ${order.getId()}"></p>
                 <p th:text="${#temporals.format(order.getOrderedOn(), 'dd-MM-yyyy HH:mm')}"></p>
@@ -46,7 +46,7 @@
             </section>
         </div>
 
-        <div class="pagination">
+        <div class="pagination" th:if="${orders != null}">
             <ul>
                 <li th:if="${orders.hasPrevious()}" class="hasPrevious">
                     <a th:if="${allOrders}"
