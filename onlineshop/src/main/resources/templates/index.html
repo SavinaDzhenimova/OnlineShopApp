@@ -305,7 +305,7 @@
         range.addEventListener("input", function () {
             const size = parseInt(range.value, 10);
             selectedSizeSpan.textContent = size;
-            selectedSizeLink.href = `/products/size/${size}`;
+            selectedSizeLink.href = `/products/all?sizes=${size}`;
         });
     </script>
 
