@@ -79,7 +79,7 @@
                                    th:value="${color.colorName}"
                                    th:id="${'color_' + color.colorName}"
                                    th:checked="${param.selectedColors != null
-                                   and #lists.contains(param.selectedColors, color.colorName)}">
+                                   and #lists.contains(param.selectedColors, color.colorName.toString())}">
                             <label th:for="${'color_' + color.colorName}" th:text="${color.colorName.displayName}">Черен</label>
                         </div>
                     </div>

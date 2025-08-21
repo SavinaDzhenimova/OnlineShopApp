@@ -37,7 +37,7 @@ public class CronScheduler {
         this.productRepository.saveAllAndFlush(products);
     }
 
-    @Scheduled(cron = "0 0 13 * * *")
+    @Scheduled(cron = "0 26 14 * * *")
     public void scheduledDiscountCheck() {
         this.discountService.applyDiscounts();
 
