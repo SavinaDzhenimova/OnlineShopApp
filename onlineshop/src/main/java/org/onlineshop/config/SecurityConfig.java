@@ -29,7 +29,7 @@ public class SecurityConfig {
                                 "/contacts", "/contacts/send-inquiry",
                                 "/users/login", "/users/register", "/users/favourites/**",
                                 "/products/all", "/products/product/**", "/products/category/**", "/products/brand/**",
-                                "/products/size/**", "/products/new", "/products/on-sale",
+                                "/products/size/**", "/products/new", "/products/on-sale", "/products/search",
                                 "/shopping-cart", "/shopping-cart/add-item/**", "/shopping-cart/remove-item/**",
                                 "/orders/create-order", "/orders/confirmation", "/orders/success", "/orders/track/**",
                                 "/orders/make-order",

@@ -1,6 +1,7 @@
 package org.onlineshop.web;
 
 import jakarta.validation.Valid;
+import org.onlineshop.model.entity.Product;
 import org.onlineshop.model.entity.Result;
 import org.onlineshop.model.enums.BrandName;
 import org.onlineshop.model.exportDTO.ProductDTO;
@@ -264,6 +265,29 @@ public class ProductController {
         }
 
         modelAndView.addObject("title", "Разпродажба на спортни обувки");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView searchProduct(@RequestParam("searchbar") String query,
+                                      @RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "12") int size) {
+
+        if (query == null || query.trim().isEmpty()) {
+            ModelAndView modelAndView = new ModelAndView("index");
+            modelAndView.addObject("warningMessageForSearchBar", "Моля, въведете дума за търсене!");
+
+            return modelAndView;
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductDTO> results = this.productService.searchProducts(query, pageable);
+
+        ModelAndView modelAndView = new ModelAndView("products");
+        modelAndView.addObject("products", results);
+        modelAndView.addObject("title", "Резултати от търсене за: " + query);
+        modelAndView.addObject("query", query);
 
         return modelAndView;
     }

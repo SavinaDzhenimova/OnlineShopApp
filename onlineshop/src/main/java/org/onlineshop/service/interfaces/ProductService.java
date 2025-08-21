@@ -21,6 +21,8 @@ public interface ProductService {
 
     ProductDTO getProductInfo(Long id);
 
+    Page<ProductDTO> searchProducts(String query, Pageable pageable);
+
     Page<ProductDTO> getAllProducts(Pageable pageable);
 
     Page<ProductDTO> getFilteredProducts(List<Integer> sizes, List<BrandName> brands, List<String> colors,

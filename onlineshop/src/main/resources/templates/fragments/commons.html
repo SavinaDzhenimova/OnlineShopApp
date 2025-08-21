@@ -41,10 +41,12 @@
                     </a>
                 </li>
                 <li class="search-form">
-                    <form>
-                        <input placeholder="Търсене...">
+                    <form th:action="@{/products/search}"
+                          th:method="GET">
+                        <input type="text" name="searchbar" th:value="${query}" placeholder="Търсене...">
                         <button><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
+                    <small th:text="*{warningMessageForSearchBar}" class="text-danger"></small>
                 </li>
                 <li class="icons">
                     <a sec:authorize="isAnonymous()"
